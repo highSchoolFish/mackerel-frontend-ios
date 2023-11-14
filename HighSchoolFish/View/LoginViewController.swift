@@ -9,7 +9,7 @@ import UIKit
 import SwiftUI
 
 final class LoginViewController: UIViewController {
-    var test = ""
+    var test = "test"
     var fCurTextfieldBottom: CGFloat = 0.0
     private let viewModel = LoginViewModel()
     
