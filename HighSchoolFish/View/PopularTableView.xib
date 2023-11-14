@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PopularTableView" customModule="HighSchoolFish_MVVM" customModuleProvider="target">
+            <connections>
+                <outlet property="commentImage" destination="vib-lk-dY6" id="TNm-Pm-slj"/>
+                <outlet property="commentLabel" destination="sWz-uJ-DeF" id="zUF-27-3nm"/>
+                <outlet property="contextLabel" destination="2OX-5B-RVj" id="hOX-79-nI4"/>
+                <outlet property="imageIcon" destination="ovy-ZP-MxO" id="h0m-c2-aso"/>
+                <outlet property="likeImage" destination="vXq-dq-uac" id="yec-06-hpJ"/>
+                <outlet property="likeLabel" destination="uQp-es-rwl" id="a5b-Se-Hmh"/>
+                <outlet property="titleLabel" destination="LuJ-Ge-UdF" id="OmP-nV-gqu"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="AVG-xO-dcZ">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="110"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LuJ-Ge-UdF">
+                    <rect key="frame" x="10" y="10" width="373" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="rdU-aP-CCM"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2OX-5B-RVj">
+                    <rect key="frame" x="10" y="40" width="373" height="26"/>
+                    <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="14"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imageIcon" translatesAutoresizingMaskIntoConstraints="NO" id="ovy-ZP-MxO">
+                    <rect key="frame" x="301" y="88" width="12" height="12"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="12" id="GFQ-JB-NiN"/>
+                        <constraint firstAttribute="width" constant="12" id="uMJ-X9-laE"/>
+                    </constraints>
+                </imageView>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="commentIcon" translatesAutoresizingMaskIntoConstraints="NO" id="vib-lk-dY6">
+                    <rect key="frame" x="319" y="88" width="12" height="12"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="12" id="4Cc-87-PBf"/>
+                        <constraint firstAttribute="height" constant="12" id="i0t-yH-oIf"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="26" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sWz-uJ-DeF">
+                    <rect key="frame" x="333" y="88" width="15" height="12"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="12" id="JW7-9x-nEE"/>
+                        <constraint firstAttribute="width" constant="15" id="hNH-Mg-miI"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="likeIcon" translatesAutoresizingMaskIntoConstraints="NO" id="vXq-dq-uac">
+                    <rect key="frame" x="354" y="88" width="12" height="12"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="12" id="VPL-5W-Azw"/>
+                        <constraint firstAttribute="width" constant="12" id="wmR-qq-VNc"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="55" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uQp-es-rwl">
+                    <rect key="frame" x="368" y="88" width="15" height="12"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="12" id="VWw-0k-0oA"/>
+                        <constraint firstAttribute="width" constant="15" id="ogD-hv-gJo"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="1hC-7g-k1u"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="uQp-es-rwl" secondAttribute="bottom" constant="10" id="02u-T6-mGQ"/>
+                <constraint firstItem="2OX-5B-RVj" firstAttribute="leading" secondItem="1hC-7g-k1u" secondAttribute="leading" constant="10" id="0wq-Pk-NWQ"/>
+                <constraint firstItem="1hC-7g-k1u" firstAttribute="bottom" secondItem="2OX-5B-RVj" secondAttribute="bottom" constant="10" id="74l-CD-esl"/>
+                <constraint firstItem="2OX-5B-RVj" firstAttribute="top" secondItem="LuJ-Ge-UdF" secondAttribute="bottom" constant="10" id="BZO-R9-0dO"/>
+                <constraint firstItem="1hC-7g-k1u" firstAttribute="trailing" secondItem="2OX-5B-RVj" secondAttribute="trailing" constant="10" id="CAB-Jq-chb"/>
+                <constraint firstAttribute="trailing" secondItem="uQp-es-rwl" secondAttribute="trailing" constant="10" id="DE4-QT-U4Z"/>
+                <constraint firstItem="vXq-dq-uac" firstAttribute="leading" secondItem="sWz-uJ-DeF" secondAttribute="trailing" constant="6" id="Dy4-mN-phH"/>
+                <constraint firstItem="sWz-uJ-DeF" firstAttribute="leading" secondItem="vib-lk-dY6" secondAttribute="trailing" constant="2" id="K8T-GU-VRR"/>
+                <constraint firstItem="vib-lk-dY6" firstAttribute="leading" secondItem="ovy-ZP-MxO" secondAttribute="trailing" constant="6" id="Kgg-az-XUQ"/>
+                <constraint firstItem="uQp-es-rwl" firstAttribute="leading" secondItem="vXq-dq-uac" secondAttribute="trailing" constant="2" id="NJT-Qs-kFK"/>
+                <constraint firstItem="LuJ-Ge-UdF" firstAttribute="top" secondItem="AVG-xO-dcZ" secondAttribute="top" constant="10" id="Nik-WR-Lyv"/>
+                <constraint firstAttribute="trailing" secondItem="LuJ-Ge-UdF" secondAttribute="trailing" constant="10" id="QKy-bP-BWj"/>
+                <constraint firstItem="sWz-uJ-DeF" firstAttribute="centerY" secondItem="uQp-es-rwl" secondAttribute="centerY" id="Vsf-U4-gjT"/>
+                <constraint firstItem="vib-lk-dY6" firstAttribute="centerY" secondItem="uQp-es-rwl" secondAttribute="centerY" id="bLc-Ak-88j"/>
+                <constraint firstItem="vXq-dq-uac" firstAttribute="centerY" secondItem="uQp-es-rwl" secondAttribute="centerY" id="jrb-EB-GQZ"/>
+                <constraint firstItem="ovy-ZP-MxO" firstAttribute="centerY" secondItem="uQp-es-rwl" secondAttribute="centerY" id="omW-cm-8Ef"/>
+                <constraint firstItem="LuJ-Ge-UdF" firstAttribute="leading" secondItem="AVG-xO-dcZ" secondAttribute="leading" constant="10" id="pbN-vu-Mgx"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="-196.18320610687022" y="272.53521126760563"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="commentIcon" width="12" height="12"/>
+        <image name="imageIcon" width="12" height="12"/>
+        <image name="likeIcon" width="12" height="12"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

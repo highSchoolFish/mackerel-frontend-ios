@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SchoolViewCell" rowHeight="60" id="ggd-Ua-cJZ" customClass="SchoolViewCell" customModule="HighSchoolFish_MVVM" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="60"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ggd-Ua-cJZ" id="iCX-l5-HTe">
+                <rect key="frame" x="0.0" y="0.0" width="393" height="60"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="ciS-eW-OEa">
+                        <rect key="frame" x="10" y="14.999999999999998" width="373" height="30.333333333333329"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G4L-mf-tlX">
+                                <rect key="frame" x="0.0" y="0.0" width="373" height="14.333333333333334"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="03O-8j-XsQ">
+                                <rect key="frame" x="0.0" y="18.333333333333336" width="373" height="12"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <color key="textColor" name="gray"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="ciS-eW-OEa" secondAttribute="trailing" constant="10" id="7mf-vX-I46"/>
+                    <constraint firstItem="ciS-eW-OEa" firstAttribute="leading" secondItem="iCX-l5-HTe" secondAttribute="leading" constant="10" id="RIy-tr-apt"/>
+                    <constraint firstItem="ciS-eW-OEa" firstAttribute="centerX" secondItem="iCX-l5-HTe" secondAttribute="centerX" id="SXl-Qt-T2V"/>
+                    <constraint firstItem="ciS-eW-OEa" firstAttribute="centerY" secondItem="iCX-l5-HTe" secondAttribute="centerY" id="hba-82-a6t"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="schoolAddressLabel" destination="03O-8j-XsQ" id="nYk-5b-wFk"/>
+                <outlet property="schoolNameLabel" destination="G4L-mf-tlX" id="7x3-Yi-slP"/>
+            </connections>
+            <point key="canvasLocation" x="-25.190839694656489" y="-186.61971830985917"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <namedColor name="gray">
+            <color red="0.72549019607843135" green="0.72549019607843135" blue="0.72549019607843135" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

@@ -1,0 +1,43 @@
+PODS:
+  - Alamofire (5.8.0)
+  - BSImagePicker (3.3.1)
+  - JWTDecode (3.1.0)
+  - Moya (15.0.0):
+    - Moya/Core (= 15.0.0)
+  - Moya/Core (15.0.0):
+    - Alamofire (~> 5.0)
+  - SafeAreaBrush (1.0.4)
+  - SideMenu (6.5.0)
+  - SwiftyJSON (5.0.1)
+
+DEPENDENCIES:
+  - Alamofire
+  - BSImagePicker (~> 3.1)
+  - JWTDecode (~> 3.0)
+  - Moya
+  - SafeAreaBrush
+  - SideMenu
+  - SwiftyJSON
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - BSImagePicker
+    - JWTDecode
+    - Moya
+    - SafeAreaBrush
+    - SideMenu
+    - SwiftyJSON
+
+SPEC CHECKSUMS:
+  Alamofire: 0e92e751b3e9e66d7982db43919d01f313b8eb91
+  BSImagePicker: 0fe04b574d4d6b81093785d2af6c26227efc8428
+  JWTDecode: 3eaab1e06b6f4dcbdd6716aff09ba4c2104ca8b7
+  Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
+  SafeAreaBrush: 282315ce500e436c04b2c26b46e8ac0ad4288bbd
+  SideMenu: f583187d21c5b1dd04c72002be544b555a2627a2
+  SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
+
+PODFILE CHECKSUM: e7060bb3749ba4a122f56e03321381c9c5e7d5f6
+
+COCOAPODS: 1.12.0
