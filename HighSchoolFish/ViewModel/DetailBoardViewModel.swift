@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import Moya
 import Alamofire
+import SwiftyJSON
 
 class DetailBoardViewModel {
     static let shared = DetailBoardViewModel()
@@ -16,6 +17,7 @@ class DetailBoardViewModel {
     var getBoardComplete: ((Bool) -> Void)?
     var onBoardComplete: ((Boards) -> Void)?
     var onCommentsResult: (([Comment]) -> Void)?
+    var onMoreCommentResult: ((Bool) -> Void)?
     
     private var boardIdString: String = ""
     
@@ -24,6 +26,7 @@ class DetailBoardViewModel {
         self.boardIdString = boardIdString
         if boardIdString != "" {
             getDetailBoard()
+            getComment()
         }
     }
     
@@ -36,9 +39,9 @@ class DetailBoardViewModel {
         
         let url = URL(string: encodedStr)!
         print(url)
-//        guard let accessToken = KeyChain.shared.read("api/v1/auth/token", account: "accessToken") else {
-//            return
-//        }
+        //        guard let accessToken = KeyChain.shared.read("api/v1/auth/token", account: "accessToken") else {
+        //            return
+        //        }
         let header : HTTPHeaders = ["Content-type": "application/json"]
         print(header)
         AF.request(url, method: .get,
@@ -58,9 +61,10 @@ class DetailBoardViewModel {
                     // dic 성공하면 completion -> board
                 }
                 print("getDetailBoard success")
+                
             case .failure(let error):
                 print(error.localizedDescription)
-
+                
             default :
                 fatalError()
             }
@@ -71,28 +75,36 @@ class DetailBoardViewModel {
         
         let provider = MoyaProvider<CommentService>(session: Session(interceptor: AuthManager()))
         
-        provider.request(CommentService.readComment(boardId: self.boardIdString)) { result in
+        provider.request(CommentService.readComment(boardId: self.boardIdString, page: 0, size: 1)) { result in
             var commentsResult = [Comment]()
             switch result {
-            case .success(let value as [String:Any]) :
-                if let data = value["data"] as? Dictionary<String,AnyObject> {
-                    print(data)
-                    data.forEach { key, value in
-                        if let commentDict = value as? [String: Any] {
-                            commentsResult.append(Comment(commentDictionary: commentDict))
+            case let .success(response):
+                print("통신성공")
+                let data = response
+                do{
+                    let responseJson = JSON(data.data)
+                    print("responseJson: \(responseJson)")
+                    if let commentsData = responseJson["data"]["content"].array {
+                        commentsResult = commentsData.map {
+                            Comment(commentDictionary: $0.dictionaryObject ?? [:])
                         }
                     }
                     
                     print("print comments: \(commentsResult.count)")
                     self.onCommentsResult?(commentsResult)
                 }
+                
+                catch(let err) {
+                    print(err.localizedDescription)
+                }
             case .failure(let error):
                 print(error.localizedDescription)
-                
-            default :
-                fatalError()
             }
         }
+    }
+    
+    func moreCommentButtonTapped(){
+        self.onMoreCommentResult?(true)
     }
     
     

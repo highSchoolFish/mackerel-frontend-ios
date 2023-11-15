@@ -11,28 +11,37 @@ import SwiftyJSON
 struct Comment: Codable {
     var id: String = ""
     var isWriter: Bool = false
-    var isAnonymous:Bool = false
-    var writerProfile: URL? = URL(string: "")
+    var profile: URL? = URL(string: "")
     var name: String = ""
     var isLike: Bool = false
     var createdAt: String = ""
     var context: String = ""
+    var numberOfLikes: Int  = 0
     var childComments: [Comment]? = []
-    
+        
     init(commentDictionary: Dictionary<String, Any>) {
-        let commentData = JSON(commentDictionary["content"])
-        self.id = commentData["id"].stringValue
-        self.isWriter = commentData["isWriter"].boolValue
-        self.isAnonymous = commentData["isAnonymous"].boolValue
-        self.writerProfile = URL(string: commentData["writerProfile"].stringValue)
-        self.name = commentData["name"].stringValue
-        self.isLike = commentData["isLike"].boolValue
-        self.createdAt = commentData["createdAt"].stringValue
-        self.context = commentData["context"].stringValue
+        let commentData = commentDictionary
+        print("commentData in dictionary")
+        print(commentData)
+        self.id = commentData["id"] as! String
+        self.isWriter = commentData["isWriter"] as! Bool
+        if let profileString = commentData["profile"] as? String {
+            self.profile = URL(string: profileString)
+        } else {
+            self.profile = nil
+        }
+        self.name = commentData["name"] as! String
+        self.isLike = commentData["isLike"] as! Bool
+        self.numberOfLikes = commentData["numberOfLikes"] as! Int
+        self.createdAt = commentData["createdAt"] as! String
+        self.context = commentData["context"] as! String
         
         // Parse childComments if available
-        if let childCommentsData = commentData["childComments"].array {
-            self.childComments = childCommentsData.map { Comment(commentDictionary: $0.dictionaryObject ?? [:]) }
+        if let childCommentsData = commentData["childComments"] as? [JSON] {
+            self.childComments = childCommentsData.map {
+                Comment(commentDictionary: $0.dictionaryObject ?? [:])
+            }
+            print(childCommentsData)
         }
     }
     

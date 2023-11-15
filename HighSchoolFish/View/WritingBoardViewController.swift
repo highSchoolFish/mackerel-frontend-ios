@@ -471,6 +471,7 @@ class WritingBoardViewController: UIViewController, UIImagePickerControllerDeleg
             }
             print("imageData ", self.imageDataArray.count)
         })
+        self.imageLabel.text = "\(self.imageDataArray.count)/10"
     }
     
     func convertAssetToImages(image: PHAsset) {

@@ -11,7 +11,6 @@ import SwiftUI
 final class LoginViewController: UIViewController {
     var test = "test"
     var fCurTextfieldBottom: CGFloat = 0.0
-    private let viewModel = LoginViewModel()
     
     private lazy var titleLabel: UILabel = {
         var label = UILabel()
@@ -166,7 +165,6 @@ final class LoginViewController: UIViewController {
         super.viewDidLoad()
         configure()
         setupAutoLayout()
-        handleLoginProcess()
     }
     
     // MARK: - configure
@@ -227,7 +225,9 @@ final class LoginViewController: UIViewController {
     
     // MARK: - 로그인 버튼 눌림 ===> 뷰모델에 전달 ⭐️⭐️⭐️ (Input)
     @objc func loginButtonTapped() {
-        viewModel.loginButtonTapped()
+        LoginViewModel.shared.loginButtonTapped()
+        handleLoginProcess()
+
     }
     
     @objc func autoLoginButtonTapped() {
@@ -238,7 +238,7 @@ final class LoginViewController: UIViewController {
             autoLoginButton.isSelected = true
             self.autoLoginButton.setImage(UIImage(named: "checkedButton"), for: .selected)
         }
-        viewModel.autoLoginButtonTapped()
+        LoginViewModel.shared.autoLoginButtonTapped()
     }
     
     @objc func findIdButtonTapped() {
@@ -262,7 +262,7 @@ final class LoginViewController: UIViewController {
     // MARK: - 로그인 결과 처리 클로저 설정
     private func handleLoginProcess() {
         // 로그인 처리 결과에 따라서 처리할 로직 ⭐️⭐️⭐️
-        viewModel.loginStatusChanged = { [unowned self] loginStatus in
+        LoginViewModel.shared.loginStatusChanged = { [unowned self] loginStatus in
             switch loginStatus {
             case .authenticated:
                 goToNextVC()
@@ -277,6 +277,7 @@ final class LoginViewController: UIViewController {
     
     // MARK: - 화면이동
     private func goToNextVC() {
+        print("tabVC open func")
         let nextVC = TabBarViewController()
         nextVC.modalPresentationStyle = .fullScreen
         self.present(nextVC, animated: true)
@@ -351,12 +352,12 @@ extension LoginViewController: UITextFieldDelegate {
         
         // MARK: - 이메일주소 입력 ===> 뷰모델에 전달 ⭐️⭐️⭐️ (Input)
         if textField == idTextField {
-            viewModel.setEmailText(textField.text ?? "")
+            LoginViewModel.shared.setEmailText(textField.text ?? "")
         }
         
         // MARK: - 비밀번호 입력 ===> 뷰모델에 전달 ⭐️⭐️⭐️ (Input)
         if textField == passwordTextField {
-            viewModel.setPasswordText(textField.text ?? "")
+            LoginViewModel.shared.setPasswordText(textField.text ?? "")
         }
         
         if (textField.text!.count > 15) {

@@ -13,7 +13,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CommentCell" id="Plt-ez-mrg" customClass="CommentCollectionViewCell" customModule="HighSchoolFish_MVVM" customModuleProvider="target">
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CommentCell" id="Plt-ez-mrg" customClass="CommentCollectionViewCell" customModule="HighSchoolFish" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="406" height="102"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -129,13 +129,14 @@
             <size key="customSize" width="406" height="102"/>
             <connections>
                 <outlet property="commentButton" destination="4O7-wi-GRA" id="MCo-yt-1O6"/>
+                <outlet property="contextLabel" destination="OGv-br-0wj" id="iSc-Tz-w9T"/>
                 <outlet property="likeButton" destination="xlp-sF-aCf" id="PyB-is-QVL"/>
                 <outlet property="likeCountLabel" destination="LAG-hi-2ur" id="BTM-dD-hXb"/>
                 <outlet property="nicknameLabel" destination="jQP-Ma-fLA" id="zM4-xb-OTX"/>
                 <outlet property="profileImageView" destination="piZ-O2-UI4" id="lqh-WF-p0j"/>
                 <outlet property="timeLabel" destination="icP-76-zIA" id="Hc2-fG-HKq"/>
             </connections>
-            <point key="canvasLocation" x="430.53435114503816" y="-17.605633802816904"/>
+            <point key="canvasLocation" x="374" y="-173"/>
         </collectionViewCell>
     </objects>
     <resources>

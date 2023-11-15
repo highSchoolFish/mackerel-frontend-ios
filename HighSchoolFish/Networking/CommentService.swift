@@ -9,7 +9,7 @@ import Foundation
 import Moya
 
 enum CommentService {
-    case readComment(boardId: String)
+    case readComment(boardId: String, page: Int, size: Int)
 }
 
 extension CommentService: TargetType {
@@ -19,7 +19,7 @@ extension CommentService: TargetType {
     
     var path: String {
         switch self {
-        case .readComment(let boardId):
+        case .readComment(let boardId, _, _):
             return "/api/v1/schools/boards/\(boardId)/comments"
         }
     }
@@ -40,8 +40,12 @@ extension CommentService: TargetType {
     
     var task: Task {
         switch self {
-        case .readComment:
-            return .requestPlain
+        case .readComment(_, let page, let size):
+            let params: [String: Any] = [
+                "page": page,
+                "size": size
+            ]
+            return .requestParameters(parameters: params, encoding: URLEncoding.queryString)
         }
     }
     

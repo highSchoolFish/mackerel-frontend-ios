@@ -23,10 +23,32 @@ class CommentCollectionViewCell: UICollectionViewCell {
     
     func generateCell(comment: Comment) {
         print("generateCell child comment")
-        nicknameLabel.text = comment.name
-        contextLabel.text = comment.context
+        if comment.profile == nil {
+            profileImageView.image = UIImage(named: "profileIcon")
+        }
         
+        timeLabel.text = comment.createdAt
+        contextLabel.text = comment.context
+        //
+        //        if comment.childComments != nil {
+        //            if comment.childComments!.count >= 1 {
+        //                showCommentView.isHidden = false
+        //            }
+        //            else {
+        //                showCommentView.isHidden = true
+        //            }
+        //        }
+        //
+        if comment.isLike == false {
+            // 좋아요 안눌려있음
+            likeButton.tintColor = UIColor(named: "gray")
+        }
+        else {
+            likeButton.tintColor = UIColor(named: "red")
+        }
+        
+        if comment.isWriter {
+            // 본인이 단 댓글
+        }
     }
-    
-
 }

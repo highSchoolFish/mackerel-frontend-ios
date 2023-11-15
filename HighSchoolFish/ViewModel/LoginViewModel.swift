@@ -23,10 +23,13 @@ class LoginViewModel {
     var isMemberCertify = true
     var autoLogin: Bool = false
     
+    static var shared = LoginViewModel()
+    
     // 로그인 상태 데이터 ⭐️⭐️⭐️
     private var loginStatus: LoginStatus = .none {
         didSet {
             loginStatusChanged(loginStatus)
+            print(loginStatus)
         }
     }
     
@@ -73,9 +76,12 @@ class LoginViewModel {
                     guard let accessToken = loginResponse?.data.accessToken else {
                         return
                     }
+                    
                     guard let refreshToken = loginResponse?.data.refreshToken else {
                         return
                     }
+                    print(accessToken)
+                    print(refreshToken)
                     
                     KeyChain.shared.create("api/v1/auth/token", account: "accessToken", value: accessToken)
                     KeyChain.shared.create("api/v1/auth/token", account: "refreshToken", value: refreshToken)

@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		071DD3A42ADFA94B005151C9 /* PopularTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 071DD3A32ADFA94B005151C9 /* PopularTableView.xib */; };
-		071F8F262AFF63DE0011DBBC /* CommentCollectionHeaderViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071F8F242AFF63DE0011DBBC /* CommentCollectionHeaderViewCell.swift */; };
-		071F8F272AFF63DE0011DBBC /* CommentCollectionHeaderViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 071F8F252AFF63DE0011DBBC /* CommentCollectionHeaderViewCell.xib */; };
 		071F8F292AFF78760011DBBC /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071F8F282AFF78760011DBBC /* Comment.swift */; };
 		071F8F2D2AFF95EF0011DBBC /* CommentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071F8F2C2AFF95EF0011DBBC /* CommentService.swift */; };
 		071F8F302AFF9EC00011DBBC /* CommentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071F8F2E2AFF9EC00011DBBC /* CommentCollectionViewCell.swift */; };
@@ -32,6 +30,8 @@
 		075FA4AB2AA70199002471C7 /* ChangePwRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075FA4AA2AA70199002471C7 /* ChangePwRequest.swift */; };
 		076E74B02AE7BA50003ABEEF /* CommunityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 076E74AE2AE7BA50003ABEEF /* CommunityTableViewCell.swift */; };
 		076E74B12AE7BA50003ABEEF /* CommunityTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 076E74AF2AE7BA50003ABEEF /* CommunityTableViewCell.xib */; };
+		0782BA5B2B03509E00B896CC /* CommentHeaderReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0782BA592B03509E00B896CC /* CommentHeaderReusableView.swift */; };
+		0782BA5C2B03509E00B896CC /* CommentHeaderReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0782BA5A2B03509E00B896CC /* CommentHeaderReusableView.xib */; };
 		0787ADE92A3C429B00DEFE2A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0787ADE82A3C429B00DEFE2A /* AppDelegate.swift */; };
 		0787ADEB2A3C429B00DEFE2A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0787ADEA2A3C429B00DEFE2A /* SceneDelegate.swift */; };
 		0787ADED2A3C429B00DEFE2A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0787ADEC2A3C429B00DEFE2A /* LoginViewController.swift */; };
@@ -80,7 +80,6 @@
 		07C8CEC52A8E136D00FBB750 /* FindIdResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C8CEC42A8E136D00FBB750 /* FindIdResponse.swift */; };
 		07D1E93F2AF9F91E000268AB /* TokenService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D1E93E2AF9F91E000268AB /* TokenService.swift */; };
 		07D1E9412AFCA8C3000268AB /* DetailBoardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D1E9402AFCA8C3000268AB /* DetailBoardViewModel.swift */; };
-		07D1E9432AFE0442000268AB /* DetailBoardTestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D1E9422AFE0442000268AB /* DetailBoardTestModel.swift */; };
 		07D7E0F82ADFAEE50080F31F /* PopularTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D7E0F72ADFAEE50080F31F /* PopularTableView.swift */; };
 		07D7E0FA2ADFDA2D0080F31F /* CategoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07D7E0F92ADFDA2D0080F31F /* CategoryView.xib */; };
 		07D7E0FC2ADFDA450080F31F /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D7E0FB2ADFDA450080F31F /* CategoryView.swift */; };
@@ -90,8 +89,6 @@
 
 /* Begin PBXFileReference section */
 		071DD3A32ADFA94B005151C9 /* PopularTableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PopularTableView.xib; sourceTree = "<group>"; };
-		071F8F242AFF63DE0011DBBC /* CommentCollectionHeaderViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCollectionHeaderViewCell.swift; sourceTree = "<group>"; };
-		071F8F252AFF63DE0011DBBC /* CommentCollectionHeaderViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentCollectionHeaderViewCell.xib; sourceTree = "<group>"; };
 		071F8F282AFF78760011DBBC /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		071F8F2C2AFF95EF0011DBBC /* CommentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentService.swift; sourceTree = "<group>"; };
 		071F8F2E2AFF9EC00011DBBC /* CommentCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -114,6 +111,8 @@
 		075FA4AA2AA70199002471C7 /* ChangePwRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePwRequest.swift; sourceTree = "<group>"; };
 		076E74AE2AE7BA50003ABEEF /* CommunityTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityTableViewCell.swift; sourceTree = "<group>"; };
 		076E74AF2AE7BA50003ABEEF /* CommunityTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommunityTableViewCell.xib; sourceTree = "<group>"; };
+		0782BA592B03509E00B896CC /* CommentHeaderReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentHeaderReusableView.swift; sourceTree = "<group>"; };
+		0782BA5A2B03509E00B896CC /* CommentHeaderReusableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentHeaderReusableView.xib; sourceTree = "<group>"; };
 		0787ADE52A3C429B00DEFE2A /* HighSchoolFish.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HighSchoolFish.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0787ADE82A3C429B00DEFE2A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0787ADEA2A3C429B00DEFE2A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -164,7 +163,6 @@
 		07C8CEC42A8E136D00FBB750 /* FindIdResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindIdResponse.swift; sourceTree = "<group>"; };
 		07D1E93E2AF9F91E000268AB /* TokenService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenService.swift; sourceTree = "<group>"; };
 		07D1E9402AFCA8C3000268AB /* DetailBoardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailBoardViewModel.swift; sourceTree = "<group>"; };
-		07D1E9422AFE0442000268AB /* DetailBoardTestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailBoardTestModel.swift; sourceTree = "<group>"; };
 		07D7E0F72ADFAEE50080F31F /* PopularTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularTableView.swift; sourceTree = "<group>"; };
 		07D7E0F92ADFDA2D0080F31F /* CategoryView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoryView.xib; sourceTree = "<group>"; };
 		07D7E0FB2ADFDA450080F31F /* CategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
@@ -255,7 +253,6 @@
 				075FA4AA2AA70199002471C7 /* ChangePwRequest.swift */,
 				073CC3022AF0F94700EDD5AA /* WritingBoardRequest.swift */,
 				073CC3082AF22D3A00EDD5AA /* Boards.swift */,
-				07D1E9422AFE0442000268AB /* DetailBoardTestModel.swift */,
 				071F8F282AFF78760011DBBC /* Comment.swift */,
 			);
 			path = Model;
@@ -314,10 +311,10 @@
 				07A5A7132AEA3AB000245041 /* BoardImageCollectionViewCell.swift */,
 				07A5A7142AEA3AB000245041 /* BoardImageCollectionViewCell.xib */,
 				073CC30A2AF37E8E00EDD5AA /* SplashViewController.swift */,
-				071F8F242AFF63DE0011DBBC /* CommentCollectionHeaderViewCell.swift */,
-				071F8F252AFF63DE0011DBBC /* CommentCollectionHeaderViewCell.xib */,
 				071F8F2E2AFF9EC00011DBBC /* CommentCollectionViewCell.swift */,
 				071F8F2F2AFF9EC00011DBBC /* CommentCollectionViewCell.xib */,
+				0782BA592B03509E00B896CC /* CommentHeaderReusableView.swift */,
+				0782BA5A2B03509E00B896CC /* CommentHeaderReusableView.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -403,7 +400,7 @@
 				07A5A7162AEA3AB000245041 /* BoardImageCollectionViewCell.xib in Resources */,
 				071F8F312AFF9EC00011DBBC /* CommentCollectionViewCell.xib in Resources */,
 				07C8CEB72A8CB56600FBB750 /* SchoolViewCell.xib in Resources */,
-				071F8F272AFF63DE0011DBBC /* CommentCollectionHeaderViewCell.xib in Resources */,
+				0782BA5C2B03509E00B896CC /* CommentHeaderReusableView.xib in Resources */,
 				071DD3A42ADFA94B005151C9 /* PopularTableView.xib in Resources */,
 				076E74B12AE7BA50003ABEEF /* CommunityTableViewCell.xib in Resources */,
 				0787ADF52A3C429B00DEFE2A /* LaunchScreen.storyboard in Resources */,
@@ -462,7 +459,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				0787AE112A40322B00DEFE2A /* KeyChain.swift in Sources */,
-				07D1E9432AFE0442000268AB /* DetailBoardTestModel.swift in Sources */,
 				073CC30D2AF38F2D00EDD5AA /* AuthManager.swift in Sources */,
 				0787AE372A556F2D00DEFE2A /* RegisterViewModel.swift in Sources */,
 				0787AE272A456E9600DEFE2A /* RegisterViewController.swift in Sources */,
@@ -489,6 +485,7 @@
 				07C8CEBD2A8CBE1000FBB750 /* SendCertificationNumberRequest.swift in Sources */,
 				0754607C2A7BB633004539F1 /* RegisterService.swift in Sources */,
 				0787AE2F2A456EC100DEFE2A /* WebViewController.swift in Sources */,
+				0782BA5B2B03509E00B896CC /* CommentHeaderReusableView.swift in Sources */,
 				076E74B02AE7BA50003ABEEF /* CommunityTableViewCell.swift in Sources */,
 				0787AE3B2A652FC100DEFE2A /* RegisterPageData.swift in Sources */,
 				0787AE192A456E3F00DEFE2A /* FindIDViewController.swift in Sources */,
@@ -516,7 +513,6 @@
 				0787AE212A456E7400DEFE2A /* RegisterUserInfoViewController.swift in Sources */,
 				075FA4A92AA0764B002471C7 /* FindPwResponse.swift in Sources */,
 				07C8CEB92A8CB63000FBB750 /* SchoolViewCell.swift in Sources */,
-				071F8F262AFF63DE0011DBBC /* CommentCollectionHeaderViewCell.swift in Sources */,
 				072FFAE02AB9722100A07FA7 /* NationwideCommunityViewController.swift in Sources */,
 				075FA4A52AA06FAB002471C7 /* FindPwRequest.swift in Sources */,
 				0787AE092A3EE96700DEFE2A /* LoginService.swift in Sources */,

@@ -72,6 +72,7 @@ class DetailBoardViewController: UIViewController {
         view.addSubview(recommandCountView)
         view.addSubview(viewsCountView)
         view.addSubview(countLineView)
+        view.addSubview(commentCollectionView)
         view.addSubview(commentView)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -275,7 +276,9 @@ class DetailBoardViewController: UIViewController {
     
     private lazy var commentCollectionView: UICollectionView = {
         var collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        collectionView.register(CommentCollectionHeaderViewCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "CommentHeaderCell")
+        //        collectionView.register(CommentHeaderReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "CommentHeader")
+        collectionView.register(UINib(nibName: "CommentHeaderReusableView", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "CommentHeader")
+        
         collectionView.register(UINib(nibName: "CommentCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "CommentCell")
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
@@ -359,22 +362,18 @@ class DetailBoardViewController: UIViewController {
         DetailBoardViewModel.shared.onBoardComplete = { result in
             self.setBoard(board: result)
         }
-//        DetailBoardViewModel.shared.onCommentsResult = { result in
-//            self.setComment([comments]: result)
-//        }
+        
         DetailBoardViewModel.shared.onCommentsResult = { resultArray in
             print("in DetailVC arr count ", resultArray.count)
             self.comments = resultArray
             self.commentCollectionView.reloadData()
-
+            
         }
-        self.commentCollectionView.reloadData()
-
-//
-//        self.setBoard(board: DetailBoardTestModel.init(boardId: "12345", title: "제목제목제목", context: "내용내용내용", writerNickname: "익명이라니까요", createAt: "몇시간 전", numberOfComments: 4, numberOfLikes: 6, views: 7, isExistPhoto: true, isWriter: false, isLike: false, photos: [""], writerProfile: null))
         
-        //        self.setBoard(board: DetailBoardTestModel(boardId: "board-id-123", title: "제에모옥", context: "내용자리요\n띄어쓰기\n아\n한줄\n한줄\n두줄\n한줄\n한줄\n한줄\n한줄\n세줄\n네줄\n다섯\n여섯\nseven\neight\nnine\nten\neleven", createAt: "몇시간 전이게", writerNickname: "익명일걸요", numberOfComments: 4, numberOfLikes: 6, views: 20, isExistPhoto: true, isWriter: false, isLike: false, photos: ["http://15.165.183.200:8080/api/v1/photos/748b3e90-adbb-4c49-86de-9dc4327715fc.png", "http://15.165.183.200:8080/api/v1/photos/748b3e90-adbb-4c49-86de-9dc4327715fc.png", "http://15.165.183.200:8080/api/v1/photos/748b3e90-adbb-4c49-86de-9dc4327715fc.png"], writerProfile: nil))
+        //        self.setBoard(board: DetailBoardTestModel(boardId: "board-id-123", title: "제에모옥", context: "내용자리요\n띄어쓰기\n아\n한줄\n한줄\n두줄\n한줄\n한줄\n한줄\n한줄\n세줄\n네줄\n다섯\n여섯\nseven\neight\nnine\nten\neleven", createAt: "몇시간 전이게", writerNickname: "익명일걸요", numberOfComments: 4, numberOfLikes: 6, views: 20, isExistPhoto: true, isWriter: false, isLike: false, photos: ["http://15.165.183.200:8080/api/v1/photos/601202ea-d224-400c-9a18-87c906f545ea.png", "http://15.165.183.200:8080/api/v1/photos/601202ea-d224-400c-9a18-87c906f545ea.png", "http://15.165.183.200:8080/api/v1/photos/601202ea-d224-400c-9a18-87c906f545ea.png"], writerProfile: nil))
         
+        //        self.setComment(comment: CommentTestModel(id: "id111", name: "namename", createdAt: "213123", context: "s내내용용ㅇ", isWriter: false, isAnonymous: false, isLike: false, writerProfile: nil, childComments: [CommentTestModel(id: "id222", name: "name2", createdAt: "몰라", context: "내용내용22", isWriter: false, isAnonymous: false, isLike: false, writerProfile: nil, childComments: nil), CommentTestModel(id: "id333", name: "name3", createdAt: "몇분전인데", context: "내요오옹333", isWriter: false, isAnonymous: false, isLike: false, writerProfile: nil, childComments: nil)]))
+        //
     }
     
     override func viewDidLayoutSubviews() {
@@ -394,12 +393,27 @@ class DetailBoardViewController: UIViewController {
         commentTextField.delegate = self
         commentCollectionView.delegate = self
         commentCollectionView.dataSource = self
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.scrollDirection = .vertical
+        commentCollectionView.collectionViewLayout = flowLayout
+    }
+    
+    private func setComment(comment: Comment) {
+        print(comments.count)
+        print(comments)
+        commentCollectionView.reloadData()
+        self.comments = [comment]
+        print(comments.count)
+        print(comments)
+        commentCollectionView.reloadData()
     }
     
     private func setBoard(board: Boards) {
         print(board)
         // writerProfile -> nil?
-        //        self.profileImageView.image = board.writerProfile
+        if board.writerProfile == nil {
+            self.profileImageView.image = UIImage(named: "profileIcon")
+        }
         self.nicknameLabel.text = board.writerNickname
         self.timeLabel.text = createdAt(createTime: board.createdAt)
         self.titleLabel.text = board.title
@@ -516,10 +530,6 @@ class DetailBoardViewController: UIViewController {
         }
     }
     
-    private func setComment() {
-        
-    }
-    
     private func createdAt(createTime: String) -> String {
         // 시간계산
         return createTime
@@ -602,10 +612,15 @@ class DetailBoardViewController: UIViewController {
             countLineView.topAnchor.constraint(equalTo: commentCountView.bottomAnchor, constant: 8),
             countLineView.heightAnchor.constraint(equalToConstant: 1),
             
-            bottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0),
+            commentCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
+            commentCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0),
+            commentCollectionView.topAnchor.constraint(equalTo: countLineView.bottomAnchor, constant: 20),
+            commentCollectionView.heightAnchor.constraint(equalToConstant: 200),
+            
+            bottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20),
             bottomView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             bottomView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            bottomView.heightAnchor.constraint(equalToConstant: 40),
+            bottomView.heightAnchor.constraint(equalToConstant: 50),
             
             uploadCommentView.centerYAnchor.constraint(equalTo: bottomView.centerYAnchor, constant: 0),
             uploadCommentView.leadingAnchor.constraint(equalTo: bottomView.leadingAnchor, constant: 0),
@@ -668,10 +683,72 @@ extension DetailBoardViewController: UITextFieldDelegate {
     
 }
 
-extension DetailBoardViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+extension DetailBoardViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return comments.count
-        // comment.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        // Return the size of your header
+        let comment = comments[section]
+        let headerHeight: CGFloat = calculateHeaderHeight(for: comment)
+        return CGSize(width: collectionView.bounds.width, height: headerHeight)
+    }
+    
+    private func calculateHeaderHeight(for comment: Comment) -> CGFloat {
+        // Implement your logic to calculate the header height based on the content of the comment
+        // For example, you might use UILabel to calculate height based on the text content.
+        
+        // Example:
+        print(comment.context)
+        let label = UILabel()
+        label.text = comment.context
+        label.numberOfLines = 0 // Allow multiple lines
+        label.lineBreakMode = .byWordWrapping
+        
+        let labelSize = label.sizeThatFits(CGSize(width: view.frame.width, height: .greatestFiniteMagnitude))
+        
+        // Add any additional padding or spacing you might need
+        //        let padding: CGFloat = 16.0
+        return labelSize.height + 100
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if kind == UICollectionView.elementKindSectionHeader {
+            guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "CommentHeader", for: indexPath) as? CommentHeaderReusableView else {
+                fatalError("Unable to dequeue header view")
+            }
+            
+            headerView.buttonAction = {
+                
+                DetailBoardViewModel.shared.moreCommentButtonTapped()
+                DetailBoardViewModel.shared.onMoreCommentResult = { result in
+                    if result {
+                        // 댓글 더 보기 버튼 눌렸음
+                        headerView.showCommentView.isHidden = true
+                    }
+                }
+            }
+            
+            let comment = comments[indexPath.section]
+            print("header comment context ", comment.name)
+            // Configure your header view with comment data
+            headerView.generateCell(comment: comment)
+            
+            return headerView
+        }
+        return UICollectionReusableView()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print("comments ", comments.count)
+        
+        if let childCommentsCount = comments[section].childComments?.count {
+            print(childCommentsCount)
+            return childCommentsCount
+        }
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -679,29 +756,46 @@ extension DetailBoardViewController: UICollectionViewDelegate, UICollectionViewD
             return UICollectionViewCell()
         }
         
-//        commentCell.generateCell(comment: comments[indexPath.item])
-        print("print cell index \(commentCell.index)")
-
+        let childComment = comments[indexPath.section].childComments![indexPath.item]
+        print("childComment context ", childComment.context)
+        
+        DetailBoardViewModel.shared.onMoreCommentResult = { result in
+            if result {
+                // 댓글 더보기 버튼 눌렸다
+                commentCell.generateCell(comment: childComment)
+            }
+        }
         return commentCell
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-            // Return the size of your header
-            return CGSize(width: collectionView.frame.width, height: 50)
-        }
-    
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        if kind == UICollectionView.elementKindSectionHeader {
-            guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "CommentHeaderCell", for: indexPath) as? CommentCollectionHeaderViewCell else {
-                fatalError("Unable to dequeue header view")
-            }
-
-            headerView.contextLabel.text = "Test \(indexPath.section + 1) header"
-
-            return headerView
-        }
-        return UICollectionReusableView()
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let comment = comments[indexPath.section].childComments?[indexPath.item]
+        let cellHeight: CGFloat = calculateCellHeight(for: comment)
+        return CGSize(width: view.bounds.width, height: cellHeight + 100)
     }
+    
+    private func calculateCellHeight(for comment: Comment?) -> CGFloat {
+        guard let comment = comment else {
+            return 0.0 // Return a default value or handle the case when comment is nil
+        }
+        
+        // Implement your logic to calculate the cell height based on the content of the comment
+        // For example, you might use UILabel to calculate height based on the text content.
+        
+        // Example:
+        print(comment.context)
+        
+        let label = UILabel()
+        label.text = comment.context
+        label.numberOfLines = 0 // Allow multiple lines
+        label.lineBreakMode = .byWordWrapping
+        let labelSize = label.sizeThatFits(CGSize(width: view.bounds.width, height: .greatestFiniteMagnitude))
+        
+        // Add any additional padding or spacing you might need
+        let padding: CGFloat = 8.0
+        return labelSize.height + padding
+    }
+    
 }
 
 struct PreView: PreviewProvider {
