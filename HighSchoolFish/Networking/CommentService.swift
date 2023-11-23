@@ -52,7 +52,7 @@ extension CommentService: TargetType {
     var headers: [String : String]? {
         switch self {
         case .readComment:
-            return ["Content-Type": "application/json"]
+            return ["Content-Type": "application/json", "Authorization": "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiUk9MRV9NRU1CRVIiLCJvZmZpY2VPZkVkdWNhdGlvbkNvZGUiOiJKMTAiLCJuaWNrbmFtZSI6ImJoeW4xMiIsInNjaG9vbENvZGUiOiI3NTMwNDg2Iiwic3ViIjoiYmh5bjEiLCJleHAiOjE3MzIyNTcxMDQsImlhdCI6MTcwMDYzNDcwNH0.GIlQIN6KEfRoXd-ZT0Xe1pIvY7p-YGvQTfGy0eTLOpf9GhAPGBRgeSFBIBGfW-0kyQqc0zPL_5VC0gjDr2_CTA"]
         }
     }
     

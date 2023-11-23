@@ -46,6 +46,7 @@ class LoginViewModel {
     
     func loginButtonTapped() {
         
+        
         // 유효성 검사 할라면
         guard !emailString.isEmpty && !passwordString.isEmpty else {
             
@@ -106,22 +107,25 @@ class LoginViewModel {
         }
     }
     
-    //        APIService.shared.loginTest(username: emailString, password: passwordString) { [unowned self] result in
-    //            switch result {
-    //            case .success():
-    //                self.loginStatus = .authenticated
-    //            case .failure(_):
-    //                self.loginStatus = .loginDenied
-    //            }
-    //        }
-    
-    
     func autoLoginButtonTapped() {
-        if self.autoLogin == true {
-            UserDefaults.standard.set(self.autoLogin, forKey: "autoLogin")
-        }
+//        if self.autoLogin == true {
+//            UserDefaults.standard.set(self.autoLogin, forKey: "autoLogin")
+//        }
+        
+        // 임시 test login
+        
+        
+        // refreshToken
+        // eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiUk9MRV9NRU1CRVIiLCJvZmZpY2VPZkVkdWNhdGlvbkNvZGUiOiJKMTAiLCJuaWNrbmFtZSI6ImJoeW4xMiIsInNjaG9vbENvZGUiOiI3NTMwNDg2Iiwic3ViIjoiYmh5bjEiLCJleHAiOjE3MzE4MjU3OTcsImlhdCI6MTcwMDIwMzM5N30.8nR7k6O6nav3W0AT9Tgk7oX2US52G0v1a9sQxUI1W1nKOM1Qtol2NTJwieysrixXmDlbe-ZhmBOn4CyraxnS_w
+        
+        // id
+        // bhyn1
+        
+        // pw
+        // qwer1234!!
+        
     }
-
+    
     // Logic
     func getMainViewModel() -> MainViewModel {
         let mainVM = MainViewModel(userEmail: self.emailString)

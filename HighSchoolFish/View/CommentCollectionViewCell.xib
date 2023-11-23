@@ -128,6 +128,7 @@
             </constraints>
             <size key="customSize" width="406" height="102"/>
             <connections>
+                <outlet property="backView" destination="vLl-Dn-R5g" id="TTo-QH-2OU"/>
                 <outlet property="commentButton" destination="4O7-wi-GRA" id="MCo-yt-1O6"/>
                 <outlet property="contextLabel" destination="OGv-br-0wj" id="iSc-Tz-w9T"/>
                 <outlet property="likeButton" destination="xlp-sF-aCf" id="PyB-is-QVL"/>

@@ -16,9 +16,9 @@ class DetailBoardViewModel {
     
     var getBoardComplete: ((Bool) -> Void)?
     var onBoardComplete: ((Boards) -> Void)?
-    var onCommentsResult: (([Comment]) -> Void)?
+    var onCommentsResult: ((Comment) -> Void)?
     var onMoreCommentResult: ((Bool) -> Void)?
-    
+    var onCommentsCount: ((Int) -> Int)?
     private var boardIdString: String = ""
     
     // table cell 선택시 setBoardId func 호출
@@ -39,15 +39,13 @@ class DetailBoardViewModel {
         
         let url = URL(string: encodedStr)!
         print(url)
-        //        guard let accessToken = KeyChain.shared.read("api/v1/auth/token", account: "accessToken") else {
-        //            return
-        //        }
         let header : HTTPHeaders = ["Content-type": "application/json"]
         print(header)
         AF.request(url, method: .get,
                    parameters: nil,
                    encoding: URLEncoding.default,
                    headers: header, interceptor: AuthManager())
+        
         .validate(statusCode: 200..<300)
         .responseJSON { (response) in
             let result = response.result
@@ -58,6 +56,7 @@ class DetailBoardViewModel {
                     var board = Boards(detailBoardDictionary: data)
                     self.getBoardComplete?(true)
                     self.onBoardComplete?(board)
+                    
                     // dic 성공하면 completion -> board
                 }
                 print("getDetailBoard success")
@@ -75,23 +74,20 @@ class DetailBoardViewModel {
         
         let provider = MoyaProvider<CommentService>(session: Session(interceptor: AuthManager()))
         
-        provider.request(CommentService.readComment(boardId: self.boardIdString, page: 0, size: 1)) { result in
-            var commentsResult = [Comment]()
+        provider.request(CommentService.readComment(boardId: self.boardIdString, page: 0, size: 10)) { result in
             switch result {
             case let .success(response):
                 print("통신성공")
                 let data = response
                 do{
-                    let responseJson = JSON(data.data)
-                    print("responseJson: \(responseJson)")
-                    if let commentsData = responseJson["data"]["content"].array {
-                        commentsResult = commentsData.map {
-                            Comment(commentDictionary: $0.dictionaryObject ?? [:])
-                        }
-                    }
                     
-                    print("print comments: \(commentsResult.count)")
-                    self.onCommentsResult?(commentsResult)
+                    let commentResponse = try JSONDecoder().decode(Comment.self, from: data.data)
+                    let pageNumber = commentResponse.data.pageNumber
+                    let totalElements = commentResponse.data.totalElements
+                    let json = JSON(data.data)
+                    print(json)
+                    self.onCommentsResult?(commentResponse)
+                    self.onCommentsCount?(commentResponse.data.totalElements)
                 }
                 
                 catch(let err) {
@@ -105,6 +101,7 @@ class DetailBoardViewModel {
     
     func moreCommentButtonTapped(){
         self.onMoreCommentResult?(true)
+        print("more comment button tapped in VM")
     }
     
     

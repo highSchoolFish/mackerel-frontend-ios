@@ -281,6 +281,7 @@ class DetailBoardViewController: UIViewController {
         
         collectionView.register(UINib(nibName: "CommentCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "CommentCell")
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.backgroundColor = .blue
         return collectionView
     }()
     
@@ -351,8 +352,8 @@ class DetailBoardViewController: UIViewController {
     
     var images: [UIImage] = []
     var photos: [URL] = []
-    var comments: [Comment] = []
-    // comment 받아서 넣어야함
+    var comments: [CommentContent] = []
+    var total = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -363,23 +364,16 @@ class DetailBoardViewController: UIViewController {
             self.setBoard(board: result)
         }
         
-        DetailBoardViewModel.shared.onCommentsResult = { resultArray in
-            print("in DetailVC arr count ", resultArray.count)
-            self.comments = resultArray
-            self.commentCollectionView.reloadData()
-            
+        DetailBoardViewModel.shared.onCommentsResult = { result in
+            print("comment result ", result)
+            print("comment result.data.content ", result.data.content)
+            self.setComment(comment: result)
         }
-        
-        //        self.setBoard(board: DetailBoardTestModel(boardId: "board-id-123", title: "제에모옥", context: "내용자리요\n띄어쓰기\n아\n한줄\n한줄\n두줄\n한줄\n한줄\n한줄\n한줄\n세줄\n네줄\n다섯\n여섯\nseven\neight\nnine\nten\neleven", createAt: "몇시간 전이게", writerNickname: "익명일걸요", numberOfComments: 4, numberOfLikes: 6, views: 20, isExistPhoto: true, isWriter: false, isLike: false, photos: ["http://15.165.183.200:8080/api/v1/photos/601202ea-d224-400c-9a18-87c906f545ea.png", "http://15.165.183.200:8080/api/v1/photos/601202ea-d224-400c-9a18-87c906f545ea.png", "http://15.165.183.200:8080/api/v1/photos/601202ea-d224-400c-9a18-87c906f545ea.png"], writerProfile: nil))
-        
-        //        self.setComment(comment: CommentTestModel(id: "id111", name: "namename", createdAt: "213123", context: "s내내용용ㅇ", isWriter: false, isAnonymous: false, isLike: false, writerProfile: nil, childComments: [CommentTestModel(id: "id222", name: "name2", createdAt: "몰라", context: "내용내용22", isWriter: false, isAnonymous: false, isLike: false, writerProfile: nil, childComments: nil), CommentTestModel(id: "id333", name: "name3", createdAt: "몇분전인데", context: "내요오옹333", isWriter: false, isAnonymous: false, isLike: false, writerProfile: nil, childComments: nil)]))
-        //
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         self.scrollView.updateContentSize()
-        
     }
     
     private func configure() {
@@ -395,17 +389,45 @@ class DetailBoardViewController: UIViewController {
         commentCollectionView.dataSource = self
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
+        flowLayout.estimatedItemSize = CGSize(width: commentCollectionView.bounds.width, height: 100)
         commentCollectionView.collectionViewLayout = flowLayout
+        commentCollectionView.backgroundColor = .red
     }
     
     private func setComment(comment: Comment) {
-        print(comments.count)
-        print(comments)
+        self.comments = comment.data.content
         commentCollectionView.reloadData()
-        self.comments = [comment]
-        print(comments.count)
-        print(comments)
-        commentCollectionView.reloadData()
+        commentCollectionView.isHidden = comments.isEmpty
+        
+        print(commentCollectionView.isHidden) // Check the output in the console
+        print(commentCollectionView.frame) // Check the frame in the console
+        let newHeight = calculateTotalHeight()
+        commentCollectionView.heightAnchor.constraint(equalToConstant: CGFloat(newHeight)).isActive = true
+        print("dd ", commentCollectionView.frame) // Check the frame in the console
+        
+        
+    }
+    
+    func calculateTotalHeight() -> CGFloat {
+        var totalHeight: CGFloat = 0
+        
+        // Add 100 for each cell
+        for comment in comments {
+            let headerHeight = calculateCommentHeight(text: comment.context, width: commentCollectionView.bounds.width) // Implement your logic to calculate cell height
+            totalHeight += headerHeight + 50
+            print(totalHeight)
+            
+            if let childComments = comment.childComments {
+                for childComment in childComments {
+                    let cellHeight = calculateCommentHeight(text: childComment.context, width: commentCollectionView.bounds.width) // Implement your logic to calculate cell height
+                    totalHeight += cellHeight + 50
+                    print(totalHeight)
+                }
+            }
+            
+        }
+        print(totalHeight)
+        return totalHeight
     }
     
     private func setBoard(board: Boards) {
@@ -422,107 +444,105 @@ class DetailBoardViewController: UIViewController {
         self.recommandLabel.text = "추천 \(board.numberOfLikes)"
         self.viewsLabel.text = "조회 \(board.views)"
         
-        if board.isExistPhoto == true {
-            let photosCount = board.photos.count
-            if photosCount == 1 {
-                // 1장 photosView 하나 통으로
-                
-                let imageView = UIImageView()
-                let url = URL(string: "\(board.photos[0])")
-                imageView.load(url: url!)
-                imageView.contentMode = .scaleAspectFill
-                imageView.clipsToBounds = true
-                photosView.addSubview(imageView)
-                imageView.translatesAutoresizingMaskIntoConstraints = false
-                
-                imageView.leadingAnchor.constraint(equalTo: photosView.leadingAnchor).isActive = true
-                imageView.topAnchor.constraint(equalTo: photosView.topAnchor).isActive = true
-                imageView.trailingAnchor.constraint(equalTo: photosView.trailingAnchor).isActive = true
-                imageView.bottomAnchor.constraint(equalTo: photosView.bottomAnchor).isActive = true
-            }
-            else if photosCount == 2 {
-                // 2장 photosView 반반 width 반 나누기 or stackView 만들어서 하나 추가?
-                let imageView1 = UIImageView()
-                let url1 = URL(string: "\(board.photos[0])")
-                imageView1.load(url: url1!)
-                imageView1.contentMode = .scaleToFill
-                imageView1.clipsToBounds = true
-                imageView1.translatesAutoresizingMaskIntoConstraints = false
-                
-                let imageView2 = UIImageView()
-                let url2 = URL(string: "\(board.photos[1])")
-                imageView2.load(url: url2!)
-                imageView2.contentMode = .scaleAspectFill
-                imageView2.clipsToBounds = true
-                imageView2.translatesAutoresizingMaskIntoConstraints = false
-                let stackView = UIStackView()
-                stackView.addArrangedSubview(imageView1)
-                stackView.addArrangedSubview(imageView2)
-                stackView.axis = .horizontal
-                stackView.spacing = 8
-                stackView.distribution = .fillEqually
-                photosView.addSubview(stackView)
-                stackView.translatesAutoresizingMaskIntoConstraints = false
-                
-                stackView.leadingAnchor.constraint(equalTo: photosView.leadingAnchor).isActive = true
-                stackView.topAnchor.constraint(equalTo: photosView.topAnchor).isActive = true
-                stackView.trailingAnchor.constraint(equalTo: photosView.trailingAnchor).isActive = true
-                stackView.bottomAnchor.constraint(equalTo: photosView.bottomAnchor).isActive = true
-            }
-            else if photosCount >= 3 {
-                // 3이상
-                let imageView1 = UIImageView()
-                let url1 = URL(string: "\(board.photos[0])")
-                imageView1.load(url: url1!)
-                imageView1.contentMode = .scaleAspectFill
-                imageView1.clipsToBounds = true
-                
-                let imageView2 = UIImageView()
-                let url2 = URL(string: "\(board.photos[1])")
-                imageView2.load(url: url2!)
-                imageView2.contentMode = .scaleAspectFill
-                imageView2.clipsToBounds = true
-                
-                let imageView3 = UIImageView()
-                let url3 = URL(string: "\(board.photos[2])")
-                imageView3.load(url: url3!)
-                imageView3.contentMode = .scaleAspectFill
-                imageView3.clipsToBounds = true
-                
-                let vStackView = UIStackView()
-                vStackView.addArrangedSubview(imageView2)
-                vStackView.addArrangedSubview(imageView3)
-                vStackView.axis = .vertical
-                vStackView.spacing = 8
-                vStackView.distribution = .fillEqually
-                vStackView.translatesAutoresizingMaskIntoConstraints = false
-                
-                let hStackView = UIStackView()
-                hStackView.addArrangedSubview(imageView1)
-                hStackView.addArrangedSubview(vStackView)
-                hStackView.axis = .horizontal
-                hStackView.spacing = 8
-                hStackView.distribution = .fillEqually
-                hStackView.translatesAutoresizingMaskIntoConstraints = false
-                
-                photosView.addSubview(hStackView)
-                
-                hStackView.leadingAnchor.constraint(equalTo: photosView.leadingAnchor).isActive = true
-                hStackView.topAnchor.constraint(equalTo: photosView.topAnchor).isActive = true
-                hStackView.trailingAnchor.constraint(equalTo: photosView.trailingAnchor).isActive = true
-                hStackView.bottomAnchor.constraint(equalTo: photosView.bottomAnchor).isActive = true
-                
-                if photosCount >= 4 {
-                    imageView3.alpha = 0.6
-                    let button = UIButton(type: .custom)
-                    button.setTitle("+ \(photosCount-3)", for: .normal)
-                    button.setTitleColor(.white, for: .normal)
-                    photosView.addSubview(button)
-                    button.bringSubviewToFront(photosView)
-                    button.translatesAutoresizingMaskIntoConstraints = false
-                    button.centerXAnchor.constraint(equalTo: imageView3.centerXAnchor, constant: 0).isActive = true
-                    button.centerYAnchor.constraint(equalTo: imageView3.centerYAnchor, constant: 0).isActive = true
-                }
+        let photosCount = board.photos.count
+        if photosCount == 1 {
+            // 1장 photosView 하나 통으로
+            
+            let imageView = UIImageView()
+            let url = URL(string: "\(board.photos[0])")
+            imageView.load(url: url!)
+            imageView.contentMode = .scaleAspectFill
+            imageView.clipsToBounds = true
+            photosView.addSubview(imageView)
+            imageView.translatesAutoresizingMaskIntoConstraints = false
+            
+            imageView.leadingAnchor.constraint(equalTo: photosView.leadingAnchor).isActive = true
+            imageView.topAnchor.constraint(equalTo: photosView.topAnchor).isActive = true
+            imageView.trailingAnchor.constraint(equalTo: photosView.trailingAnchor).isActive = true
+            imageView.bottomAnchor.constraint(equalTo: photosView.bottomAnchor).isActive = true
+        }
+        else if photosCount == 2 {
+            // 2장 photosView 반반 width 반 나누기 or stackView 만들어서 하나 추가?
+            let imageView1 = UIImageView()
+            let url1 = URL(string: "\(board.photos[0])")
+            imageView1.load(url: url1!)
+            imageView1.contentMode = .scaleToFill
+            imageView1.clipsToBounds = true
+            imageView1.translatesAutoresizingMaskIntoConstraints = false
+            
+            let imageView2 = UIImageView()
+            let url2 = URL(string: "\(board.photos[1])")
+            imageView2.load(url: url2!)
+            imageView2.contentMode = .scaleAspectFill
+            imageView2.clipsToBounds = true
+            imageView2.translatesAutoresizingMaskIntoConstraints = false
+            let stackView = UIStackView()
+            stackView.addArrangedSubview(imageView1)
+            stackView.addArrangedSubview(imageView2)
+            stackView.axis = .horizontal
+            stackView.spacing = 8
+            stackView.distribution = .fillEqually
+            photosView.addSubview(stackView)
+            stackView.translatesAutoresizingMaskIntoConstraints = false
+            
+            stackView.leadingAnchor.constraint(equalTo: photosView.leadingAnchor).isActive = true
+            stackView.topAnchor.constraint(equalTo: photosView.topAnchor).isActive = true
+            stackView.trailingAnchor.constraint(equalTo: photosView.trailingAnchor).isActive = true
+            stackView.bottomAnchor.constraint(equalTo: photosView.bottomAnchor).isActive = true
+        }
+        else if photosCount >= 3 {
+            // 3이상
+            let imageView1 = UIImageView()
+            let url1 = URL(string: "\(board.photos[0])")
+            imageView1.load(url: url1!)
+            imageView1.contentMode = .scaleAspectFill
+            imageView1.clipsToBounds = true
+            
+            let imageView2 = UIImageView()
+            let url2 = URL(string: "\(board.photos[1])")
+            imageView2.load(url: url2!)
+            imageView2.contentMode = .scaleAspectFill
+            imageView2.clipsToBounds = true
+            
+            let imageView3 = UIImageView()
+            let url3 = URL(string: "\(board.photos[2])")
+            imageView3.load(url: url3!)
+            imageView3.contentMode = .scaleAspectFill
+            imageView3.clipsToBounds = true
+            
+            let vStackView = UIStackView()
+            vStackView.addArrangedSubview(imageView2)
+            vStackView.addArrangedSubview(imageView3)
+            vStackView.axis = .vertical
+            vStackView.spacing = 8
+            vStackView.distribution = .fillEqually
+            vStackView.translatesAutoresizingMaskIntoConstraints = false
+            
+            let hStackView = UIStackView()
+            hStackView.addArrangedSubview(imageView1)
+            hStackView.addArrangedSubview(vStackView)
+            hStackView.axis = .horizontal
+            hStackView.spacing = 8
+            hStackView.distribution = .fillEqually
+            hStackView.translatesAutoresizingMaskIntoConstraints = false
+            
+            photosView.addSubview(hStackView)
+            
+            hStackView.leadingAnchor.constraint(equalTo: photosView.leadingAnchor).isActive = true
+            hStackView.topAnchor.constraint(equalTo: photosView.topAnchor).isActive = true
+            hStackView.trailingAnchor.constraint(equalTo: photosView.trailingAnchor).isActive = true
+            hStackView.bottomAnchor.constraint(equalTo: photosView.bottomAnchor).isActive = true
+            
+            if photosCount >= 4 {
+                imageView3.alpha = 0.6
+                let button = UIButton(type: .custom)
+                button.setTitle("+ \(photosCount-3)", for: .normal)
+                button.setTitleColor(.white, for: .normal)
+                photosView.addSubview(button)
+                button.bringSubviewToFront(photosView)
+                button.translatesAutoresizingMaskIntoConstraints = false
+                button.centerXAnchor.constraint(equalTo: imageView3.centerXAnchor, constant: 0).isActive = true
+                button.centerYAnchor.constraint(equalTo: imageView3.centerYAnchor, constant: 0).isActive = true
             }
         }
         else {
@@ -558,12 +578,12 @@ class DetailBoardViewController: UIViewController {
             profileHStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             profileHStackView.heightAnchor.constraint(equalToConstant: 50),
             
-            profileImageView.heightAnchor.constraint(equalToConstant: 40),
+            profileImageView.heightAnchor.constraint(equalToConstant: 50),
             profileImageView.widthAnchor.constraint(equalTo: profileImageView.heightAnchor, multiplier: 1.0),
             profileImageView.leadingAnchor.constraint(equalTo: profileHStackView.leadingAnchor, constant: 0),
-            profileImageView.centerYAnchor.constraint(equalTo: profileHStackView.centerYAnchor, constant: 0),
+            //            profileImageView.centerYAnchor.constraint(equalTo: profileHStackView.centerYAnchor, constant: 0),
             
-            profileVStackView.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor, constant: 0),
+            //            profileVStackView.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor, constant: 0),
             profileVStackView.trailingAnchor.constraint(equalTo: profileHStackView.trailingAnchor, constant: 0),
             
             profileLineView.topAnchor.constraint(equalTo: profileHStackView.bottomAnchor, constant: 8),
@@ -588,7 +608,6 @@ class DetailBoardViewController: UIViewController {
             photosView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             photosView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             photosView.topAnchor.constraint(equalTo: contextTextView.bottomAnchor, constant: 20),
-            photosView.heightAnchor.constraint(equalToConstant: 200),
             
             imageLineView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
             imageLineView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0),
@@ -615,7 +634,6 @@ class DetailBoardViewController: UIViewController {
             commentCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
             commentCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0),
             commentCollectionView.topAnchor.constraint(equalTo: countLineView.bottomAnchor, constant: 20),
-            commentCollectionView.heightAnchor.constraint(equalToConstant: 200),
             
             bottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20),
             bottomView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
@@ -660,16 +678,16 @@ class DetailBoardViewController: UIViewController {
 extension UIScrollView {
     func updateContentSize() {
         let unionCalculatedTotalRect = recursiveUnionInDepthFor(view: self)
-        
         // 계산된 크기로 컨텐츠 사이즈 설정
-        self.contentSize = CGSize(width: self.frame.width, height: unionCalculatedTotalRect.height+50)
+        self.contentSize = CGSize(width: self.frame.width, height: unionCalculatedTotalRect.height)
     }
     
     private func recursiveUnionInDepthFor(view: UIView) -> CGRect {
         var totalRect: CGRect = .zero
         
         // 모든 자식 View의 컨트롤의 크기를 재귀적으로 호출하며 최종 영역의 크기를 설정
-        print(view.frame.height)
+        //        print("view \(view)", view.frame.height)
+        
         for subView in view.subviews {
             totalRect = totalRect.union(recursiveUnionInDepthFor(view: subView))
         }
@@ -685,33 +703,52 @@ extension DetailBoardViewController: UITextFieldDelegate {
 
 extension DetailBoardViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return comments.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        // Return the size of your header
-        let comment = comments[section]
-        let headerHeight: CGFloat = calculateHeaderHeight(for: comment)
-        return CGSize(width: collectionView.bounds.width, height: headerHeight)
-    }
-    
-    private func calculateHeaderHeight(for comment: Comment) -> CGFloat {
-        // Implement your logic to calculate the header height based on the content of the comment
-        // For example, you might use UILabel to calculate height based on the text content.
+    func calculateCommentHeight(text: String, width: CGFloat, font: UIFont? = nil) -> CGFloat {
         
-        // Example:
-        print(comment.context)
+        
         let label = UILabel()
-        label.text = comment.context
+        label.text = text
         label.numberOfLines = 0 // Allow multiple lines
         label.lineBreakMode = .byWordWrapping
         
         let labelSize = label.sizeThatFits(CGSize(width: view.frame.width, height: .greatestFiniteMagnitude))
         
-        // Add any additional padding or spacing you might need
-        //        let padding: CGFloat = 16.0
-        return labelSize.height + 100
+        return labelSize.height
+        
+        //        let maxSize = CGSize(width: width, height: .greatestFiniteMagnitude)
+        //        let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
+        //
+        //        let attributes: [NSAttributedString.Key: Any]
+        //        if let font = font {
+        //            attributes = [NSAttributedString.Key.font: font]
+        //        } else {
+        //            attributes = [:] // Use the system font
+        //        }
+        //
+        //        let rect = NSString(string: text).boundingRect(with: maxSize, options: options, attributes: attributes, context: nil)
+        
+        //        return ceil(rect.height)
+    }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        
+        DetailBoardViewModel.shared.onCommentsCount = { result in
+            print("onCommentsCount \(result)")
+            return result
+        }
+        return comments.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        let comment = comments[section]
+        
+        let commentText = comment.context
+        let headerHeight = calculateCommentHeight(text: commentText, width: collectionView.bounds.width)
+        // Set the calculated height for the headerview
+        // (Assuming you have a reference to your headerview)
+        
+        print("context :\(commentText)\n", headerHeight)
+        return CGSize(width: collectionView.frame.width, height: headerHeight + 80)
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -719,21 +756,10 @@ extension DetailBoardViewController: UICollectionViewDelegate, UICollectionViewD
             guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "CommentHeader", for: indexPath) as? CommentHeaderReusableView else {
                 fatalError("Unable to dequeue header view")
             }
-            
-            headerView.buttonAction = {
-                
-                DetailBoardViewModel.shared.moreCommentButtonTapped()
-                DetailBoardViewModel.shared.onMoreCommentResult = { result in
-                    if result {
-                        // 댓글 더 보기 버튼 눌렸음
-                        headerView.showCommentView.isHidden = true
-                    }
-                }
-            }
-            
             let comment = comments[indexPath.section]
-            print("header comment context ", comment.name)
-            // Configure your header view with comment data
+            print("headerComment context ", comment.context)
+            // ok
+            headerView.backView.backgroundColor = .systemTeal
             headerView.generateCell(comment: comment)
             
             return headerView
@@ -742,60 +768,60 @@ extension DetailBoardViewController: UICollectionViewDelegate, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("comments ", comments.count)
-        
         if let childCommentsCount = comments[section].childComments?.count {
-            print(childCommentsCount)
+            print("section: \(section) chileComment: \(childCommentsCount)")
             return childCommentsCount
+            
         }
+        print("fail")
         return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         guard let commentCell = collectionView.dequeueReusableCell(withReuseIdentifier: "CommentCell", for: indexPath) as? CommentCollectionViewCell else {
             return UICollectionViewCell()
         }
-        
-        let childComment = comments[indexPath.section].childComments![indexPath.item]
-        print("childComment context ", childComment.context)
-        
-        DetailBoardViewModel.shared.onMoreCommentResult = { result in
-            if result {
-                // 댓글 더보기 버튼 눌렸다
-                commentCell.generateCell(comment: childComment)
-            }
+        if let childComment = self.comments[indexPath.section].childComments?[indexPath.item] {
+            print("childComment context ", childComment.context)
+            commentCell.generateCell(comment: childComment)
         }
+        
+        commentCell.backView.backgroundColor = .blue
+//        
+//        DetailBoardViewModel.shared.onMoreCommentResult = { result in
+//            if result == false {
+//                print("result false")
+//                // 더보기 x
+//                commentCell.isHidden = true
+//            }
+//            else if result == true {
+//                print("result true")
+//                // 더보기 ㅇ
+//                commentCell.isHidden = false
+//                if let childComment = self.comments[indexPath.section].childComments?[indexPath.item] {
+//                    print("childComment context ", childComment.context)
+//                    commentCell.generateCell(comment: childComment)
+//                } else {
+//                    print("fail to load childComment")
+//                }
+//            }
+//            
+//        }
         return commentCell
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let comment = comments[indexPath.section].childComments?[indexPath.item]
-        let cellHeight: CGFloat = calculateCellHeight(for: comment)
-        return CGSize(width: view.bounds.width, height: cellHeight + 100)
-    }
-    
-    private func calculateCellHeight(for comment: Comment?) -> CGFloat {
-        guard let comment = comment else {
-            return 0.0 // Return a default value or handle the case when comment is nil
+        guard let comment = comments[indexPath.section].childComments?[indexPath.item] else {
+            return CGSize(width: view.bounds.width, height: 0)
         }
+        let cellHeight = calculateCommentHeight(text: comment.context, width: collectionView.bounds.width)
+        print("comment :\(comment.context)\n", cellHeight)
         
-        // Implement your logic to calculate the cell height based on the content of the comment
-        // For example, you might use UILabel to calculate height based on the text content.
         
-        // Example:
-        print(comment.context)
-        
-        let label = UILabel()
-        label.text = comment.context
-        label.numberOfLines = 0 // Allow multiple lines
-        label.lineBreakMode = .byWordWrapping
-        let labelSize = label.sizeThatFits(CGSize(width: view.bounds.width, height: .greatestFiniteMagnitude))
-        
-        // Add any additional padding or spacing you might need
-        let padding: CGFloat = 8.0
-        return labelSize.height + padding
+        return CGSize(width: collectionView.bounds.width, height: cellHeight + 50)
     }
-    
 }
 
 struct PreView: PreviewProvider {

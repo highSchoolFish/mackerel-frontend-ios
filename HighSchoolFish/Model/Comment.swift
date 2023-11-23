@@ -8,43 +8,26 @@
 import Foundation
 import SwiftyJSON
 
+// MARK: - Comment
 struct Comment: Codable {
-    var id: String = ""
-    var isWriter: Bool = false
-    var profile: URL? = URL(string: "")
-    var name: String = ""
-    var isLike: Bool = false
-    var createdAt: String = ""
-    var context: String = ""
-    var numberOfLikes: Int  = 0
-    var childComments: [Comment]? = []
-        
-    init(commentDictionary: Dictionary<String, Any>) {
-        let commentData = commentDictionary
-        print("commentData in dictionary")
-        print(commentData)
-        self.id = commentData["id"] as! String
-        self.isWriter = commentData["isWriter"] as! Bool
-        if let profileString = commentData["profile"] as? String {
-            self.profile = URL(string: profileString)
-        } else {
-            self.profile = nil
-        }
-        self.name = commentData["name"] as! String
-        self.isLike = commentData["isLike"] as! Bool
-        self.numberOfLikes = commentData["numberOfLikes"] as! Int
-        self.createdAt = commentData["createdAt"] as! String
-        self.context = commentData["context"] as! String
-        
-        // Parse childComments if available
-        if let childCommentsData = commentData["childComments"] as? [JSON] {
-            self.childComments = childCommentsData.map {
-                Comment(commentDictionary: $0.dictionaryObject ?? [:])
-            }
-            print(childCommentsData)
-        }
-    }
-    
+    let id, createdAt: String
+    let data: CommentData
 }
 
+// MARK: - CommentData
+struct CommentData: Codable {
+    let content: [CommentContent]
+    let pageNumber, pageSize, totalPages, totalElements: Int
+}
 
+// MARK: - CommentContent
+struct CommentContent: Codable {
+    let id: String
+    let isWriter: Bool
+    let profile: URL? = URL(string: "")
+    let name: String
+    let isLike: Bool
+    let numberOfLikes: Int
+    let createdAt, context: String
+    let childComments: [CommentContent]?
+}
