@@ -24,21 +24,17 @@ class CommentHeaderReusableView: UICollectionReusableView, UICollectionViewDeleg
         print("awakeFromNib")
         // no
         self.backgroundColor = .purple
-        
-        let gesture = UITapGestureRecognizer(target: self, action: #selector(viewTap))
-        showMoreView.addGestureRecognizer(gesture)
-        self.addGestureRecognizer(gesture)
-        showMoreButton.addGestureRecognizer(gesture)
-        self.isUserInteractionEnabled = true
-        showMoreView.isUserInteractionEnabled = true
-        showMoreButton.isUserInteractionEnabled = true
+//        
+//        let gesture = UITapGestureRecognizer(target: self, action: #selector(viewTap))
+//        showMoreView.addGestureRecognizer(gesture)
+//        self.addGestureRecognizer(gesture)
+//        showMoreButton.addGestureRecognizer(gesture)
+//        self.isUserInteractionEnabled = true
+//        showMoreView.isUserInteractionEnabled = true
+//        showMoreButton.isUserInteractionEnabled = true
     }
     
-    @objc func viewTap() {
-        print("view tapped")
-        DetailBoardViewModel.shared.moreCommentButtonTapped()
-        // Handle the tap gesture
-    }
+
     
     
     func generateCell(comment: CommentContent) {

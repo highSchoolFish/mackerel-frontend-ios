@@ -26,6 +26,7 @@ class CommentCollectionViewCell: UICollectionViewCell {
     
     func generateCell(comment: CommentContent) {
         print("generateCell comment")
+        
         self.backgroundColor = .green
 
         if comment.profile == nil {

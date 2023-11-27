@@ -389,7 +389,7 @@ class DetailBoardViewController: UIViewController {
         commentCollectionView.dataSource = self
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
-        flowLayout.estimatedItemSize = CGSize(width: commentCollectionView.bounds.width, height: 100)
+//        flowLayout.estimatedItemSize = CGSize(width: commentCollectionView.bounds.width, height: 100)
         commentCollectionView.collectionViewLayout = flowLayout
         commentCollectionView.backgroundColor = .red
     }
@@ -405,7 +405,7 @@ class DetailBoardViewController: UIViewController {
         commentCollectionView.heightAnchor.constraint(equalToConstant: CGFloat(newHeight)).isActive = true
         print("dd ", commentCollectionView.frame) // Check the frame in the console
         
-        
+        commentCollectionView.setContentHuggingPriority(.required, for: .horizontal)
     }
     
     func calculateTotalHeight() -> CGFloat {
@@ -414,7 +414,7 @@ class DetailBoardViewController: UIViewController {
         // Add 100 for each cell
         for comment in comments {
             let headerHeight = calculateCommentHeight(text: comment.context, width: commentCollectionView.bounds.width) // Implement your logic to calculate cell height
-            totalHeight += headerHeight + 50
+            totalHeight += headerHeight + 100
             print(totalHeight)
             
             if let childComments = comment.childComments {
@@ -673,6 +673,11 @@ class DetailBoardViewController: UIViewController {
         print("menu button tapped")
     }
     
+    @objc func viewTap() {
+        print("view tapped")
+        DetailBoardViewModel.shared.moreCommentButtonTapped()
+        // Handle the tap gesture
+    }
 }
 
 extension UIScrollView {
@@ -714,20 +719,6 @@ extension DetailBoardViewController: UICollectionViewDelegate, UICollectionViewD
         let labelSize = label.sizeThatFits(CGSize(width: view.frame.width, height: .greatestFiniteMagnitude))
         
         return labelSize.height
-        
-        //        let maxSize = CGSize(width: width, height: .greatestFiniteMagnitude)
-        //        let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
-        //
-        //        let attributes: [NSAttributedString.Key: Any]
-        //        if let font = font {
-        //            attributes = [NSAttributedString.Key.font: font]
-        //        } else {
-        //            attributes = [:] // Use the system font
-        //        }
-        //
-        //        let rect = NSString(string: text).boundingRect(with: maxSize, options: options, attributes: attributes, context: nil)
-        
-        //        return ceil(rect.height)
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -744,11 +735,11 @@ extension DetailBoardViewController: UICollectionViewDelegate, UICollectionViewD
         
         let commentText = comment.context
         let headerHeight = calculateCommentHeight(text: commentText, width: collectionView.bounds.width)
-        // Set the calculated height for the headerview
-        // (Assuming you have a reference to your headerview)
-        
-        print("context :\(commentText)\n", headerHeight)
-        return CGSize(width: collectionView.frame.width, height: headerHeight + 80)
+        if comment.childComments == nil {
+            // childComment가 없다면
+            return CGSize(width: collectionView.frame.width, height: headerHeight + 80)
+        }
+        return CGSize(width: collectionView.frame.width, height: headerHeight + 100)
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -760,6 +751,10 @@ extension DetailBoardViewController: UICollectionViewDelegate, UICollectionViewD
             print("headerComment context ", comment.context)
             // ok
             headerView.backView.backgroundColor = .systemTeal
+            headerView.isUserInteractionEnabled = true
+            headerView.showMoreView.isUserInteractionEnabled = true
+            let gesture = UITapGestureRecognizer(target: self, action: #selector(viewTap))
+            headerView.showMoreView.addGestureRecognizer(gesture)
             headerView.generateCell(comment: comment)
             
             return headerView
@@ -769,7 +764,7 @@ extension DetailBoardViewController: UICollectionViewDelegate, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let childCommentsCount = comments[section].childComments?.count {
-            print("section: \(section) chileComment: \(childCommentsCount)")
+            print("section: \(section) childComment: \(childCommentsCount)")
             return childCommentsCount
             
         }
@@ -784,17 +779,21 @@ extension DetailBoardViewController: UICollectionViewDelegate, UICollectionViewD
         }
         if let childComment = self.comments[indexPath.section].childComments?[indexPath.item] {
             print("childComment context ", childComment.context)
+            commentCell.contextLabel.numberOfLines = 0
+            commentCell.contextLabel.lineBreakMode = .byWordWrapping
             commentCell.generateCell(comment: childComment)
         }
-        
-        commentCell.backView.backgroundColor = .blue
-//        
+//        commentCell.contextLabel.numberOfLines = 0
+//        commentCell.contextLabel.lineBreakMode = .byWordWrapping
+//        commentCell.backView.backgroundColor = .blue
+
+//
 //        DetailBoardViewModel.shared.onMoreCommentResult = { result in
 //            if result == false {
 //                print("result false")
 //                // 더보기 x
 //                commentCell.isHidden = true
-//            }
+//           \
 //            else if result == true {
 //                print("result true")
 //                // 더보기 ㅇ
@@ -820,7 +819,9 @@ extension DetailBoardViewController: UICollectionViewDelegate, UICollectionViewD
         print("comment :\(comment.context)\n", cellHeight)
         
         
-        return CGSize(width: collectionView.bounds.width, height: cellHeight + 50)
+        print("childcell width bounds \(collectionView.bounds.width)")
+        print("childcell width frame \(collectionView.frame.width)")
+        return CGSize(width: collectionView.bounds.width, height: cellHeight + 80)
     }
 }
 
