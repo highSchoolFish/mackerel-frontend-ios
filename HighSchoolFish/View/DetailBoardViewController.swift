@@ -9,7 +9,7 @@ import UIKit
 import SwiftUI
 import SafeAreaBrush
 
-class DetailBoardViewController: UIViewController {
+class DetailBoardViewController: UIViewController, TappedLikeButtonDelegate {
     
     private lazy var navigationBar: UINavigationBar = {
         let naviBar = UINavigationBar()
@@ -72,8 +72,7 @@ class DetailBoardViewController: UIViewController {
         view.addSubview(recommandCountView)
         view.addSubview(viewsCountView)
         view.addSubview(countLineView)
-        view.addSubview(commentCollectionView)
-        view.addSubview(commentView)
+        view.addSubview(commentTableView)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -144,16 +143,9 @@ class DetailBoardViewController: UIViewController {
     private lazy var titleLineView: UIView = {
         let view = UIView()
         view.layer.borderWidth = 1
-        view.layer.borderColor = UIColor(named: "lineGray")!.cgColor
+        view.layer.borderColor = UIColor(named: "blue")!.cgColor
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
-    }()
-    
-    private lazy var textViewStackView: UIStackView = {
-        let stView = UIStackView()
-        stView.addArrangedSubview(contextTextView)
-        stView.translatesAutoresizingMaskIntoConstraints = false
-        return stView
     }()
     
     private lazy var contextTextView: UITextView = {
@@ -162,7 +154,8 @@ class DetailBoardViewController: UIViewController {
         textView.isScrollEnabled = false
         textView.font = UIFont.systemFont(ofSize: 13)
         textView.backgroundColor = UIColor(named: "backgroundColor")
-        textView.text = "hello\nooo"
+        textView.text = "너는 항상 빛에 반짝일 테니까 멋진 말들을 전하지 못하고 아무도 관심 없는 그림이 되겠지만 달콤한 색감은 감추지 못해 터지고 있어너는 항상 빛에 반짝일 테니까 멋진 말들을 전하지 못하고 아무도 관심 없는 그림이 되겠지만 달콤한 색감은 감추지 못해 터지고 있어너는 항상 빛에 반짝일 테니까 멋진 말들을 전하지 못하고 아무도 관심 없는 그림이 되겠지만 달콤한 색감은 감추지 못해 터지고 있어너는 항상 빛에 반짝일 테니까 멋진 말들을 전하지 못하고 아무도 관심 없는 그림이 되겠지만 달콤한 색감은 감추지 못해 터지고 있어너는 항상 빛에 반짝일 테니까 멋진 말들을 전하지 못하고 아무도 관심 없는 그림이 되겠지만 달콤한 색감은 감추지 못해 터지고 있어"
+        textView.showsVerticalScrollIndicator = false
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
     }()
@@ -262,28 +255,23 @@ class DetailBoardViewController: UIViewController {
     private lazy var countLineView: UIView = {
         let view = UIView()
         view.layer.borderWidth = 1
-        view.layer.borderColor = UIColor(named: "lineGray")!.cgColor
+        view.layer.borderColor = UIColor(named: "red")!.cgColor
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    private lazy var commentView: UIStackView = {
-        let stView = UIStackView()
-        stView.backgroundColor = .yellow
-        stView.translatesAutoresizingMaskIntoConstraints = false
-        return stView
+    private lazy var commentTableView: UITableView = {
+        var tableView = UITableView(frame: CGRect.zero, style: .grouped)
+        //        tableView.backgroundColor = .brown
+        tableView.register(UINib(nibName: "CommentTableHeaderView", bundle: nil), forHeaderFooterViewReuseIdentifier: "CommentTableHeaderView")
+        tableView.register(UINib(nibName: "CommentTableViewCell", bundle: nil), forCellReuseIdentifier: "CommentTableViewCell")
+        tableView.isScrollEnabled = false
+        tableView.sectionFooterHeight = 0
+        
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        return tableView
     }()
     
-    private lazy var commentCollectionView: UICollectionView = {
-        var collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        //        collectionView.register(CommentHeaderReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "CommentHeader")
-        collectionView.register(UINib(nibName: "CommentHeaderReusableView", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "CommentHeader")
-        
-        collectionView.register(UINib(nibName: "CommentCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "CommentCell")
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.backgroundColor = .blue
-        return collectionView
-    }()
     
     private lazy var bottomView: UIView = {
         let view = UIView()
@@ -296,7 +284,9 @@ class DetailBoardViewController: UIViewController {
     private lazy var commentLineView: UIView = {
         let view = UIView()
         view.layer.borderWidth = 1
-        view.layer.borderColor = UIColor(named: "lineGray")!.cgColor
+        //        view.layer.borderColor = UIColor(named: "lineGray")!.cgColor
+        view.layer.borderColor = UIColor(named: "red")!.cgColor
+        
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -353,7 +343,7 @@ class DetailBoardViewController: UIViewController {
     var images: [UIImage] = []
     var photos: [URL] = []
     var comments: [CommentContent] = []
-    var total = 0
+    var totalheight: CGFloat = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -368,7 +358,13 @@ class DetailBoardViewController: UIViewController {
             print("comment result ", result)
             print("comment result.data.content ", result.data.content)
             self.setComment(comment: result)
+            self.commentTableView.reloadData()
         }
+        self.commentTableView.reloadData()
+        
+        //        self.view.setNeedsLayout()
+        //        self.view.layoutIfNeeded()
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -385,27 +381,17 @@ class DetailBoardViewController: UIViewController {
         view.addSubview(bottomView)
         view.addSubview(uploadCommentView)
         commentTextField.delegate = self
-        commentCollectionView.delegate = self
-        commentCollectionView.dataSource = self
-        let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.scrollDirection = .vertical
-//        flowLayout.estimatedItemSize = CGSize(width: commentCollectionView.bounds.width, height: 100)
-        commentCollectionView.collectionViewLayout = flowLayout
-        commentCollectionView.backgroundColor = .red
+        
+        commentTableView.delegate = self
+        commentTableView.dataSource = self
+        
     }
     
     private func setComment(comment: Comment) {
         self.comments = comment.data.content
-        commentCollectionView.reloadData()
-        commentCollectionView.isHidden = comments.isEmpty
+        print("tableview height : \(calculateTotalHeight())")
+        commentTableView.heightAnchor.constraint(equalToConstant: CGFloat(calculateTotalHeight())).isActive = true
         
-        print(commentCollectionView.isHidden) // Check the output in the console
-        print(commentCollectionView.frame) // Check the frame in the console
-        let newHeight = calculateTotalHeight()
-        commentCollectionView.heightAnchor.constraint(equalToConstant: CGFloat(newHeight)).isActive = true
-        print("dd ", commentCollectionView.frame) // Check the frame in the console
-        
-        commentCollectionView.setContentHuggingPriority(.required, for: .horizontal)
     }
     
     func calculateTotalHeight() -> CGFloat {
@@ -413,14 +399,14 @@ class DetailBoardViewController: UIViewController {
         
         // Add 100 for each cell
         for comment in comments {
-            let headerHeight = calculateCommentHeight(text: comment.context, width: commentCollectionView.bounds.width) // Implement your logic to calculate cell height
-            totalHeight += headerHeight + 100
+            let headerHeight = calculateCommentHeight(text: comment.context, width: commentTableView.bounds.width)
+            totalHeight += headerHeight + 120
             print(totalHeight)
             
             if let childComments = comment.childComments {
                 for childComment in childComments {
-                    let cellHeight = calculateCommentHeight(text: childComment.context, width: commentCollectionView.bounds.width) // Implement your logic to calculate cell height
-                    totalHeight += cellHeight + 50
+                    let cellHeight = calculateCommentHeight(text: childComment.context, width: commentTableView.bounds.width)
+                    totalHeight += cellHeight + 90
                     print(totalHeight)
                 }
             }
@@ -428,6 +414,21 @@ class DetailBoardViewController: UIViewController {
         }
         print(totalHeight)
         return totalHeight
+    }
+    
+    func calculateCommentHeight(text: String, width: CGFloat, font: UIFont? = nil) -> CGFloat {
+        let label = UILabel()
+        label.text = text
+        label.numberOfLines = 0 // Allow multiple lines
+        label.lineBreakMode = .byWordWrapping
+        
+        let labelSize = label.sizeThatFits(CGSize(width: view.frame.width, height: .greatestFiniteMagnitude))
+        return labelSize.height
+    }
+    
+    func likeButtonTapped() {
+        // --ToDo--
+        print("테스트 제발 성공했으면 좋겠다!")
     }
     
     private func setBoard(board: Boards) {
@@ -546,7 +547,9 @@ class DetailBoardViewController: UIViewController {
             }
         }
         else {
+            print("photosView.height 0")
             self.photosView.heightAnchor.constraint(equalToConstant: 0).isActive = true
+            
         }
     }
     
@@ -569,7 +572,7 @@ class DetailBoardViewController: UIViewController {
             
             contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 0),
             contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: 0),
-            contentView.topAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 0),
+            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 0),
             contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 0),
             contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
             
@@ -581,9 +584,6 @@ class DetailBoardViewController: UIViewController {
             profileImageView.heightAnchor.constraint(equalToConstant: 50),
             profileImageView.widthAnchor.constraint(equalTo: profileImageView.heightAnchor, multiplier: 1.0),
             profileImageView.leadingAnchor.constraint(equalTo: profileHStackView.leadingAnchor, constant: 0),
-            //            profileImageView.centerYAnchor.constraint(equalTo: profileHStackView.centerYAnchor, constant: 0),
-            
-            //            profileVStackView.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor, constant: 0),
             profileVStackView.trailingAnchor.constraint(equalTo: profileHStackView.trailingAnchor, constant: 0),
             
             profileLineView.topAnchor.constraint(equalTo: profileHStackView.bottomAnchor, constant: 8),
@@ -608,6 +608,7 @@ class DetailBoardViewController: UIViewController {
             photosView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             photosView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             photosView.topAnchor.constraint(equalTo: contextTextView.bottomAnchor, constant: 20),
+            photosView.heightAnchor.constraint(equalToConstant: 200),
             
             imageLineView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
             imageLineView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0),
@@ -631,9 +632,10 @@ class DetailBoardViewController: UIViewController {
             countLineView.topAnchor.constraint(equalTo: commentCountView.bottomAnchor, constant: 8),
             countLineView.heightAnchor.constraint(equalToConstant: 1),
             
-            commentCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
-            commentCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0),
-            commentCollectionView.topAnchor.constraint(equalTo: countLineView.bottomAnchor, constant: 20),
+            commentTableView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            commentTableView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            commentTableView.topAnchor.constraint(equalTo: countLineView.bottomAnchor, constant: 20),
+            commentTableView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0),
             
             bottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20),
             bottomView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
@@ -660,8 +662,8 @@ class DetailBoardViewController: UIViewController {
             
             commentLineView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
             commentLineView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-            commentLineView.heightAnchor.constraint(equalToConstant: 1)
-            
+            commentLineView.heightAnchor.constraint(equalToConstant: 1),
+            commentLineView.bottomAnchor.constraint(equalTo: bottomView.topAnchor, constant: 5)
         ])
     }
     
@@ -673,11 +675,24 @@ class DetailBoardViewController: UIViewController {
         print("menu button tapped")
     }
     
-    @objc func viewTap() {
-        print("view tapped")
-        DetailBoardViewModel.shared.moreCommentButtonTapped()
-        // Handle the tap gesture
+    //    @objc func likeButtonTapped() {
+    //        print("Like button tapped")
+    //        // 추가적인 로직 처리
+    //    }
+    
+    @objc func headerViewTapped() {
+        print("headerViewTapped")
+        // 추가적인 로직 처리
     }
+    
+    @objc func headerLikeButtonTapped() {
+        print("headerLikeButtonTapped")
+        // 추가적인 로직 처리
+    }
+}
+
+extension DetailBoardViewController: UITextFieldDelegate {
+    
 }
 
 extension UIScrollView {
@@ -702,127 +717,155 @@ extension UIScrollView {
     }
 }
 
-extension DetailBoardViewController: UITextFieldDelegate {
-    
-}
+// for test
+//extension DetailBoardViewController: UITableViewDelegate, UITableViewDataSource {
+//    func numberOfSections(in tableView: UITableView) -> Int {
+//        print("numberOfSections")
+//        return 4
+//    }
+//
+//    func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
+//        return 150
+//    }
+//
+//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//        return UITableView.automaticDimension
+//    }
+//
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        print("viewForHeaderInSection")
+//
+//        guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "CommentTableHeaderView") as? CommentTableHeaderView else {
+//            // Header View를 dequeue하지 못한 경우 또는 캐스팅 실패 시 빈 UIView 반환
+//            return UIView()
+//        }
+//
+//        return headerView
+//    }
+//
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        print("numberOfRowsInSection")
+//
+//        return 2
+//    }
+//
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        print("cellForRowAt")
+//
+//        guard let commentCell = tableView.dequeueReusableCell(withIdentifier: "CommentTableViewCell", for: indexPath) as? CommentTableViewCell else { return UITableViewCell() }
+//
+//        return commentCell
+//
+//    }
+//
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//
+//        return UITableView.automaticDimension
+//    }
+//
+//    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return UITableView.automaticDimension
+//    }
+//}
 
-extension DetailBoardViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    
-    func calculateCommentHeight(text: String, width: CGFloat, font: UIFont? = nil) -> CGFloat {
-        
-        
-        let label = UILabel()
-        label.text = text
-        label.numberOfLines = 0 // Allow multiple lines
-        label.lineBreakMode = .byWordWrapping
-        
-        let labelSize = label.sizeThatFits(CGSize(width: view.frame.width, height: .greatestFiniteMagnitude))
-        
-        return labelSize.height
-    }
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        
-        DetailBoardViewModel.shared.onCommentsCount = { result in
-            print("onCommentsCount \(result)")
-            return result
-        }
+extension DetailBoardViewController: UITableViewDelegate, UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        print("numberOfSections")
         return comments.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        print("heightForHeaderInSection")
         let comment = comments[section]
-        
         let commentText = comment.context
-        let headerHeight = calculateCommentHeight(text: commentText, width: collectionView.bounds.width)
-        if comment.childComments == nil {
-            // childComment가 없다면
-            return CGSize(width: collectionView.frame.width, height: headerHeight + 80)
+        
+        let label = UILabel()
+        label.text = commentText
+        label.numberOfLines = 0
+        let labelSize = label.sizeThatFits(CGSize(width: view.frame.width, height: .greatestFiniteMagnitude))
+        print("labelsize : \(labelSize.height)")
+        if comment.childComments!.count >= 1 {
+            print("childComment 1개 이상")
+            return labelSize.height + 120
         }
-        return CGSize(width: collectionView.frame.width, height: headerHeight + 100)
+        print("childComment 0개")
+        return labelSize.height + 100
     }
     
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        if kind == UICollectionView.elementKindSectionHeader {
-            guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "CommentHeader", for: indexPath) as? CommentHeaderReusableView else {
-                fatalError("Unable to dequeue header view")
-            }
-            let comment = comments[indexPath.section]
-            print("headerComment context ", comment.context)
-            // ok
-            headerView.backView.backgroundColor = .systemTeal
-            headerView.isUserInteractionEnabled = true
-            headerView.showMoreView.isUserInteractionEnabled = true
-            let gesture = UITapGestureRecognizer(target: self, action: #selector(viewTap))
-            headerView.showMoreView.addGestureRecognizer(gesture)
-            headerView.generateCell(comment: comment)
-            
-            return headerView
-        }
-        return UICollectionReusableView()
+    func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
+        return UITableView.automaticDimension
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        print("viewForHeaderInSection")
+        
+        guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "CommentTableHeaderView") as? CommentTableHeaderView else {
+            // Header View를 dequeue하지 못한 경우 또는 캐스팅 실패 시 빈 UIView 반환
+            return UIView()
+        }
+        
+        let comment = comments[section]
+        print("comment.text \(comment.context)")
+        if comment.childComments!.count >= 1 {
+            headerView.showMoreView.isHidden = false
+            headerView.showMoreView.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        }
+        else {
+            headerView.showMoreView.isHidden = true
+        }
+        headerView.isUserInteractionEnabled = true
+        let gesture = UIGestureRecognizer(target: self, action: #selector(headerViewTapped))
+        headerView.showMoreView.addGestureRecognizer(gesture)
+        headerView.generateCell(comment: comment)
+        headerView.likeButton.addTarget(self, action: #selector(headerLikeButtonTapped), for: .touchUpInside)
+        
+        return headerView
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("numberOfRowsInSection")
         if let childCommentsCount = comments[section].childComments?.count {
             print("section: \(section) childComment: \(childCommentsCount)")
             return childCommentsCount
-            
         }
         print("fail")
         return 0
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        print("cellForRowAt")
         
-        guard let commentCell = collectionView.dequeueReusableCell(withReuseIdentifier: "CommentCell", for: indexPath) as? CommentCollectionViewCell else {
-            return UICollectionViewCell()
-        }
+        guard let commentCell = tableView.dequeueReusableCell(withIdentifier: "CommentTableViewCell", for: indexPath) as? CommentTableViewCell else { return UITableViewCell() }
+        
         if let childComment = self.comments[indexPath.section].childComments?[indexPath.item] {
             print("childComment context ", childComment.context)
-            commentCell.contextLabel.numberOfLines = 0
-            commentCell.contextLabel.lineBreakMode = .byWordWrapping
+            //            commentCell.likeButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
+            commentCell.delegate = self
             commentCell.generateCell(comment: childComment)
+            
         }
-//        commentCell.contextLabel.numberOfLines = 0
-//        commentCell.contextLabel.lineBreakMode = .byWordWrapping
-//        commentCell.backView.backgroundColor = .blue
-
-//
-//        DetailBoardViewModel.shared.onMoreCommentResult = { result in
-//            if result == false {
-//                print("result false")
-//                // 더보기 x
-//                commentCell.isHidden = true
-//           \
-//            else if result == true {
-//                print("result true")
-//                // 더보기 ㅇ
-//                commentCell.isHidden = false
-//                if let childComment = self.comments[indexPath.section].childComments?[indexPath.item] {
-//                    print("childComment context ", childComment.context)
-//                    commentCell.generateCell(comment: childComment)
-//                } else {
-//                    print("fail to load childComment")
-//                }
-//            }
-//            
-//        }
+        //
         return commentCell
         
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        guard let comment = comments[indexPath.section].childComments?[indexPath.item] else {
-            return CGSize(width: view.bounds.width, height: 0)
-        }
-        let cellHeight = calculateCommentHeight(text: comment.context, width: collectionView.bounds.width)
-        print("comment :\(comment.context)\n", cellHeight)
-        
-        
-        print("childcell width bounds \(collectionView.bounds.width)")
-        print("childcell width frame \(collectionView.frame.width)")
-        return CGSize(width: collectionView.bounds.width, height: cellHeight + 80)
-    }
+    //    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    //                let label = UILabel()
+    //
+    //                if let childComment = self.comments[indexPath.section].childComments?[indexPath.item] {
+    //                    label.text = childComment.context
+    //                }
+    //                label.numberOfLines = 0
+    //                let labelSize = label.sizeThatFits(CGSize(width: view.frame.width, height: .greatestFiniteMagnitude))
+    //                print("labelsize : \(labelSize.height)")
+    //
+    //                return labelSize.height + 80
+    ////        return UITableView.automaticDimension
+    //    }
+    //
+    //    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+    //        return UITableView.automaticDimension
+    //    }
 }
 
 struct PreView: PreviewProvider {

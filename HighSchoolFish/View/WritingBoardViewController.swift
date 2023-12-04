@@ -546,8 +546,7 @@ extension WritingBoardViewController: UICollectionViewDelegate, UICollectionView
         
         print(images.count)
         print(selectedAssets.count)
-        
-        
+
         collectionView.reloadData()
     }
     

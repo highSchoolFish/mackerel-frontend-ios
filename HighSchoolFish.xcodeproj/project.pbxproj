@@ -10,8 +10,6 @@
 		071DD3A42ADFA94B005151C9 /* PopularTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 071DD3A32ADFA94B005151C9 /* PopularTableView.xib */; };
 		071F8F292AFF78760011DBBC /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071F8F282AFF78760011DBBC /* Comment.swift */; };
 		071F8F2D2AFF95EF0011DBBC /* CommentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071F8F2C2AFF95EF0011DBBC /* CommentService.swift */; };
-		071F8F302AFF9EC00011DBBC /* CommentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071F8F2E2AFF9EC00011DBBC /* CommentCollectionViewCell.swift */; };
-		071F8F312AFF9EC00011DBBC /* CommentCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 071F8F2F2AFF9EC00011DBBC /* CommentCollectionViewCell.xib */; };
 		072FFADC2AB971E000A07FA7 /* MySchoolCommunityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 072FFADB2AB971E000A07FA7 /* MySchoolCommunityViewController.swift */; };
 		072FFADE2AB9720800A07FA7 /* SchoolDistrictCommunityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 072FFADD2AB9720800A07FA7 /* SchoolDistrictCommunityViewController.swift */; };
 		072FFAE02AB9722100A07FA7 /* NationwideCommunityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 072FFADF2AB9722100A07FA7 /* NationwideCommunityViewController.swift */; };
@@ -28,10 +26,6 @@
 		075FA4A72AA0701C002471C7 /* FindService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075FA4A62AA0701B002471C7 /* FindService.swift */; };
 		075FA4A92AA0764B002471C7 /* FindPwResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075FA4A82AA0764B002471C7 /* FindPwResponse.swift */; };
 		075FA4AB2AA70199002471C7 /* ChangePwRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075FA4AA2AA70199002471C7 /* ChangePwRequest.swift */; };
-		076E74B02AE7BA50003ABEEF /* CommunityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 076E74AE2AE7BA50003ABEEF /* CommunityTableViewCell.swift */; };
-		076E74B12AE7BA50003ABEEF /* CommunityTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 076E74AF2AE7BA50003ABEEF /* CommunityTableViewCell.xib */; };
-		0782BA5B2B03509E00B896CC /* CommentHeaderReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0782BA592B03509E00B896CC /* CommentHeaderReusableView.swift */; };
-		0782BA5C2B03509E00B896CC /* CommentHeaderReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0782BA5A2B03509E00B896CC /* CommentHeaderReusableView.xib */; };
 		0787ADE92A3C429B00DEFE2A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0787ADE82A3C429B00DEFE2A /* AppDelegate.swift */; };
 		0787ADEB2A3C429B00DEFE2A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0787ADEA2A3C429B00DEFE2A /* SceneDelegate.swift */; };
 		0787ADED2A3C429B00DEFE2A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0787ADEC2A3C429B00DEFE2A /* LoginViewController.swift */; };
@@ -69,6 +63,12 @@
 		07A5A7152AEA3AB000245041 /* BoardImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A5A7132AEA3AB000245041 /* BoardImageCollectionViewCell.swift */; };
 		07A5A7162AEA3AB000245041 /* BoardImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07A5A7142AEA3AB000245041 /* BoardImageCollectionViewCell.xib */; };
 		07A5A7182AEA529A00245041 /* CategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A5A7172AEA529A00245041 /* CategoryViewModel.swift */; };
+		07B5ECE72B15FE7F000B9157 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B5ECE52B15FE7F000B9157 /* CommentTableViewCell.swift */; };
+		07B5ECE82B15FE7F000B9157 /* CommentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07B5ECE62B15FE7F000B9157 /* CommentTableViewCell.xib */; };
+		07B5ECEA2B16012D000B9157 /* CommentTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07B5ECE92B16012D000B9157 /* CommentTableHeaderView.xib */; };
+		07B5ECEC2B16F57C000B9157 /* CommentTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B5ECEB2B16F57C000B9157 /* CommentTableHeaderView.swift */; };
+		07B5ECEE2B1714DB000B9157 /* CommunityTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07B5ECED2B1714DB000B9157 /* CommunityTableViewCell.xib */; };
+		07B5ECF02B1714E0000B9157 /* CommunityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B5ECEF2B1714E0000B9157 /* CommunityTableViewCell.swift */; };
 		07C8CEB52A8CA45A00FBB750 /* School.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C8CEB42A8CA45A00FBB750 /* School.swift */; };
 		07C8CEB72A8CB56600FBB750 /* SchoolViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07C8CEB62A8CB56600FBB750 /* SchoolViewCell.xib */; };
 		07C8CEB92A8CB63000FBB750 /* SchoolViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C8CEB82A8CB63000FBB750 /* SchoolViewCell.swift */; };
@@ -91,8 +91,6 @@
 		071DD3A32ADFA94B005151C9 /* PopularTableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PopularTableView.xib; sourceTree = "<group>"; };
 		071F8F282AFF78760011DBBC /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		071F8F2C2AFF95EF0011DBBC /* CommentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentService.swift; sourceTree = "<group>"; };
-		071F8F2E2AFF9EC00011DBBC /* CommentCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCollectionViewCell.swift; sourceTree = "<group>"; };
-		071F8F2F2AFF9EC00011DBBC /* CommentCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentCollectionViewCell.xib; sourceTree = "<group>"; };
 		072FFADB2AB971E000A07FA7 /* MySchoolCommunityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySchoolCommunityViewController.swift; sourceTree = "<group>"; };
 		072FFADD2AB9720800A07FA7 /* SchoolDistrictCommunityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolDistrictCommunityViewController.swift; sourceTree = "<group>"; };
 		072FFADF2AB9722100A07FA7 /* NationwideCommunityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NationwideCommunityViewController.swift; sourceTree = "<group>"; };
@@ -109,10 +107,6 @@
 		075FA4A62AA0701B002471C7 /* FindService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindService.swift; sourceTree = "<group>"; };
 		075FA4A82AA0764B002471C7 /* FindPwResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindPwResponse.swift; sourceTree = "<group>"; };
 		075FA4AA2AA70199002471C7 /* ChangePwRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePwRequest.swift; sourceTree = "<group>"; };
-		076E74AE2AE7BA50003ABEEF /* CommunityTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityTableViewCell.swift; sourceTree = "<group>"; };
-		076E74AF2AE7BA50003ABEEF /* CommunityTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommunityTableViewCell.xib; sourceTree = "<group>"; };
-		0782BA592B03509E00B896CC /* CommentHeaderReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentHeaderReusableView.swift; sourceTree = "<group>"; };
-		0782BA5A2B03509E00B896CC /* CommentHeaderReusableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentHeaderReusableView.xib; sourceTree = "<group>"; };
 		0787ADE52A3C429B00DEFE2A /* HighSchoolFish.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HighSchoolFish.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0787ADE82A3C429B00DEFE2A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0787ADEA2A3C429B00DEFE2A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -152,6 +146,12 @@
 		07A5A7132AEA3AB000245041 /* BoardImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		07A5A7142AEA3AB000245041 /* BoardImageCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BoardImageCollectionViewCell.xib; sourceTree = "<group>"; };
 		07A5A7172AEA529A00245041 /* CategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewModel.swift; sourceTree = "<group>"; };
+		07B5ECE52B15FE7F000B9157 /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
+		07B5ECE62B15FE7F000B9157 /* CommentTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentTableViewCell.xib; sourceTree = "<group>"; };
+		07B5ECE92B16012D000B9157 /* CommentTableHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentTableHeaderView.xib; sourceTree = "<group>"; };
+		07B5ECEB2B16F57C000B9157 /* CommentTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableHeaderView.swift; sourceTree = "<group>"; };
+		07B5ECED2B1714DB000B9157 /* CommunityTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CommunityTableViewCell.xib; path = "../../../../mackerel-frontend-ios/HighSchoolFish/HighSchoolFish/Views/CommunityTableViewCell.xib"; sourceTree = "<group>"; };
+		07B5ECEF2B1714E0000B9157 /* CommunityTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommunityTableViewCell.swift; path = "../../../../mackerel-frontend-ios/HighSchoolFish/HighSchoolFish/Views/CommunityTableViewCell.swift"; sourceTree = "<group>"; };
 		07C8CEB42A8CA45A00FBB750 /* School.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = School.swift; sourceTree = "<group>"; };
 		07C8CEB62A8CB56600FBB750 /* SchoolViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SchoolViewCell.xib; sourceTree = "<group>"; };
 		07C8CEB82A8CB63000FBB750 /* SchoolViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolViewCell.swift; sourceTree = "<group>"; };
@@ -306,15 +306,15 @@
 				07D7E0F72ADFAEE50080F31F /* PopularTableView.swift */,
 				07D7E0F92ADFDA2D0080F31F /* CategoryView.xib */,
 				07D7E0FB2ADFDA450080F31F /* CategoryView.swift */,
-				076E74AE2AE7BA50003ABEEF /* CommunityTableViewCell.swift */,
-				076E74AF2AE7BA50003ABEEF /* CommunityTableViewCell.xib */,
 				07A5A7132AEA3AB000245041 /* BoardImageCollectionViewCell.swift */,
 				07A5A7142AEA3AB000245041 /* BoardImageCollectionViewCell.xib */,
 				073CC30A2AF37E8E00EDD5AA /* SplashViewController.swift */,
-				071F8F2E2AFF9EC00011DBBC /* CommentCollectionViewCell.swift */,
-				071F8F2F2AFF9EC00011DBBC /* CommentCollectionViewCell.xib */,
-				0782BA592B03509E00B896CC /* CommentHeaderReusableView.swift */,
-				0782BA5A2B03509E00B896CC /* CommentHeaderReusableView.xib */,
+				07B5ECED2B1714DB000B9157 /* CommunityTableViewCell.xib */,
+				07B5ECEF2B1714E0000B9157 /* CommunityTableViewCell.swift */,
+				07B5ECE52B15FE7F000B9157 /* CommentTableViewCell.swift */,
+				07B5ECE62B15FE7F000B9157 /* CommentTableViewCell.xib */,
+				07B5ECE92B16012D000B9157 /* CommentTableHeaderView.xib */,
+				07B5ECEB2B16F57C000B9157 /* CommentTableHeaderView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -398,14 +398,14 @@
 			files = (
 				07D7E0FA2ADFDA2D0080F31F /* CategoryView.xib in Resources */,
 				07A5A7162AEA3AB000245041 /* BoardImageCollectionViewCell.xib in Resources */,
-				071F8F312AFF9EC00011DBBC /* CommentCollectionViewCell.xib in Resources */,
 				07C8CEB72A8CB56600FBB750 /* SchoolViewCell.xib in Resources */,
-				0782BA5C2B03509E00B896CC /* CommentHeaderReusableView.xib in Resources */,
 				071DD3A42ADFA94B005151C9 /* PopularTableView.xib in Resources */,
-				076E74B12AE7BA50003ABEEF /* CommunityTableViewCell.xib in Resources */,
+				07B5ECEA2B16012D000B9157 /* CommentTableHeaderView.xib in Resources */,
 				0787ADF52A3C429B00DEFE2A /* LaunchScreen.storyboard in Resources */,
+				07B5ECE82B15FE7F000B9157 /* CommentTableViewCell.xib in Resources */,
 				0787ADF22A3C429B00DEFE2A /* Assets.xcassets in Resources */,
 				0787ADF02A3C429B00DEFE2A /* Main.storyboard in Resources */,
+				07B5ECEE2B1714DB000B9157 /* CommunityTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -471,9 +471,9 @@
 				072FFADE2AB9720800A07FA7 /* SchoolDistrictCommunityViewController.swift in Sources */,
 				0787ADEB2A3C429B00DEFE2A /* SceneDelegate.swift in Sources */,
 				075FA47F2A8F3AEA002471C7 /* RegisterRequest.swift in Sources */,
+				07B5ECEC2B16F57C000B9157 /* CommentTableHeaderView.swift in Sources */,
 				073CC3092AF22D3A00EDD5AA /* Boards.swift in Sources */,
 				07C8CEBB2A8CBDE800FBB750 /* CertificationService.swift in Sources */,
-				071F8F302AFF9EC00011DBBC /* CommentCollectionViewCell.swift in Sources */,
 				07C8CEBF2A8CBE2900FBB750 /* ConfirmCertificationNumberRequest.swift in Sources */,
 				0787AE0D2A3EF0AA00DEFE2A /* TabBarViewController.swift in Sources */,
 				0787AE0F2A3EF13C00DEFE2A /* MainViewModel.swift in Sources */,
@@ -481,12 +481,11 @@
 				07D7E0FC2ADFDA450080F31F /* CategoryView.swift in Sources */,
 				0787AE172A40371800DEFE2A /* MyPageTabViewController.swift in Sources */,
 				07C8CEC12A8CBE5A00FBB750 /* ConfirmCertificationNumberResponse.swift in Sources */,
+				07B5ECE72B15FE7F000B9157 /* CommentTableViewCell.swift in Sources */,
 				0787AE052A3EE44100DEFE2A /* LoginViewModel.swift in Sources */,
 				07C8CEBD2A8CBE1000FBB750 /* SendCertificationNumberRequest.swift in Sources */,
 				0754607C2A7BB633004539F1 /* RegisterService.swift in Sources */,
 				0787AE2F2A456EC100DEFE2A /* WebViewController.swift in Sources */,
-				0782BA5B2B03509E00B896CC /* CommentHeaderReusableView.swift in Sources */,
-				076E74B02AE7BA50003ABEEF /* CommunityTableViewCell.swift in Sources */,
 				0787AE3B2A652FC100DEFE2A /* RegisterPageData.swift in Sources */,
 				0787AE192A456E3F00DEFE2A /* FindIDViewController.swift in Sources */,
 				071F8F292AFF78760011DBBC /* Comment.swift in Sources */,
@@ -514,6 +513,7 @@
 				075FA4A92AA0764B002471C7 /* FindPwResponse.swift in Sources */,
 				07C8CEB92A8CB63000FBB750 /* SchoolViewCell.swift in Sources */,
 				072FFAE02AB9722100A07FA7 /* NationwideCommunityViewController.swift in Sources */,
+				07B5ECF02B1714E0000B9157 /* CommunityTableViewCell.swift in Sources */,
 				075FA4A52AA06FAB002471C7 /* FindPwRequest.swift in Sources */,
 				0787AE092A3EE96700DEFE2A /* LoginService.swift in Sources */,
 				0787AE132A40368A00DEFE2A /* MessageTabViewController.swift in Sources */,

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 class CommentTableHeaderView: UITableViewHeaderFooterView {
     @IBOutlet weak var profileImage: UIImageView!
@@ -20,4 +21,33 @@ class CommentTableHeaderView: UITableViewHeaderFooterView {
     override func awakeFromNib() {
         
     }
+    
+    @IBAction func headerLikeButtonTapped() {
+        print("likeButtonTapped define on headerViewCustomClass")
+    }
+    
+    func generateCell(comment: CommentContent) {
+        print("generateCell comment")
+        
+        if comment.profile == nil {
+            profileImage.image = UIImage(named: "profileIcon")
+        }
+        nameLabel.text = comment.name
+        timeLabel.text = comment.createdAt
+        contextLabel.text = comment.context
+        likeCountLabel.text = "\(comment.numberOfLikes)"
+//        if comment.isLike == false {
+//            // 좋아요 안눌려있음
+//            likeButton.tintColor = UIColor(named: "gray")
+//        }
+//        else {
+//            likeButton.tintColor = UIColor(named: "red")
+//        }
+        
+//        if comment.isWriter {
+//            // 본인이 단 댓글
+//        }
+    }
+    
+    
 }
