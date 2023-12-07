@@ -14,11 +14,17 @@ import SwiftyJSON
 class DetailBoardViewModel {
     static let shared = DetailBoardViewModel()
     
+    private var commentString: String = ""
+    private var isAnonymous: Bool = false
+    
     var getBoardComplete: ((Bool) -> Void)?
     var onBoardComplete: ((Boards) -> Void)?
     var onCommentsResult: ((Comment) -> Void)?
     var onMoreCommentResult: ((Bool) -> Void)?
     var onCommentsCount: ((Int) -> Int)?
+    var onCommentCursor: ((Bool) -> Void)?
+    var checkCommentTextField: ((Bool) -> Void)?
+
     private var boardIdString: String = ""
     
     // table cell 선택시 setBoardId func 호출
@@ -28,6 +34,14 @@ class DetailBoardViewModel {
             getDetailBoard()
             getComment()
         }
+    }
+    
+    func setCommentString(_ commentString: String) {
+        self.commentString = commentString
+    }
+    
+    func setAnonymous(_ isAnonymous: Bool) {
+        self.isAnonymous = isAnonymous
     }
     
     func getDetailBoard() {
@@ -99,11 +113,38 @@ class DetailBoardViewModel {
         }
     }
     
+    func commentWriteButtonTapped() {
+        self.onCommentCursor?(true)
+    }
+    
     func moreCommentButtonTapped(){
         self.onMoreCommentResult?(true)
         print("more comment button tapped in VM")
     }
     
+    func commentUploadButtonTapped(parentCommentId: String?) {
+        // upload button tapped
+        
+        let provider = MoyaProvider<CommentService>(session: Session(interceptor: AuthManager()))
+        
+        provider.request(CommentService.uploadComment(boardId: self.boardIdString, parentCommentId: parentCommentId, context: self.commentString, isAnonymous: self.isAnonymous)) { result in
+            switch result {
+            case let .success(response):
+                print("통신성공")
+                let data = response
+                print("response \(data)")
+                do {
+                    
+                }
+                catch(let err) {
+                    print(err.localizedDescription)
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+            
+        }
+    }
     
 }
 

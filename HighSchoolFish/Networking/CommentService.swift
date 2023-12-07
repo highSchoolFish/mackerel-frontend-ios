@@ -10,6 +10,8 @@ import Moya
 
 enum CommentService {
     case readComment(boardId: String, page: Int, size: Int)
+    case uploadComment(boardId: String, parentCommentId: String?, context: String, isAnonymous: Bool)
+    case likeComment(id: String)
 }
 
 extension CommentService: TargetType {
@@ -21,6 +23,10 @@ extension CommentService: TargetType {
         switch self {
         case .readComment(let boardId, _, _):
             return "/api/v1/schools/boards/\(boardId)/comments"
+        case .uploadComment:
+            return "/api/v1/schools/boards/comments"
+        case .likeComment:
+            return "/api/v1/schools/boards/likes"
         }
     }
     
@@ -28,12 +34,16 @@ extension CommentService: TargetType {
         switch self {
         case .readComment(_):
             return .get
+        case .uploadComment(_):
+            return .post
+        case .likeComment(_):
+            return .post
         }
     }
     
     var sampleData: Data {
         switch self {
-        case .readComment:
+        case .readComment, .uploadComment, .likeComment:
             return "@@".data(using: .utf8)!
         }
     }
@@ -46,15 +56,27 @@ extension CommentService: TargetType {
                 "size": size
             ]
             return .requestParameters(parameters: params, encoding: URLEncoding.queryString)
+            
+        case .uploadComment(boardId: let boardId, parentCommentId: let parentCommentId, context: let context, isAnonymous: let isAnonymous):
+            var params: [String: Any] = [
+                "boardId": boardId,
+                "context": context,
+                "isAnonymous": isAnonymous
+            ]
+            if let parentCommentId = parentCommentId {
+                params["parentCommentId"] = parentCommentId
+            }
+            return .requestParameters(parameters: params, encoding: JSONEncoding.default)
+
+        case .likeComment(id: let id):
+            return .requestParameters(parameters: ["id": id], encoding: JSONEncoding.default)
         }
     }
     
     var headers: [String : String]? {
         switch self {
-        case .readComment:
-            return ["Content-Type": "application/json", "Authorization": "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiUk9MRV9NRU1CRVIiLCJvZmZpY2VPZkVkdWNhdGlvbkNvZGUiOiJKMTAiLCJuaWNrbmFtZSI6ImJoeW4xMiIsInNjaG9vbENvZGUiOiI3NTMwNDg2Iiwic3ViIjoiYmh5bjEiLCJleHAiOjE3MzIyNTcxMDQsImlhdCI6MTcwMDYzNDcwNH0.GIlQIN6KEfRoXd-ZT0Xe1pIvY7p-YGvQTfGy0eTLOpf9GhAPGBRgeSFBIBGfW-0kyQqc0zPL_5VC0gjDr2_CTA"]
+        case .readComment, .uploadComment, .likeComment:
+            return ["Content-Type": "application/json"]
         }
     }
-    
-    
 }

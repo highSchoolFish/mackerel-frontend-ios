@@ -19,6 +19,28 @@ class CommentTableHeaderView: UITableViewHeaderFooterView {
     @IBOutlet weak var showMoreView: UIView!
     
     override func awakeFromNib() {
+        let gesture = UIGestureRecognizer(target: self, action: #selector(headerViewTapped))
+        self.showMoreView.addGestureRecognizer(gesture)
+    }
+    
+    @objc func headerViewTapped() {
+        print("headerViewTapped")
+        // 추가적인 로직 처리
+        DetailBoardViewModel.shared.moreCommentButtonTapped()
+        DetailBoardViewModel.shared.onMoreCommentResult = { result in
+            print("result")
+            if result == false {
+                // 답글 \()개 버튼 안눌림
+                
+            }
+            else {
+                // 눌림
+                
+            }
+        }
+    }
+    
+    @IBAction func writeCommentButtonTapped() {
         
     }
     
@@ -36,13 +58,13 @@ class CommentTableHeaderView: UITableViewHeaderFooterView {
         timeLabel.text = comment.createdAt
         contextLabel.text = comment.context
         likeCountLabel.text = "\(comment.numberOfLikes)"
-//        if comment.isLike == false {
-//            // 좋아요 안눌려있음
-//            likeButton.tintColor = UIColor(named: "gray")
-//        }
-//        else {
-//            likeButton.tintColor = UIColor(named: "red")
-//        }
+        if comment.isLike == false {
+            // 좋아요 안눌려있음
+            likeButton.tintColor = UIColor(named: "gray")
+        }
+        else {
+            likeButton.tintColor = UIColor(named: "red")
+        }
         
 //        if comment.isWriter {
 //            // 본인이 단 댓글

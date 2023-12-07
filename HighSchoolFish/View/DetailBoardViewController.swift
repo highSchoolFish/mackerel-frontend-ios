@@ -143,7 +143,7 @@ class DetailBoardViewController: UIViewController, TappedLikeButtonDelegate {
     private lazy var titleLineView: UIView = {
         let view = UIView()
         view.layer.borderWidth = 1
-        view.layer.borderColor = UIColor(named: "blue")!.cgColor
+        view.layer.borderColor = UIColor(named: "lineGray")!.cgColor
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -255,7 +255,7 @@ class DetailBoardViewController: UIViewController, TappedLikeButtonDelegate {
     private lazy var countLineView: UIView = {
         let view = UIView()
         view.layer.borderWidth = 1
-        view.layer.borderColor = UIColor(named: "red")!.cgColor
+        view.layer.borderColor = UIColor(named: "lineGray")!.cgColor
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -285,7 +285,7 @@ class DetailBoardViewController: UIViewController, TappedLikeButtonDelegate {
         let view = UIView()
         view.layer.borderWidth = 1
         //        view.layer.borderColor = UIColor(named: "lineGray")!.cgColor
-        view.layer.borderColor = UIColor(named: "red")!.cgColor
+        view.layer.borderColor = UIColor(named: "lineGray")!.cgColor
         
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -319,6 +319,7 @@ class DetailBoardViewController: UIViewController, TappedLikeButtonDelegate {
     private lazy var commentAnonymousButton: UIButton = {
         let button = UIButton(type: .custom)
         button.setImage(UIImage(named: "uncheckedButton"), for: .normal)
+        button.addTarget(self, action: #selector(commentAnonymousButtonTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -335,7 +336,7 @@ class DetailBoardViewController: UIViewController, TappedLikeButtonDelegate {
     private lazy var commentUploadButton: UIButton = {
         let button = UIButton(type: .custom)
         button.setImage(UIImage(named: "uploadCircleIcon"), for: .normal)
-        //            button.addTarget(self, action: #selector(thumbsUpButtonPressed), for: .touchUpInside)
+        button.addTarget(self, action: #selector(commentUploadButtonTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -362,9 +363,11 @@ class DetailBoardViewController: UIViewController, TappedLikeButtonDelegate {
         }
         self.commentTableView.reloadData()
         
+        
         //        self.view.setNeedsLayout()
         //        self.view.layoutIfNeeded()
         
+        setKeyboardObserver()
     }
     
     override func viewDidLayoutSubviews() {
@@ -406,7 +409,7 @@ class DetailBoardViewController: UIViewController, TappedLikeButtonDelegate {
             if let childComments = comment.childComments {
                 for childComment in childComments {
                     let cellHeight = calculateCommentHeight(text: childComment.context, width: commentTableView.bounds.width)
-                    totalHeight += cellHeight + 90
+                    totalHeight += cellHeight + 80
                     print(totalHeight)
                 }
             }
@@ -680,18 +683,89 @@ class DetailBoardViewController: UIViewController, TappedLikeButtonDelegate {
     //        // 추가적인 로직 처리
     //    }
     
-    @objc func headerViewTapped() {
-        print("headerViewTapped")
-        // 추가적인 로직 처리
-    }
-    
     @objc func headerLikeButtonTapped() {
         print("headerLikeButtonTapped")
         // 추가적인 로직 처리
     }
+    
+    @objc func commentWriteButtonTapped() {
+        print("commentWriteButtonTapped")
+        DetailBoardViewModel.shared.commentWriteButtonTapped()
+        DetailBoardViewModel.shared.onCommentCursor = { result in
+            if result {
+                self.commentTextField.becomeFirstResponder()
+            }
+        }
+    }
+    
+    @objc func commentAnonymousButtonTapped() {
+        
+    }
+    
+    @objc func commentUploadButtonTapped(parentCommentId: String?) {
+        if commentAnonymousButton.isSelected {
+            DetailBoardViewModel.shared.setAnonymous(true)
+        }
+        else {
+            DetailBoardViewModel.shared.setAnonymous(false)
+        }
+//        DetailBoardViewModel.shared.commentUploadButtonTapped(parentCommentId: )
+        // 답글달기 버튼 눌린거면 어떤 댓글인지 부모 댓글 id 찾아야함
+        // borttomView에 commentTextField로 바로 했으면 parentId nil
+        
+        
+    }
+    
+    func setKeyboardObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object:nil)
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            let keyboardHeight = keyboardRectangle.height
+            UIView.animate(withDuration: 1) {
+                self.bottomView.frame.origin.y -= keyboardHeight
+            }
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if self.view.window?.frame.origin.y != 0 {
+            if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+                let keyboardRectangle = keyboardFrame.cgRectValue
+                let keyboardHeight = keyboardRectangle.height
+                UIView.animate(withDuration: 1) {
+                    self.bottomView.frame.origin.y += keyboardHeight
+                }
+            }
+        }
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
 }
 
 extension DetailBoardViewController: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.becomeFirstResponder()
+        
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        let text = (textField.text! as NSString).replacingCharacters(in: range, with: string)
+        
+        if !text.isEmpty {
+            self.commentUploadButton.isEnabled = true
+        } else {
+            self.commentUploadButton.isEnabled = false
+        }
+        return true
+    }
     
 }
 
@@ -717,57 +791,6 @@ extension UIScrollView {
     }
 }
 
-// for test
-//extension DetailBoardViewController: UITableViewDelegate, UITableViewDataSource {
-//    func numberOfSections(in tableView: UITableView) -> Int {
-//        print("numberOfSections")
-//        return 4
-//    }
-//
-//    func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
-//        return 150
-//    }
-//
-//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        return UITableView.automaticDimension
-//    }
-//
-//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        print("viewForHeaderInSection")
-//
-//        guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "CommentTableHeaderView") as? CommentTableHeaderView else {
-//            // Header View를 dequeue하지 못한 경우 또는 캐스팅 실패 시 빈 UIView 반환
-//            return UIView()
-//        }
-//
-//        return headerView
-//    }
-//
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        print("numberOfRowsInSection")
-//
-//        return 2
-//    }
-//
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        print("cellForRowAt")
-//
-//        guard let commentCell = tableView.dequeueReusableCell(withIdentifier: "CommentTableViewCell", for: indexPath) as? CommentTableViewCell else { return UITableViewCell() }
-//
-//        return commentCell
-//
-//    }
-//
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//
-//        return UITableView.automaticDimension
-//    }
-//
-//    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return UITableView.automaticDimension
-//    }
-//}
-
 extension DetailBoardViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         print("numberOfSections")
@@ -789,7 +812,7 @@ extension DetailBoardViewController: UITableViewDelegate, UITableViewDataSource 
             return labelSize.height + 120
         }
         print("childComment 0개")
-        return labelSize.height + 100
+        return labelSize.height + 80
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
@@ -814,11 +837,11 @@ extension DetailBoardViewController: UITableViewDelegate, UITableViewDataSource 
             headerView.showMoreView.isHidden = true
         }
         headerView.isUserInteractionEnabled = true
-        let gesture = UIGestureRecognizer(target: self, action: #selector(headerViewTapped))
-        headerView.showMoreView.addGestureRecognizer(gesture)
+        headerView.showMoreView.isUserInteractionEnabled = true
+        
         headerView.generateCell(comment: comment)
         headerView.likeButton.addTarget(self, action: #selector(headerLikeButtonTapped), for: .touchUpInside)
-        
+        headerView.commentWriteButton.addTarget(self, action: #selector(commentWriteButtonTapped), for: .touchUpInside)
         return headerView
     }
     
@@ -844,28 +867,10 @@ extension DetailBoardViewController: UITableViewDelegate, UITableViewDataSource 
             commentCell.generateCell(comment: childComment)
             
         }
-        //
+        
         return commentCell
         
     }
-    
-    //    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    //                let label = UILabel()
-    //
-    //                if let childComment = self.comments[indexPath.section].childComments?[indexPath.item] {
-    //                    label.text = childComment.context
-    //                }
-    //                label.numberOfLines = 0
-    //                let labelSize = label.sizeThatFits(CGSize(width: view.frame.width, height: .greatestFiniteMagnitude))
-    //                print("labelsize : \(labelSize.height)")
-    //
-    //                return labelSize.height + 80
-    ////        return UITableView.automaticDimension
-    //    }
-    //
-    //    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-    //        return UITableView.automaticDimension
-    //    }
 }
 
 struct PreView: PreviewProvider {

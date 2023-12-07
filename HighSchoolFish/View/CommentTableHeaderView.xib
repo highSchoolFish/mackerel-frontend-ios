@@ -66,6 +66,9 @@
                     <state key="normal" title="답글 쓰기">
                         <color key="titleColor" name="gray"/>
                     </state>
+                    <connections>
+                        <action selector="writeCommentButtonTapped" destination="iN0-l3-epB" eventType="touchUpInside" id="tNY-b2-cIt"/>
+                    </connections>
                 </button>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="yqI-U3-tfH">
                     <rect key="frame" x="374" y="41" width="30" height="31.666666666666671"/>
