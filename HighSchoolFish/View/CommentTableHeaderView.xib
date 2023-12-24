@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -66,9 +66,6 @@
                     <state key="normal" title="답글 쓰기">
                         <color key="titleColor" name="gray"/>
                     </state>
-                    <connections>
-                        <action selector="writeCommentButtonTapped" destination="iN0-l3-epB" eventType="touchUpInside" id="tNY-b2-cIt"/>
-                    </connections>
                 </button>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="yqI-U3-tfH">
                     <rect key="frame" x="374" y="41" width="30" height="31.666666666666671"/>
@@ -144,7 +141,7 @@
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
-                <outlet property="commentWriteButton" destination="9ZB-4K-pYu" id="MjY-MD-TgW"/>
+                <outlet property="commentWriteButton" destination="9ZB-4K-pYu" id="4di-oi-LWn"/>
                 <outlet property="contextLabel" destination="KbC-5P-Fuf" id="74T-AR-yfD"/>
                 <outlet property="likeButton" destination="ctU-b0-yD9" id="vto-vC-2e2"/>
                 <outlet property="likeCountLabel" destination="Pp2-bc-Nzl" id="KZ8-SF-wTj"/>

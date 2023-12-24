@@ -16,6 +16,8 @@ class DetailBoardViewModel {
     
     private var commentString: String = ""
     private var isAnonymous: Bool = false
+    private var headerSection: Int = 99999
+    var comments: [CommentContent] = []
     
     var getBoardComplete: ((Bool) -> Void)?
     var onBoardComplete: ((Boards) -> Void)?
@@ -24,7 +26,8 @@ class DetailBoardViewModel {
     var onCommentsCount: ((Int) -> Int)?
     var onCommentCursor: ((Bool) -> Void)?
     var checkCommentTextField: ((Bool) -> Void)?
-
+    var writeCommentComplete: ((Bool) -> Void)?
+    
     private var boardIdString: String = ""
     
     // table cell 선택시 setBoardId func 호출
@@ -42,6 +45,10 @@ class DetailBoardViewModel {
     
     func setAnonymous(_ isAnonymous: Bool) {
         self.isAnonymous = isAnonymous
+    }
+    
+    func setHeaderSection(_ headerSection: Int) {
+        self.headerSection = headerSection
     }
     
     func getDetailBoard() {
@@ -102,6 +109,7 @@ class DetailBoardViewModel {
                     print(json)
                     self.onCommentsResult?(commentResponse)
                     self.onCommentsCount?(commentResponse.data.totalElements)
+                    self.comments = commentResponse.data.content
                 }
                 
                 catch(let err) {
@@ -113,37 +121,49 @@ class DetailBoardViewModel {
         }
     }
     
-    func commentWriteButtonTapped() {
-        self.onCommentCursor?(true)
-    }
-    
     func moreCommentButtonTapped(){
         self.onMoreCommentResult?(true)
         print("more comment button tapped in VM")
     }
     
-    func commentUploadButtonTapped(parentCommentId: String?) {
+    func commentUploadButtonTapped() {
+        print("comment upload button tapped")
         // upload button tapped
-        
-        let provider = MoyaProvider<CommentService>(session: Session(interceptor: AuthManager()))
-        
-        provider.request(CommentService.uploadComment(boardId: self.boardIdString, parentCommentId: parentCommentId, context: self.commentString, isAnonymous: self.isAnonymous)) { result in
-            switch result {
-            case let .success(response):
-                print("통신성공")
-                let data = response
-                print("response \(data)")
-                do {
-                    
-                }
-                catch(let err) {
-                    print(err.localizedDescription)
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-            
+        print("comment String : \(commentString)")
+        var parentCommentId = ""
+        if headerSection != 99999 {
+            // header section 값 정해졌으면
+            parentCommentId = comments[headerSection].id
         }
+        
+        if self.commentString.trimmingCharacters(in:  .whitespaces).isEmpty {
+            // 댓글 비어있음
+            print("댓글 비어있음")
+        }
+        else {
+            print("댓글쓰기 통신")
+            print("parentCommentId \(parentCommentId)")
+            let provider = MoyaProvider<CommentService>(session: Session(interceptor: AuthManager()))
+            
+            provider.request(CommentService.uploadComment(boardId: self.boardIdString, parentCommentId: parentCommentId, context: self.commentString, isAnonymous: self.isAnonymous)) { result in
+                switch result {
+                case let .success(response):
+                    print("통신성공")
+                    let data = response
+                    print("response \(data)")
+                    do {
+                        self.writeCommentComplete?(true)
+                    }
+                    catch(let err) {
+                        print(err.localizedDescription)
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+                
+            }
+        }
+        
     }
     
 }

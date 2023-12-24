@@ -9,7 +9,7 @@ import UIKit
 import SwiftUI
 import SafeAreaBrush
 
-class DetailBoardViewController: UIViewController, TappedLikeButtonDelegate {
+class DetailBoardViewController: UIViewController {
     
     private lazy var navigationBar: UINavigationBar = {
         let naviBar = UINavigationBar()
@@ -345,11 +345,15 @@ class DetailBoardViewController: UIViewController, TappedLikeButtonDelegate {
     var photos: [URL] = []
     var comments: [CommentContent] = []
     var totalheight: CGFloat = 0
+    var bottomViewContraint: NSLayoutConstraint?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
         setAutoLayout()
+        
+        bottomViewContraint = bottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0.0)
+        bottomViewContraint?.isActive = true
         
         DetailBoardViewModel.shared.onBoardComplete = { result in
             self.setBoard(board: result)
@@ -362,10 +366,6 @@ class DetailBoardViewController: UIViewController, TappedLikeButtonDelegate {
             self.commentTableView.reloadData()
         }
         self.commentTableView.reloadData()
-        
-        
-        //        self.view.setNeedsLayout()
-        //        self.view.layoutIfNeeded()
         
         setKeyboardObserver()
     }
@@ -387,6 +387,7 @@ class DetailBoardViewController: UIViewController, TappedLikeButtonDelegate {
         
         commentTableView.delegate = self
         commentTableView.dataSource = self
+        commentTableView.sectionHeaderHeight = UITableView.automaticDimension
         
     }
     
@@ -403,7 +404,7 @@ class DetailBoardViewController: UIViewController, TappedLikeButtonDelegate {
         // Add 100 for each cell
         for comment in comments {
             let headerHeight = calculateCommentHeight(text: comment.context, width: commentTableView.bounds.width)
-            totalHeight += headerHeight + 120
+            totalHeight += headerHeight + 100
             print(totalHeight)
             
             if let childComments = comment.childComments {
@@ -427,11 +428,6 @@ class DetailBoardViewController: UIViewController, TappedLikeButtonDelegate {
         
         let labelSize = label.sizeThatFits(CGSize(width: view.frame.width, height: .greatestFiniteMagnitude))
         return labelSize.height
-    }
-    
-    func likeButtonTapped() {
-        // --ToDo--
-        print("테스트 제발 성공했으면 좋겠다!")
     }
     
     private func setBoard(board: Boards) {
@@ -640,7 +636,6 @@ class DetailBoardViewController: UIViewController, TappedLikeButtonDelegate {
             commentTableView.topAnchor.constraint(equalTo: countLineView.bottomAnchor, constant: 20),
             commentTableView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0),
             
-            bottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20),
             bottomView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             bottomView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             bottomView.heightAnchor.constraint(equalToConstant: 50),
@@ -678,41 +673,38 @@ class DetailBoardViewController: UIViewController, TappedLikeButtonDelegate {
         print("menu button tapped")
     }
     
-    //    @objc func likeButtonTapped() {
-    //        print("Like button tapped")
-    //        // 추가적인 로직 처리
-    //    }
+    @objc func likeButtonTapped() {
+        print("Like button tapped")
+    }
     
     @objc func headerLikeButtonTapped() {
         print("headerLikeButtonTapped")
-        // 추가적인 로직 처리
-    }
-    
-    @objc func commentWriteButtonTapped() {
-        print("commentWriteButtonTapped")
-        DetailBoardViewModel.shared.commentWriteButtonTapped()
-        DetailBoardViewModel.shared.onCommentCursor = { result in
-            if result {
-                self.commentTextField.becomeFirstResponder()
-            }
-        }
     }
     
     @objc func commentAnonymousButtonTapped() {
         
     }
     
-    @objc func commentUploadButtonTapped(parentCommentId: String?) {
+    @objc func commentUploadButtonTapped() {
+        print("commentUploadButtonTapped VC")
         if commentAnonymousButton.isSelected {
             DetailBoardViewModel.shared.setAnonymous(true)
         }
         else {
             DetailBoardViewModel.shared.setAnonymous(false)
         }
-//        DetailBoardViewModel.shared.commentUploadButtonTapped(parentCommentId: )
+        print("commentAnonymous \(commentAnonymousButton.isSelected)")
+        
+        DetailBoardViewModel.shared.setCommentString(self.commentTextField.text ?? " ")
+        
+        DetailBoardViewModel.shared.commentUploadButtonTapped()
         // 답글달기 버튼 눌린거면 어떤 댓글인지 부모 댓글 id 찾아야함
         // borttomView에 commentTextField로 바로 했으면 parentId nil
         
+        DetailBoardViewModel.shared.writeCommentComplete = { result in
+            print("comment 새로고침")
+            self.commentTableView.reloadData()
+        }
         
     }
     
@@ -722,25 +714,27 @@ class DetailBoardViewController: UIViewController, TappedLikeButtonDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object:nil)
     }
     
+    deinit {
+        // 뷰 컨트롤러가 해제될 때 옵저버를 해제
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     @objc func keyboardWillShow(notification: NSNotification) {
+        print("keyboardwillshow")
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-            let keyboardRectangle = keyboardFrame.cgRectValue
-            let keyboardHeight = keyboardRectangle.height
-            UIView.animate(withDuration: 1) {
-                self.bottomView.frame.origin.y -= keyboardHeight
-            }
+            let keyboardHeight = keyboardFrame.cgRectValue.height
+            bottomViewContraint?.constant = -keyboardHeight
+        
+            self.view.layoutIfNeeded()
         }
     }
     
     @objc func keyboardWillHide(notification: NSNotification) {
-        if self.view.window?.frame.origin.y != 0 {
-            if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-                let keyboardRectangle = keyboardFrame.cgRectValue
-                let keyboardHeight = keyboardRectangle.height
-                UIView.animate(withDuration: 1) {
-                    self.bottomView.frame.origin.y += keyboardHeight
-                }
-            }
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardHeight = keyboardFrame.cgRectValue.height
+            bottomViewContraint?.constant = -20
+            self.view.layoutIfNeeded()
+
         }
     }
     
@@ -797,26 +791,8 @@ extension DetailBoardViewController: UITableViewDelegate, UITableViewDataSource 
         return comments.count
     }
     
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        print("heightForHeaderInSection")
-        let comment = comments[section]
-        let commentText = comment.context
-        
-        let label = UILabel()
-        label.text = commentText
-        label.numberOfLines = 0
-        let labelSize = label.sizeThatFits(CGSize(width: view.frame.width, height: .greatestFiniteMagnitude))
-        print("labelsize : \(labelSize.height)")
-        if comment.childComments!.count >= 1 {
-            print("childComment 1개 이상")
-            return labelSize.height + 120
-        }
-        print("childComment 0개")
-        return labelSize.height + 80
-    }
-    
     func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
-        return UITableView.automaticDimension
+        return 300
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -841,7 +817,12 @@ extension DetailBoardViewController: UITableViewDelegate, UITableViewDataSource 
         
         headerView.generateCell(comment: comment)
         headerView.likeButton.addTarget(self, action: #selector(headerLikeButtonTapped), for: .touchUpInside)
-        headerView.commentWriteButton.addTarget(self, action: #selector(commentWriteButtonTapped), for: .touchUpInside)
+        headerView.configure(section: section) {
+            // 클로저 내에서 버튼이 선택되었을 때의 동작을 정의합니다.
+            self.commentWriteButtonTapped(section: section)
+        }
+        headerView.contentView.backgroundColor = .white
+        
         return headerView
     }
     
@@ -862,8 +843,11 @@ extension DetailBoardViewController: UITableViewDelegate, UITableViewDataSource 
         
         if let childComment = self.comments[indexPath.section].childComments?[indexPath.item] {
             print("childComment context ", childComment.context)
-            //            commentCell.likeButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
-            commentCell.delegate = self
+            commentCell.likeButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
+            commentCell.configure(section: indexPath.section) {
+                // 클로저 내에서 버튼이 선택되었을 때의 동작을 정의합니다.
+                self.commentWriteButtonTapped(section: indexPath.section)
+            }
             commentCell.generateCell(comment: childComment)
             
         }
@@ -871,6 +855,16 @@ extension DetailBoardViewController: UITableViewDelegate, UITableViewDataSource 
         return commentCell
         
     }
+    
+    func commentWriteButtonTapped(section: Int) {
+        // 여기에서 선택된 섹션 값을 사용하여 작업을 수행합니다.
+        print("Button tapped in section VC \(section)")
+        self.commentTextField.becomeFirstResponder()
+        // VM 전달
+        DetailBoardViewModel.shared.setHeaderSection(section)
+        
+    }
+    
 }
 
 struct PreView: PreviewProvider {

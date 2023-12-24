@@ -17,10 +17,25 @@ class CommentTableHeaderView: UITableViewHeaderFooterView {
     @IBOutlet weak var likeCountLabel: UILabel!
     @IBOutlet weak var commentWriteButton: UIButton!
     @IBOutlet weak var showMoreView: UIView!
+    private var buttonAction: (() -> Void)?
+    private var section: Int = 0
     
     override func awakeFromNib() {
+        self.backgroundColor = .white
         let gesture = UIGestureRecognizer(target: self, action: #selector(headerViewTapped))
         self.showMoreView.addGestureRecognizer(gesture)
+    }
+    
+    func configure(section: Int, buttonAction: @escaping () -> Void) {
+        self.section = section
+        self.buttonAction = buttonAction
+        commentWriteButton.addTarget(self, action: #selector(commentWriteButtonTapped), for: .touchUpInside)
+        // 나머지 UI 구성
+    }
+    
+    @objc private func commentWriteButtonTapped() {
+        // 클로저 내에 정의된 동작을 호출하면서 섹션 값을 전달합니다.
+        buttonAction?()
     }
     
     @objc func headerViewTapped() {
@@ -38,10 +53,6 @@ class CommentTableHeaderView: UITableViewHeaderFooterView {
                 
             }
         }
-    }
-    
-    @IBAction func writeCommentButtonTapped() {
-        
     }
     
     @IBAction func headerLikeButtonTapped() {
@@ -66,9 +77,9 @@ class CommentTableHeaderView: UITableViewHeaderFooterView {
             likeButton.tintColor = UIColor(named: "red")
         }
         
-//        if comment.isWriter {
-//            // 본인이 단 댓글
-//        }
+        //        if comment.isWriter {
+        //            // 본인이 단 댓글
+        //        }
     }
     
     

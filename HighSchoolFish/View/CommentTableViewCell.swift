@@ -7,11 +7,6 @@
 
 import UIKit
 
-protocol TappedLikeButtonDelegate: AnyObject {
-    // 위임해줄 기능
-    func likeButtonTapped()
-}
-
 class CommentTableViewCell: UITableViewCell {
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -20,28 +15,36 @@ class CommentTableViewCell: UITableViewCell {
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var likeCountLabel: UILabel!
     @IBOutlet weak var commentWriteButton: UIButton!
+    private var buttonAction: (() -> Void)?
+    private var section: Int = 0
 
-    var delegate: TappedLikeButtonDelegate?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        self.likeButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         if selected {
                     // 셀이 선택되었을 때의 동작
-                    self.contentView.backgroundColor = UIColor.blue
+            self.contentView.backgroundColor = UIColor.systemYellow
                 } else {
                     // 셀이 선택 해제되었을 때의 동작
                     self.contentView.backgroundColor = UIColor.white
                 }
         // Configure the view for the selected state
     }
+
+    func configure(section: Int, buttonAction: @escaping () -> Void) {
+        self.section = section
+        self.buttonAction = buttonAction
+        commentWriteButton.addTarget(self, action: #selector(commentWriteButtonTapped), for: .touchUpInside)
+        // 나머지 UI 구성
+    }
     
-    @objc func buttonTapped() {
-        delegate?.likeButtonTapped()
+    @objc private func commentWriteButtonTapped() {
+        // 클로저 내에 정의된 동작을 호출하면서 섹션 값을 전달합니다.
+        buttonAction?()
     }
     
     
