@@ -32,6 +32,7 @@ class HomeTabViewController: UIViewController {
         view.addSubview(articleImageView)
         view.addSubview(popularCommunityView)
         view.addSubview(selfDiagnosisView)
+        view.addSubview(cardView)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -430,21 +431,87 @@ class HomeTabViewController: UIViewController {
         return image
     }()
     
+    private lazy var cardView: UIView = {
+        var view = UIView()
+        view.backgroundColor = UIColor(named: "cardBackgroundColor")
+        view.addSubview(cardImageView)
+        view.addSubview(cardNameLabel)
+        view.addSubview(cardGradeLabel)
+        view.addSubview(cardSchoolNameLabel)
+        view.addSubview(cardHandleView)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private lazy var cardHandleView: UIView = {
+        var view = UIView()
+        view.backgroundColor = UIColor(named: "cardHandleColor")
+        view.layer.cornerRadius = 5
+        view.clipsToBounds = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private lazy var cardImageView: UIImageView = {
+        var imageView = UIImageView()
+        imageView.image = UIImage(named: "profileIcon")
+        imageView.layer.cornerRadius = imageView.frame.height/2
+        imageView.layer.borderWidth = 1
+        imageView.layer.borderColor = UIColor.clear.cgColor
+        imageView.clipsToBounds = true
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
+    private lazy var cardSchoolNameLabel: UILabel = {
+        var label = UILabel()
+        label.text = "부흥고등학교"
+        label.font = UIFont.boldSystemFont(ofSize: 13)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private lazy var cardGradeLabel: UILabel = {
+        var label = UILabel()
+        label.text = "3학년"
+        label.font = UIFont.boldSystemFont(ofSize: 10)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private lazy var cardNameLabel: UILabel = {
+        var label = UILabel()
+        label.text = "강보현"
+        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let screenHeight = UIScreen.main.bounds.height
+    var cardCloseConstraint: NSLayoutConstraint?
+    var cardOpenConstraint: NSLayoutConstraint?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         viewArrayForShadow = [mealView, timeView, mySchoolCommunityView, schoolDistrictCommunityView, nationwideCommunityView, selfDiagnosisView]
+        cardCloseConstraint = cardView.heightAnchor.constraint(equalToConstant: 60)
+        cardOpenConstraint = cardView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 200)
         
+        view.bringSubviewToFront(self.cardView)
         configure()
+        cardClose()
         setupAutoLayout()
         setShadow()
+        
+        
     }
     
     private func configure() {
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         fillSafeArea(position: .top, color: UIColor(named: "main")!, gradient: false)
-
+        
         view.backgroundColor = UIColor(named: "backgroundColor")
         
         mealTableView.dataSource = self
@@ -453,7 +520,8 @@ class HomeTabViewController: UIViewController {
         timeTableView.dataSource = self
         timeTableView.delegate = self
         
-        
+        let gesture = UIPanGestureRecognizer(target: self, action: #selector(type(of: self).wasDragged(gestureRecognizer:)))
+        cardView.addGestureRecognizer(gesture)
         
     }
     
@@ -597,9 +665,108 @@ class HomeTabViewController: UIViewController {
             syringeImageView.widthAnchor.constraint(equalToConstant: 20),
             
             rightArrowImageView.leadingAnchor.constraint(equalTo: selfDiagnosisLabel.trailingAnchor, constant: 20),
-            rightArrowImageView.centerYAnchor.constraint(equalTo: selfDiagnosisView.centerYAnchor, constant: 0)
+            rightArrowImageView.centerYAnchor.constraint(equalTo: selfDiagnosisView.centerYAnchor, constant: 0),
+            cardView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
+            cardView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
+            cardView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0),
+            cardView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0),
+            
+            cardHandleView.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 20),
+            cardHandleView.heightAnchor.constraint(equalToConstant: 10),
+            cardHandleView.widthAnchor.constraint(equalToConstant: 100),
+            cardHandleView.centerXAnchor.constraint(equalTo: cardView.centerXAnchor, constant: 0),
+            
+            cardNameLabel.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -50),
+            cardNameLabel.centerXAnchor.constraint(equalTo: cardView.centerXAnchor),
+            
+            cardGradeLabel.bottomAnchor.constraint(equalTo: cardNameLabel.topAnchor, constant: -20),
+            cardGradeLabel.centerXAnchor.constraint(equalTo: cardView.centerXAnchor),
+            
+            cardSchoolNameLabel.bottomAnchor.constraint(equalTo: cardGradeLabel.topAnchor, constant: -50),
+            cardSchoolNameLabel.centerXAnchor.constraint(equalTo: cardView.centerXAnchor),
+            
+            cardImageView.bottomAnchor.constraint(equalTo: cardSchoolNameLabel.topAnchor, constant: -80),
+            cardImageView.centerXAnchor.constraint(equalTo: cardView.centerXAnchor),
+            cardImageView.widthAnchor.constraint(equalToConstant: 150),
+            cardImageView.heightAnchor.constraint(equalTo: cardImageView.widthAnchor, multiplier: 1.0)
+            
             
         ])
+    }
+    
+    private func cardClose() {
+        DispatchQueue.global().sync {
+            
+            self.cardImageView.isHidden = true
+            self.cardSchoolNameLabel.isHidden = true
+            self.cardGradeLabel.isHidden = true
+            self.cardNameLabel.isHidden = true
+            
+                print("hidden ==================")
+        }
+        cardOpenConstraint?.isActive = false
+        cardCloseConstraint?.isActive = true
+    }
+    
+    private func cardOpen() {
+        DispatchQueue.global().sync {
+            
+            cardCloseConstraint?.isActive = false
+            cardOpenConstraint?.isActive = true
+                print("constraint ==================")
+        }
+        
+        self.cardImageView.isHidden = false
+        self.cardSchoolNameLabel.isHidden = false
+        self.cardGradeLabel.isHidden = false
+        self.cardNameLabel.isHidden = false
+        
+    }
+    
+    @objc func wasDragged(gestureRecognizer: UIPanGestureRecognizer) {
+        let distanceFromBottom = screenHeight - gestureRecognizer.view!.center.y
+        if gestureRecognizer.state == UIGestureRecognizer.State.began || gestureRecognizer.state == UIGestureRecognizer.State.changed {
+            print("changing state")
+            // open, 제스처 방향 위로 할때
+            //            cardOpenConstraint?.isActive = false
+            // close, 제스처 아래로
+            //            cardCloseConstraint?.isActive = false
+            
+            let translation = gestureRecognizer.translation(in: self.view)
+            
+            
+            print("distanceFromBottom , \(distanceFromBottom)")
+            print("translation.y , \(translation.y)")
+            print(" test ", distanceFromBottom - translation.y)
+            
+            if((distanceFromBottom - translation.y) < 100) {
+                gestureRecognizer.view!.center = CGPoint(x: gestureRecognizer.view!.center.x, y: gestureRecognizer.view!.center.y + translation.y)
+                gestureRecognizer.setTranslation(CGPoint(x: 0, y: 0), in: self.view)
+            }
+            
+        }
+        if gestureRecognizer.state == UIGestureRecognizer.State.ended{
+            print("ending state")
+            let velocity = gestureRecognizer.velocity(in: self.view)
+            
+            // 상하
+            if abs(velocity.y) > abs(velocity.x) {
+                if velocity.y > 0 {
+                    print("down")
+                    cardClose()
+                    UIView.animate(withDuration: 0.3) {
+                        self.view.layoutIfNeeded()
+                    }
+                }
+                else if velocity.y < 0 {
+                    print("up")
+                    cardOpen()
+                    UIView.animate(withDuration: 0.2) {
+                        self.view.layoutIfNeeded()
+                    }
+                }
+            }
+        }
     }
     
     @objc func mySchoolCommunityViewTapped(_ sender: UITapGestureRecognizer) {
@@ -618,7 +785,7 @@ class HomeTabViewController: UIViewController {
     }
     
     @objc func nationwideCommunityViewTapped(sender: UITapGestureRecognizer) {
-//        CommunityViewModel.shared.setCommunityNameString("nationWide")
+        //        CommunityViewModel.shared.setCommunityNameString("nationWide")
         let vc = NationwideCommunityViewController()
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true)
@@ -646,5 +813,5 @@ extension HomeTabViewController: UITableViewDelegate, UITableViewDataSource {
         }
         return 7
     }
-
+    
 }
