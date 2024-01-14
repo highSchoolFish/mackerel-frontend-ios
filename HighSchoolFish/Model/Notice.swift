@@ -6,3 +6,13 @@
 //
 
 import Foundation
+
+
+struct Notice: Codable {
+    let id, createdAt: String
+    let data: NoticeData
+}
+
+struct NoticeData: Codable {
+    
+}

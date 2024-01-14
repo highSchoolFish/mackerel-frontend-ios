@@ -51,11 +51,21 @@ class HomeTabViewController: UIViewController {
         button.setImage(UIImage(systemName: "bell"), for: .normal)
         button.tintColor = .white
         button.translatesAutoresizingMaskIntoConstraints = false
-        //        button.addTarget(self, action: #selector(autoLoginButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(noticeButtonTapped), for: .touchUpInside)
+        
         button.frame.size.height = 15
         button.frame.size.width = 15
         return button
     }()
+    
+    private func addDimmingView() {
+        dimmingView = UIView(frame: self.view.bounds)
+        dimmingView?.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        dimmingView?.isHidden = true
+        view.addSubview(dimmingView!)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleDimmingViewTap))
+        dimmingView?.addGestureRecognizer(tapGesture)
+    }
     
     private lazy var topView: UIView = {
         var view = UIView()
@@ -490,6 +500,8 @@ class HomeTabViewController: UIViewController {
     let screenHeight = UIScreen.main.bounds.height
     var cardCloseConstraint: NSLayoutConstraint?
     var cardOpenConstraint: NSLayoutConstraint?
+    private var noticeViewController = NoticeViewController()
+    private var dimmingView: UIView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -503,14 +515,14 @@ class HomeTabViewController: UIViewController {
         cardClose()
         setupAutoLayout()
         setShadow()
-        
+        addDimmingView()
         
     }
     
     private func configure() {
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
-        fillSafeArea(position: .top, color: UIColor(named: "main")!, gradient: false)
+        //        fillSafeArea(position: .top, color: UIColor(named: "main")!, gradient: false)
         
         view.backgroundColor = UIColor(named: "backgroundColor")
         
@@ -554,21 +566,20 @@ class HomeTabViewController: UIViewController {
             contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
             contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
             contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-            contentView.heightAnchor.constraint(equalToConstant: 1000),
-            
+            contentView.heightAnchor.constraint(equalToConstant: 1200),
             contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
             
             topView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             topView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            topView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: -60),
-            topView.heightAnchor.constraint(equalToConstant: 200),
+            topView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: -300),
+            topView.heightAnchor.constraint(equalToConstant: 500),
             
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0),
-            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 50),
+            titleLabel.topAnchor.constraint(equalTo: topView.bottomAnchor, constant: -100),
             
-            noticeButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 50),
             noticeButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            noticeButton.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor, constant: 0),
             
             tableImageStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             tableImageStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
@@ -767,6 +778,48 @@ class HomeTabViewController: UIViewController {
                 }
             }
         }
+    }
+
+    @objc private func handleDimmingViewTap() {
+        let noticeVC = self.noticeViewController
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            // 사이드 메뉴를 원래 위치로 되돌림.
+            noticeVC.view.frame = CGRect(x: self.view.frame.width, y: 0, width: self.view.frame.width, height: self.view.frame.height)
+            // 어두운 배경 뷰를 숨김.
+            self.dimmingView?.alpha = 0
+        }) { (finished) in
+            // 애니메이션이 완료된 후 사이드 메뉴를 뷰 계층 구조에서 제거.
+            noticeVC.view.removeFromSuperview()
+            noticeVC.removeFromParent()
+            self.dimmingView?.isHidden = true
+        }
+    }
+    
+    @objc func noticeButtonTapped(_ sender: UIButton) {
+        let noticeVC = self.noticeViewController
+        self.addChild(noticeVC)
+        self.view.addSubview(noticeVC.view)
+        
+        let menuWidth = self.view.frame.width * 0.8
+        let menuHeight = self.view.frame.height
+        
+        let yPos = (self.view.frame.height / 2) - (menuHeight / 2)// 중앙에 위치하도록 yPos 계산
+        
+        
+        // 사이드 메뉴의 시작 위치를 화면 왼쪽 바깥으로 설정.
+        noticeVC.view.frame = CGRect(x: menuWidth, y: yPos, width: menuWidth, height: menuHeight)
+        
+        // 어두운 배경 뷰를 보이게 합니다.
+        self.dimmingView?.isHidden = false
+        self.dimmingView?.alpha = 0
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            // 사이드 메뉴를 화면에 표시.
+            noticeVC.view.frame = CGRect(x: 80, y: yPos, width: menuWidth, height: menuHeight)
+            // 어두운 배경 뷰의 투명도를 조절.
+            self.dimmingView?.alpha = 0.5
+        })
     }
     
     @objc func mySchoolCommunityViewTapped(_ sender: UITapGestureRecognizer) {

@@ -13,4 +13,5 @@ target 'HighSchoolFish' do
   pod 'BSImagePicker', '~> 3.1'
   pod 'SideMenu'
   pod 'SafeAreaBrush'
+  pod 'Firebase/Messaging'
 end

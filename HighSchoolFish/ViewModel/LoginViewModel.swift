@@ -21,7 +21,7 @@ class LoginViewModel {
     private var emailString: String = ""
     private var passwordString: String = ""
     var isMemberCertify = true
-    var autoLogin: Bool = false
+    private var autoLoginBool: Bool = false
     
     static var shared = LoginViewModel()
     
@@ -35,6 +35,9 @@ class LoginViewModel {
     
     var loginStatusChanged: (LoginStatus) -> Void = { _ in }
     
+    func setAutoLoginBool(_ autoLogin: Bool) {
+        autoLoginBool = autoLogin
+    }
     
     func setEmailText(_ email: String) {
         emailString = email
@@ -45,8 +48,6 @@ class LoginViewModel {
     }
     
     func loginButtonTapped() {
-        
-        
         // 유효성 검사 할라면
         guard !emailString.isEmpty && !passwordString.isEmpty else {
             
@@ -77,12 +78,18 @@ class LoginViewModel {
                     guard let accessToken = loginResponse?.data.accessToken else {
                         return
                     }
-                    
                     guard let refreshToken = loginResponse?.data.refreshToken else {
                         return
                     }
                     print(accessToken)
                     print(refreshToken)
+                    
+                    if self.autoLoginBool == true {
+                        UserDefaults.standard.set(true, forKey: "autoLogin")
+                    }
+                    else {
+                        UserDefaults.standard.set(false, forKey: "autoLogin")
+                    }
                     
                     KeyChain.shared.create("api/v1/auth/token", account: "accessToken", value: accessToken)
                     KeyChain.shared.create("api/v1/auth/token", account: "refreshToken", value: refreshToken)
@@ -105,25 +112,6 @@ class LoginViewModel {
         else {
             print("미인증 아이디")
         }
-    }
-    
-    func autoLoginButtonTapped() {
-//        if self.autoLogin == true {
-//            UserDefaults.standard.set(self.autoLogin, forKey: "autoLogin")
-//        }
-        
-        // 임시 test login
-        
-        
-        // refreshToken
-        // eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiUk9MRV9NRU1CRVIiLCJvZmZpY2VPZkVkdWNhdGlvbkNvZGUiOiJKMTAiLCJuaWNrbmFtZSI6ImJoeW4xMiIsInNjaG9vbENvZGUiOiI3NTMwNDg2Iiwic3ViIjoiYmh5bjEiLCJleHAiOjE3MzE4MjU3OTcsImlhdCI6MTcwMDIwMzM5N30.8nR7k6O6nav3W0AT9Tgk7oX2US52G0v1a9sQxUI1W1nKOM1Qtol2NTJwieysrixXmDlbe-ZhmBOn4CyraxnS_w
-        
-        // id
-        // bhyn1
-        
-        // pw
-        // qwer1234!!
-        
     }
     
     // Logic

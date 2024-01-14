@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+// MARK: - NotificationSetting
+struct NotificationSettingRequest: Codable {
+    let isOn, token: String
+}

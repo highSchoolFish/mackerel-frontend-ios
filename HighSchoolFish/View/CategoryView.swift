@@ -31,10 +31,14 @@ class CategoryView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         print("loadXib2")
-
+        
         loadXib()
         
         freeIcon.addTarget(self, action: #selector(freeIconTapped), for: .touchUpInside)
+        academyIcon.addTarget(self, action: #selector(academyIconTapped), for: .touchUpInside)
+        universityIcon.addTarget(self, action: #selector(universityIconTapped), for: .touchUpInside)
+        secretIcon.addTarget(self, action: #selector(secretIconTapped), for: .touchUpInside)
+        heartIcon.addTarget(self, action: #selector(heartIconTapped), for: .touchUpInside)
     }
     
     private func loadXib() {
@@ -62,14 +66,31 @@ class CategoryView: UIView {
         ])
     }
     
+    
     @objc func freeIconTapped() {
         print("freeIconTapped")
-        // 현재 최상단 뷰 뭔지 확인
-        // 학교일 때
-        // 학군일 때
-        // 전국일 때
-        
         CategoryViewModel.shared.categoryViewTapped(categoryName: "free")
     }
+    
+    @objc func academyIconTapped() {
+        print("academyIconTapped")
+        CategoryViewModel.shared.categoryViewTapped(categoryName: "academy")
+    }
+    
+    @objc func universityIconTapped() {
+        print("universityIconTapped")
+        CategoryViewModel.shared.categoryViewTapped(categoryName: "university")
+    }
+    
+    @objc func secretIconTapped() {
+        print("secretIconTapped")
+        CategoryViewModel.shared.categoryViewTapped(categoryName: "secret")
+    }
+    
+    @objc func heartIconTapped() {
+        print("heartIconTapped")
+        CategoryViewModel.shared.categoryViewTapped(categoryName: "heart")
+    }
+    
+    
 }
-

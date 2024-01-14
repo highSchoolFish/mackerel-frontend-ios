@@ -11,46 +11,30 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
     
-    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
-        guard let windowScene = (scene as? UIWindowScene) else { return }
-        let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = TabBarViewController()
-        self.window = window
-        window.makeKeyAndVisible()
         
-        
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        
-
-//        DispatchQueue.asyncAfter(deadline: DispatchTime.now() + 1) {
-//            if self.appdelegate?.isLogin == true {
-//                self.presentToMain()
-//            }
-//            else{
-//                self.presentToLogin()
-//            }
-//        }
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
+            if let isAutoLogin = UserDefaults.standard.object(forKey: "autoLogin") {
+                if isAutoLogin as! Bool == true {
+                    // 자동로그인 T
+                    guard let windowScene = (scene as? UIWindowScene) else { return }
+                    let window = UIWindow(windowScene: windowScene)
+                    window.rootViewController = TabBarViewController()
+                    self.window = window
+                    window.makeKeyAndVisible()
+                }
+            }
+            print("autoLogin 저장값 없음")
+            
+            guard let windowScene = (scene as? UIWindowScene) else { return }
+            let window = UIWindow(windowScene: windowScene)
+            window.rootViewController = LoginViewController()
+            self.window = window
+            window.makeKeyAndVisible()
+        }
     }
     
-    private func presentToMain() {
-        guard let windowScene = (scene as? UIWindowScene) else { return }
-        let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = HomeTabViewController()
-        self.window = window
-        window.makeKeyAndVisible()
-    }
-    
-    private func presentToLogin() {
-        guard let windowScene = (scene as? UIWindowScene) else { return }
-        let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = LoginViewController()
-        self.window = window
-        window.makeKeyAndVisible()
-    }
     
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.

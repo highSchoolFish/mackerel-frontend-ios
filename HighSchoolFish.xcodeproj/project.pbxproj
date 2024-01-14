@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0717A5472B4FEFA9000E91DA /* FCMService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0717A5462B4FEFA9000E91DA /* FCMService.swift */; };
+		0717A5492B4FEFE1000E91DA /* NotificationSettingRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0717A5482B4FEFE1000E91DA /* NotificationSettingRequest.swift */; };
+		0717A54B2B4FEFFD000E91DA /* FCMRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0717A54A2B4FEFFD000E91DA /* FCMRequest.swift */; };
 		071DD3A42ADFA94B005151C9 /* PopularTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 071DD3A32ADFA94B005151C9 /* PopularTableView.xib */; };
 		071F8F292AFF78760011DBBC /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071F8F282AFF78760011DBBC /* Comment.swift */; };
 		071F8F2D2AFF95EF0011DBBC /* CommentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071F8F2C2AFF95EF0011DBBC /* CommentService.swift */; };
@@ -18,7 +21,6 @@
 		073CC3052AF1062A00EDD5AA /* WritingBoardService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073CC3042AF1062A00EDD5AA /* WritingBoardService.swift */; };
 		073CC3072AF228F500EDD5AA /* CommunityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073CC3062AF228F500EDD5AA /* CommunityViewModel.swift */; };
 		073CC3092AF22D3A00EDD5AA /* Boards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073CC3082AF22D3A00EDD5AA /* Boards.swift */; };
-		073CC30B2AF37E8F00EDD5AA /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073CC30A2AF37E8E00EDD5AA /* SplashViewController.swift */; };
 		073CC30D2AF38F2D00EDD5AA /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073CC30C2AF38F2D00EDD5AA /* AuthManager.swift */; };
 		0754607C2A7BB633004539F1 /* RegisterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0754607B2A7BB633004539F1 /* RegisterService.swift */; };
 		075FA47F2A8F3AEA002471C7 /* RegisterRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075FA47E2A8F3AEA002471C7 /* RegisterRequest.swift */; };
@@ -26,12 +28,18 @@
 		075FA4A72AA0701C002471C7 /* FindService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075FA4A62AA0701B002471C7 /* FindService.swift */; };
 		075FA4A92AA0764B002471C7 /* FindPwResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075FA4A82AA0764B002471C7 /* FindPwResponse.swift */; };
 		075FA4AB2AA70199002471C7 /* ChangePwRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075FA4AA2AA70199002471C7 /* ChangePwRequest.swift */; };
+		077F83452B4BDD060089571B /* NoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077F83442B4BDD060089571B /* NoticeViewController.swift */; };
+		077F83472B4BE8440089571B /* NoticeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 077F83462B4BE8440089571B /* NoticeTableViewCell.xib */; };
+		077F83492B4BE8C10089571B /* NoticeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077F83482B4BE8C10089571B /* NoticeTableViewCell.swift */; };
+		077F834B2B4EA00D0089571B /* NoticeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077F834A2B4EA00D0089571B /* NoticeViewModel.swift */; };
+		077F834D2B4FC6E40089571B /* Notice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077F834C2B4FC6E40089571B /* Notice.swift */; };
+		077F834F2B4FC8FE0089571B /* CustomAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 077F834E2B4FC8FE0089571B /* CustomAlertView.xib */; };
 		0787ADE92A3C429B00DEFE2A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0787ADE82A3C429B00DEFE2A /* AppDelegate.swift */; };
 		0787ADEB2A3C429B00DEFE2A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0787ADEA2A3C429B00DEFE2A /* SceneDelegate.swift */; };
 		0787ADED2A3C429B00DEFE2A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0787ADEC2A3C429B00DEFE2A /* LoginViewController.swift */; };
 		0787ADF02A3C429B00DEFE2A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0787ADEE2A3C429B00DEFE2A /* Main.storyboard */; };
 		0787ADF22A3C429B00DEFE2A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0787ADF12A3C429B00DEFE2A /* Assets.xcassets */; };
-		0787ADF52A3C429B00DEFE2A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0787ADF32A3C429B00DEFE2A /* LaunchScreen.storyboard */; };
+		0787ADF52A3C429B00DEFE2A /* SplashViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0787ADF32A3C429B00DEFE2A /* SplashViewController.storyboard */; };
 		0787AE012A3C47AA00DEFE2A /* AgreementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0787AE002A3C47AA00DEFE2A /* AgreementViewController.swift */; };
 		0787AE052A3EE44100DEFE2A /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0787AE042A3EE44100DEFE2A /* LoginViewModel.swift */; };
 		0787AE072A3EE93800DEFE2A /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0787AE062A3EE93800DEFE2A /* LoginResponse.swift */; };
@@ -88,6 +96,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0717A5462B4FEFA9000E91DA /* FCMService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FCMService.swift; sourceTree = "<group>"; };
+		0717A5482B4FEFE1000E91DA /* NotificationSettingRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingRequest.swift; sourceTree = "<group>"; };
+		0717A54A2B4FEFFD000E91DA /* FCMRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FCMRequest.swift; sourceTree = "<group>"; };
 		071DD3A32ADFA94B005151C9 /* PopularTableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PopularTableView.xib; sourceTree = "<group>"; };
 		071F8F282AFF78760011DBBC /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		071F8F2C2AFF95EF0011DBBC /* CommentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentService.swift; sourceTree = "<group>"; };
@@ -99,7 +110,6 @@
 		073CC3042AF1062A00EDD5AA /* WritingBoardService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WritingBoardService.swift; sourceTree = "<group>"; };
 		073CC3062AF228F500EDD5AA /* CommunityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityViewModel.swift; sourceTree = "<group>"; };
 		073CC3082AF22D3A00EDD5AA /* Boards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Boards.swift; sourceTree = "<group>"; };
-		073CC30A2AF37E8E00EDD5AA /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		073CC30C2AF38F2D00EDD5AA /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		0754607B2A7BB633004539F1 /* RegisterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterService.swift; sourceTree = "<group>"; };
 		075FA47E2A8F3AEA002471C7 /* RegisterRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterRequest.swift; sourceTree = "<group>"; };
@@ -107,13 +117,19 @@
 		075FA4A62AA0701B002471C7 /* FindService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindService.swift; sourceTree = "<group>"; };
 		075FA4A82AA0764B002471C7 /* FindPwResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindPwResponse.swift; sourceTree = "<group>"; };
 		075FA4AA2AA70199002471C7 /* ChangePwRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePwRequest.swift; sourceTree = "<group>"; };
+		077F83442B4BDD060089571B /* NoticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeViewController.swift; sourceTree = "<group>"; };
+		077F83462B4BE8440089571B /* NoticeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoticeTableViewCell.xib; sourceTree = "<group>"; };
+		077F83482B4BE8C10089571B /* NoticeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeTableViewCell.swift; sourceTree = "<group>"; };
+		077F834A2B4EA00D0089571B /* NoticeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeViewModel.swift; sourceTree = "<group>"; };
+		077F834C2B4FC6E40089571B /* Notice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notice.swift; sourceTree = "<group>"; };
+		077F834E2B4FC8FE0089571B /* CustomAlertView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomAlertView.xib; sourceTree = "<group>"; };
 		0787ADE52A3C429B00DEFE2A /* HighSchoolFish.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HighSchoolFish.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0787ADE82A3C429B00DEFE2A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0787ADEA2A3C429B00DEFE2A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		0787ADEC2A3C429B00DEFE2A /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		0787ADEF2A3C429B00DEFE2A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0787ADF12A3C429B00DEFE2A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		0787ADF42A3C429B00DEFE2A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		0787ADF42A3C429B00DEFE2A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/SplashViewController.storyboard; sourceTree = "<group>"; };
 		0787ADF62A3C429B00DEFE2A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0787AE002A3C47AA00DEFE2A /* AgreementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementViewController.swift; sourceTree = "<group>"; };
 		0787AE042A3EE44100DEFE2A /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
@@ -212,7 +228,7 @@
 				0787ADFF2A3C443300DEFE2A /* View */,
 				0787ADFE2A3C440E00DEFE2A /* ViewModel */,
 				0787ADF12A3C429B00DEFE2A /* Assets.xcassets */,
-				0787ADF32A3C429B00DEFE2A /* LaunchScreen.storyboard */,
+				0787ADF32A3C429B00DEFE2A /* SplashViewController.storyboard */,
 				0787ADF62A3C429B00DEFE2A /* Info.plist */,
 				0787AE102A40322B00DEFE2A /* KeyChain.swift */,
 				07ED74DA2A7B878700568C12 /* PreviewExtension.swift */,
@@ -231,6 +247,7 @@
 				073CC3042AF1062A00EDD5AA /* WritingBoardService.swift */,
 				07D1E93E2AF9F91E000268AB /* TokenService.swift */,
 				071F8F2C2AFF95EF0011DBBC /* CommentService.swift */,
+				0717A5462B4FEFA9000E91DA /* FCMService.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -254,6 +271,9 @@
 				073CC3022AF0F94700EDD5AA /* WritingBoardRequest.swift */,
 				073CC3082AF22D3A00EDD5AA /* Boards.swift */,
 				071F8F282AFF78760011DBBC /* Comment.swift */,
+				077F834C2B4FC6E40089571B /* Notice.swift */,
+				0717A5482B4FEFE1000E91DA /* NotificationSettingRequest.swift */,
+				0717A54A2B4FEFFD000E91DA /* FCMRequest.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -270,6 +290,7 @@
 				073CC3002AF0E9D800EDD5AA /* WritingBoardViewModel.swift */,
 				073CC3062AF228F500EDD5AA /* CommunityViewModel.swift */,
 				07D1E9402AFCA8C3000268AB /* DetailBoardViewModel.swift */,
+				077F834A2B4EA00D0089571B /* NoticeViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -308,13 +329,16 @@
 				07D7E0FB2ADFDA450080F31F /* CategoryView.swift */,
 				07A5A7132AEA3AB000245041 /* BoardImageCollectionViewCell.swift */,
 				07A5A7142AEA3AB000245041 /* BoardImageCollectionViewCell.xib */,
-				073CC30A2AF37E8E00EDD5AA /* SplashViewController.swift */,
 				07B5ECED2B1714DB000B9157 /* CommunityTableViewCell.xib */,
 				07B5ECEF2B1714E0000B9157 /* CommunityTableViewCell.swift */,
 				07B5ECE52B15FE7F000B9157 /* CommentTableViewCell.swift */,
 				07B5ECE62B15FE7F000B9157 /* CommentTableViewCell.xib */,
 				07B5ECE92B16012D000B9157 /* CommentTableHeaderView.xib */,
 				07B5ECEB2B16F57C000B9157 /* CommentTableHeaderView.swift */,
+				077F83442B4BDD060089571B /* NoticeViewController.swift */,
+				077F83462B4BE8440089571B /* NoticeTableViewCell.xib */,
+				077F83482B4BE8C10089571B /* NoticeTableViewCell.swift */,
+				077F834E2B4FC8FE0089571B /* CustomAlertView.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -398,12 +422,14 @@
 			files = (
 				07D7E0FA2ADFDA2D0080F31F /* CategoryView.xib in Resources */,
 				07A5A7162AEA3AB000245041 /* BoardImageCollectionViewCell.xib in Resources */,
+				077F834F2B4FC8FE0089571B /* CustomAlertView.xib in Resources */,
 				07C8CEB72A8CB56600FBB750 /* SchoolViewCell.xib in Resources */,
 				071DD3A42ADFA94B005151C9 /* PopularTableView.xib in Resources */,
 				07B5ECEA2B16012D000B9157 /* CommentTableHeaderView.xib in Resources */,
-				0787ADF52A3C429B00DEFE2A /* LaunchScreen.storyboard in Resources */,
+				0787ADF52A3C429B00DEFE2A /* SplashViewController.storyboard in Resources */,
 				07B5ECE82B15FE7F000B9157 /* CommentTableViewCell.xib in Resources */,
 				0787ADF22A3C429B00DEFE2A /* Assets.xcassets in Resources */,
+				077F83472B4BE8440089571B /* NoticeTableViewCell.xib in Resources */,
 				0787ADF02A3C429B00DEFE2A /* Main.storyboard in Resources */,
 				07B5ECEE2B1714DB000B9157 /* CommunityTableViewCell.xib in Resources */,
 			);
@@ -493,6 +519,9 @@
 				07A13C822A669CF700522B0B /* Observable.swift in Sources */,
 				0787AE152A40370D00DEFE2A /* HomeTabViewController.swift in Sources */,
 				073CC3012AF0E9D800EDD5AA /* WritingBoardViewModel.swift in Sources */,
+				077F834D2B4FC6E40089571B /* Notice.swift in Sources */,
+				0717A5472B4FEFA9000E91DA /* FCMService.swift in Sources */,
+				077F83492B4BE8C10089571B /* NoticeTableViewCell.swift in Sources */,
 				07D1E9412AFCA8C3000268AB /* DetailBoardViewModel.swift in Sources */,
 				0787AE1F2A456E6100DEFE2A /* ChangePWViewController.swift in Sources */,
 				07ED74DB2A7B878700568C12 /* PreviewExtension.swift in Sources */,
@@ -502,9 +531,10 @@
 				0787AE1D2A456E5100DEFE2A /* FindIDResultViewController.swift in Sources */,
 				0787AE232A456E7E00DEFE2A /* RegisterSchoolViewController.swift in Sources */,
 				071F8F2D2AFF95EF0011DBBC /* CommentService.swift in Sources */,
-				073CC30B2AF37E8F00EDD5AA /* SplashViewController.swift in Sources */,
 				073CC3072AF228F500EDD5AA /* CommunityViewModel.swift in Sources */,
+				077F83452B4BDD060089571B /* NoticeViewController.swift in Sources */,
 				0787AE352A4573B100DEFE2A /* AgreementViewModel.swift in Sources */,
+				0717A5492B4FEFE1000E91DA /* NotificationSettingRequest.swift in Sources */,
 				0787AE012A3C47AA00DEFE2A /* AgreementViewController.swift in Sources */,
 				0787AE1B2A456E4800DEFE2A /* FindPWViewController.swift in Sources */,
 				073CC3032AF0F94700EDD5AA /* WritingBoardRequest.swift in Sources */,
@@ -516,6 +546,7 @@
 				07B5ECF02B1714E0000B9157 /* CommunityTableViewCell.swift in Sources */,
 				075FA4A52AA06FAB002471C7 /* FindPwRequest.swift in Sources */,
 				0787AE092A3EE96700DEFE2A /* LoginService.swift in Sources */,
+				077F834B2B4EA00D0089571B /* NoticeViewModel.swift in Sources */,
 				0787AE132A40368A00DEFE2A /* MessageTabViewController.swift in Sources */,
 				073CC3052AF1062A00EDD5AA /* WritingBoardService.swift in Sources */,
 				0787AE332A456ED500DEFE2A /* DetailBoardViewController.swift in Sources */,
@@ -524,6 +555,7 @@
 				075FA4A72AA0701C002471C7 /* FindService.swift in Sources */,
 				07D1E93F2AF9F91E000268AB /* TokenService.swift in Sources */,
 				07A5A7182AEA529A00245041 /* CategoryViewModel.swift in Sources */,
+				0717A54B2B4FEFFD000E91DA /* FCMRequest.swift in Sources */,
 				0787AE0B2A3EEAD200DEFE2A /* LoginRequest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -539,12 +571,12 @@
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		0787ADF32A3C429B00DEFE2A /* LaunchScreen.storyboard */ = {
+		0787ADF32A3C429B00DEFE2A /* SplashViewController.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				0787ADF42A3C429B00DEFE2A /* Base */,
 			);
-			name = LaunchScreen.storyboard;
+			name = SplashViewController.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -682,7 +714,7 @@
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Album permissions for saving pictures";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = SplashViewController.storyboard;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -721,7 +753,7 @@
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Album permissions for saving pictures";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = SplashViewController.storyboard;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";

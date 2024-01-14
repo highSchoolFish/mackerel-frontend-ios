@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+// MARK: - SendFCM
+struct FCMRequest: Codable {
+    let title, body: String
+}
