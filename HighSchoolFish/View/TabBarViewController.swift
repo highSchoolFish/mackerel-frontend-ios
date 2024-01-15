@@ -41,6 +41,11 @@ class TabBarViewController: UITabBarController {
         viewControllers = [messageViewController, homeViewController, myPageViewController]
         self.setViewControllers(viewControllers, animated: true)
         configure()
+        
+        // 현재 자동로그인 하면 이 화면으로 오는데
+        // 이후에 로그인 되었음을 알게해주는 keychain에 token이 왔는지 확인해야함
+        // 만료되었으면 refresh 해줘야하고 --> 서버 통신할 때에 따로 해주면 될듯
+        // 로그아웃 해서 다시 로그인 VC로 돌아가기 위한 버튼 추가해야할듯?
     }
     
     private func configure(){

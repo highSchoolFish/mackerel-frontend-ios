@@ -12,27 +12,35 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        
-        
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
-            if let isAutoLogin = UserDefaults.standard.object(forKey: "autoLogin") {
-                if isAutoLogin as! Bool == true {
-                    // 자동로그인 T
-                    guard let windowScene = (scene as? UIWindowScene) else { return }
-                    let window = UIWindow(windowScene: windowScene)
-                    window.rootViewController = TabBarViewController()
-                    self.window = window
-                    window.makeKeyAndVisible()
-                }
-            }
-            print("autoLogin 저장값 없음")
-            
-            guard let windowScene = (scene as? UIWindowScene) else { return }
-            let window = UIWindow(windowScene: windowScene)
-            window.rootViewController = LoginViewController()
-            self.window = window
-            window.makeKeyAndVisible()
+        for (key, value) in UserDefaults.standard.dictionaryRepresentation() {
+            print("\(key) = \(value) \n")
         }
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
+            if UserDefaults.standard.bool(forKey: "autoLogin") == true {
+                // 자동로그인 T
+                print("autoLogin true")
+                guard let windowScene = (scene as? UIWindowScene) else { return }
+                let window = UIWindow(windowScene: windowScene)
+                window.rootViewController = TabBarViewController()
+                self.window = window
+                window.makeKeyAndVisible()
+            }
+            else {
+                print("autoLogin false")
+                guard let windowScene = (scene as? UIWindowScene) else { return }
+                let window = UIWindow(windowScene: windowScene)
+                window.rootViewController = LoginViewController()
+                self.window = window
+                window.makeKeyAndVisible()
+            }
+        }
+        
+        //        guard let windowScene = (scene as? UIWindowScene) else { return }
+        //        let window = UIWindow(windowScene: windowScene)
+        //        window.rootViewController = LoginViewController()
+        //        self.window = window
+        //        window.makeKeyAndVisible()
+        //
     }
     
     

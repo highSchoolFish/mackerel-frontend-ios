@@ -49,6 +49,7 @@ class LoginViewModel {
     
     func loginButtonTapped() {
         // 유효성 검사 할라면
+        print("auto check \(self.autoLoginBool)")
         guard !emailString.isEmpty && !passwordString.isEmpty else {
             
             // 근데 내가 짠거에서는 여기 들어갈 수가 없어
@@ -86,14 +87,19 @@ class LoginViewModel {
                     
                     if self.autoLoginBool == true {
                         UserDefaults.standard.set(true, forKey: "autoLogin")
+                        print("저장 완료 true")
                     }
                     else {
                         UserDefaults.standard.set(false, forKey: "autoLogin")
+                        print("저장 완료 false")
+
                     }
                     
                     KeyChain.shared.create("api/v1/auth/token", account: "accessToken", value: accessToken)
                     KeyChain.shared.create("api/v1/auth/token", account: "refreshToken", value: refreshToken)
                     self.loginStatus = .authenticated
+                    
+                    print("test", UserDefaults.standard.bool(forKey: "autoLogin"))
                     
                 case .failure(let error):
                     print("통신실패")

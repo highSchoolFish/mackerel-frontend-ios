@@ -227,8 +227,8 @@ final class LoginViewController: UIViewController {
     
     // MARK: - 로그인 버튼 눌림 ===> 뷰모델에 전달 ⭐️⭐️⭐️ (Input)
     @objc func loginButtonTapped() {
-        LoginViewModel.shared.loginButtonTapped()
         LoginViewModel.shared.setAutoLoginBool(self.autoLoginButton.isSelected)
+        LoginViewModel.shared.loginButtonTapped()
         handleLoginProcess()
     }
     
