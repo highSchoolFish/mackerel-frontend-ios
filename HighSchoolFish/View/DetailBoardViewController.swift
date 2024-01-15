@@ -671,6 +671,9 @@ class DetailBoardViewController: UIViewController {
     
     @objc private func menuButtonTapped() {
         print("menu button tapped")
+        let bottomSheetVC = BoardBottomSheetViewController()
+        bottomSheetVC.modalPresentationStyle = .overFullScreen
+        self.present(bottomSheetVC, animated: false, completion: nil)
     }
     
     @objc func likeButtonTapped() {

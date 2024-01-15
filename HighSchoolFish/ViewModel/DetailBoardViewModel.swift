@@ -54,7 +54,7 @@ class DetailBoardViewModel {
     func getDetailBoard() {
         print("getDetailBoard in")
         // 특수문자 encoding 해야함
-        let path = "http://high-school-fish.com:8080/api/v1/schools/boards/\(boardIdString)"
+        let path = "http://43.203.76.213:8080/api/v1/schools/boards/\(boardIdString)"
         print(path)
         guard let encodedStr = path.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return }
         

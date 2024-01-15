@@ -18,9 +18,7 @@ extension FCMService: TargetType {
     
     var baseURL: URL {
         // Test Server
-        return URL(string: "http://high-school-fish.com:8080")!
-        // Mock Server
-//        return URL(string: "https://ce0f4e94-cb49-46fc-a25f-f362fd1a4124.mock.pstmn.io")!
+        return URL(string: "http://43.203.76.213:8080")!
     }
     
     var path: String {

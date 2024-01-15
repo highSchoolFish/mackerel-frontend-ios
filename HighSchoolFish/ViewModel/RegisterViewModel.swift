@@ -392,9 +392,10 @@ class RegisterViewModel {
         // tableView에 데이터 넣어야함
         // School 모델에
         // network검색 여기서
+        
         print("getSchoolInfo")
         print("schoolName \(schoolNameString)")
-        let path = "http://high-school-fish.com:8080/api/v1/schools/\(schoolNameString)"
+        let path = "http://43.203.76.213:8080/api/v1/schools/\(schoolNameString)"
         guard let encodedStr = path.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return }
         
         let url = URL(string: encodedStr)!

@@ -22,7 +22,6 @@ class FindPWViewController: UIViewController {
         return naviBar
     }()
     
-    
     private lazy var backButton: UIBarButtonItem = {
         let button = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(backAction))
         button.tag = 1

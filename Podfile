@@ -6,12 +6,9 @@ target 'HighSchoolFish' do
   use_frameworks!
 
   # Pods for HighSchoolFish
-  pod 'Moya'
-  pod 'Alamofire'
   pod 'SwiftyJSON'
-  pod 'JWTDecode', '~> 3.0'
-  pod 'BSImagePicker', '~> 3.1'
+  pod 'JWTDecode', '~>3.0'
+  pod 'BSImagePicker','~>3.1'
   pod 'SideMenu'
   pod 'SafeAreaBrush'
-  pod 'Firebase/Messaging'
 end

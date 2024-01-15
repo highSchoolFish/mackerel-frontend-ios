@@ -17,7 +17,7 @@ enum CertificationService {
 extension CertificationService: TargetType {
     
     var baseURL: URL {
-        return URL(string: "http://high-school-fish.com:8080")!
+        return URL(string: "http://43.203.76.213:8080")!
     }
     
     var path: String {

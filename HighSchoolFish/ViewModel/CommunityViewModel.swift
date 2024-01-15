@@ -27,7 +27,7 @@ class CommunityViewModel {
     func getCategory() {
         print("categoryName")
         print("\(communityNameString), \(categoryNameString)")
-        let path = "http://high-school-fish.com:8080/api/v1/\(communityNameString)/boards/category/\(categoryNameString)"
+        let path = "http://43.203.76.213:8080/api/v1/\(communityNameString)/boards/category/\(categoryNameString)"
         guard let encodedStr = path.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return }
         
         let url = URL(string: encodedStr)!

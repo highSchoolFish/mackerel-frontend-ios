@@ -8,6 +8,7 @@
 import Foundation
 import Moya
 import Alamofire
+import UIKit
 
 class FindViewModel {
     
@@ -149,7 +150,7 @@ class FindViewModel {
         let suffixPhoneNumberString = phoneNumberString.suffix(8)
         print(suffixPhoneNumberString)
         
-        let path = "http://high-school-fish.com:8080/api/v1/members/name/\(nameString)/phone/\(suffixPhoneNumberString)"
+        let path = "http://43.203.76.213:8080/api/v1/members/name/\(nameString)/phone/\(suffixPhoneNumberString)"
         guard let encodedStr = path.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return }
         
         let url = URL(string: encodedStr)!
