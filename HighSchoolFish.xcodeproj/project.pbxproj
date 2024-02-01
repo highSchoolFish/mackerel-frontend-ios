@@ -127,6 +127,7 @@
 		07E87D642B67B94600D5A2D9 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 07E87D632B67B94600D5A2D9 /* Lottie */; };
 		07E87D6B2B6B8BAA00D5A2D9 /* MemberInfoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E87D6A2B6B8BAA00D5A2D9 /* MemberInfoResponse.swift */; };
 		07E87D6D2B6B8D2900D5A2D9 /* MemberInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E87D6C2B6B8D2900D5A2D9 /* MemberInfoViewModel.swift */; };
+		07E87D6F2B6BA97000D5A2D9 /* BoardMenuService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E87D6E2B6BA97000D5A2D9 /* BoardMenuService.swift */; };
 		07ED74DB2A7B878700568C12 /* PreviewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07ED74DA2A7B878700568C12 /* PreviewExtension.swift */; };
 		D0F4513D4F61A66CFF485838 /* Pods_HighSchoolFish.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A3C611A54ACCD33140CD42A /* Pods_HighSchoolFish.framework */; };
 /* End PBXBuildFile section */
@@ -222,6 +223,7 @@
 		07D7E0FB2ADFDA450080F31F /* CategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
 		07E87D6A2B6B8BAA00D5A2D9 /* MemberInfoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberInfoResponse.swift; sourceTree = "<group>"; };
 		07E87D6C2B6B8D2900D5A2D9 /* MemberInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberInfoViewModel.swift; sourceTree = "<group>"; };
+		07E87D6E2B6BA97000D5A2D9 /* BoardMenuService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardMenuService.swift; sourceTree = "<group>"; };
 		07ED74DA2A7B878700568C12 /* PreviewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewExtension.swift; sourceTree = "<group>"; };
 		3C5E49F49C3305B7AE1D5224 /* Pods-HighSchoolFish.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HighSchoolFish.debug.xcconfig"; path = "Target Support Files/Pods-HighSchoolFish/Pods-HighSchoolFish.debug.xcconfig"; sourceTree = "<group>"; };
 		9724AFCC7E013FC76EF48DE9 /* Pods-HighSchoolFish.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HighSchoolFish.release.xcconfig"; path = "Target Support Files/Pods-HighSchoolFish/Pods-HighSchoolFish.release.xcconfig"; sourceTree = "<group>"; };
@@ -323,6 +325,7 @@
 				07D1E93E2AF9F91E000268AB /* TokenService.swift */,
 				071F8F2C2AFF95EF0011DBBC /* CommentService.swift */,
 				0717A5462B4FEFA9000E91DA /* FCMService.swift */,
+				07E87D6E2B6BA97000D5A2D9 /* BoardMenuService.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -606,6 +609,7 @@
 				0787AE112A40322B00DEFE2A /* KeyChain.swift in Sources */,
 				073CC30D2AF38F2D00EDD5AA /* AuthManager.swift in Sources */,
 				0787AE372A556F2D00DEFE2A /* RegisterViewModel.swift in Sources */,
+				07E87D6F2B6BA97000D5A2D9 /* BoardMenuService.swift in Sources */,
 				0787AE272A456E9600DEFE2A /* RegisterViewController.swift in Sources */,
 				0787AE2B2A456EAF00DEFE2A /* NotificationViewController.swift in Sources */,
 				07D7E0F82ADFAEE50080F31F /* PopularTableView.swift in Sources */,

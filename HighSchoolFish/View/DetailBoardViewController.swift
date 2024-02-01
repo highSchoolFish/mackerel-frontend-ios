@@ -456,6 +456,15 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
         self.recommandLabel.text = "추천 \(board.numberOfLikes)"
         self.viewsLabel.text = "조회 \(board.views)"
         
+        if board.isWriter {
+            // 본인
+            DetailBoardViewModel.shared.isWriter = true
+        }
+        else {
+            // 일반
+            DetailBoardViewModel.shared.isWriter = false
+        }
+        
         let photosCount = board.photos.count
         if photosCount == 1 {
             // 1장 photosView 하나 통으로
@@ -714,24 +723,22 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
         self.addChild(bottomSheetVC)
         self.view.addSubview(bottomSheetVC.view)
         
-        let sheetWidth = self.view.frame.width
-        let sheetHeight = 180
-        
-        let yPos = self.view.frame.height - CGFloat(sheetHeight)
-        
-        // 사이드 메뉴의 시작 위치를 화면 왼쪽 바깥으로 설정.
+        let sheetWidth = self.view.frame.width // 메뉴의 너비를 전체 뷰의 너비로 설정합니다.
+        let sheetHeight: CGFloat = 150 // 메뉴의 높이를 200으로 설정합니다.
 
-        bottomSheetVC.view.frame = CGRect(x: 0, y: yPos, width: sheetWidth, height: CGFloat(sheetHeight))
-        
+        // 사이드 메뉴의 시작 위치를 화면 하단 바로 아래로 설정합니다.
+        let startPos = self.view.frame.height // 화면 하단의 y 위치
+        bottomSheetVC.view.frame = CGRect(x: 0, y: startPos, width: sheetWidth, height: sheetHeight)
+
         // 어두운 배경 뷰를 보이게 합니다.
         self.dimmingView?.isHidden = false
         self.dimmingView?.alpha = 0
-        
         UIView.animate(withDuration: 0.3, animations: {
-            // 사이드 메뉴를 화면에 표시.
-            bottomSheetVC.view.frame = CGRect(x: 0, y: yPos, width: sheetWidth, height: CGFloat(sheetHeight))
-            // 어두운 배경 뷰의 투명도를 조절.
-            self.dimmingView?.alpha = 0.5
+            let endPos = self.view.frame.height - sheetHeight // 화면 하단에서 메뉴 높이를 뺀 y 위치
+                bottomSheetVC.view.frame = CGRect(x: 0, y: endPos, width: sheetWidth, height: sheetHeight)
+                
+                // 어두운 배경 뷰의 투명도를 조절합니다.
+                self.dimmingView?.alpha = 0.5
         })
     }
     

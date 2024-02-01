@@ -9,20 +9,20 @@ import UIKit
 import SwiftUI
 
 class BoardBottomSheetViewController: UIViewController {
-    private lazy var bottomSheetView: UIView = {
-        let view = UIView()
+
+    private lazy var bottomView: UIView = {
+        var view = UIView()
         view.addSubview(bottomStackView)
-        view.backgroundColor = .white
-        view.clipsToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     private lazy var bottomStackView: UIStackView = {
-        var stView = UIStackView() 
+        var stView = UIStackView()
         stView.addArrangedSubview(editButton)
         stView.addArrangedSubview(shareButton)
         stView.addArrangedSubview(deleteButton)
+        stView.addArrangedSubview(reportButton)
         stView.axis = .vertical
         stView.distribution = .fillEqually
         stView.translatesAutoresizingMaskIntoConstraints = false
@@ -30,59 +30,110 @@ class BoardBottomSheetViewController: UIViewController {
     }()
     
     private lazy var editButton: UIButton = {
-        var button = UIButton(type: .custom)
-        button.titleLabel?.text = "수정하기"
-        button.setTitleColor(.blue, for: .normal)
+        var button = UIButton()
+        button.setTitle("수정하기", for: .normal)
+        button.setTitleColor(UIColor(named: "blue"), for: .normal)
         button.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
+        button.contentHorizontalAlignment = .left
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
     private lazy var shareButton: UIButton = {
-        var button = UIButton(type: .custom)
-        button.titleLabel?.text = "공유하기"
+        var button = UIButton()
         button.setTitleColor(.black, for: .normal)
+        button.setTitle("공유하기", for: .normal)
+        button.contentHorizontalAlignment = .left
+        button.addTarget(self, action: #selector(shareButtonTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
     private lazy var deleteButton: UIButton = {
-        var button = UIButton(type: .custom)
-        button.titleLabel?.text = "삭제하기"
-        button.setTitleColor(.red, for: .normal)
+        var button = UIButton()
+        button.setTitleColor(UIColor(named: "red"), for: .normal)
+        button.setTitle("삭제하기", for: .normal)
+        button.contentHorizontalAlignment = .left
+        button.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    private lazy var reportButton: UIButton = {
+        var button = UIButton()
+        button.setTitleColor(UIColor(named: "red"), for: .normal)
+        button.setTitle("신고하기", for: .normal)
+        button.contentHorizontalAlignment = .left
+        button.addTarget(self, action: #selector(reportButtonTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(bottomSheetView)
+        view.backgroundColor = .white
+        view.addSubview(bottomView)
+        
+        let isWriter = DetailBoardViewModel.shared.isWriter
+        
+        if isWriter {
+            // true 작성자 본인
+            editButton.isHidden = false
+            deleteButton.isHidden = false
+            shareButton.isHidden = false
+            reportButton.isHidden = true
+        }
+        else {
+            // false 일반인
+            editButton.isHidden = true
+            deleteButton.isHidden = true
+            shareButton.isHidden = false
+            reportButton.isHidden = false
+        }
+        setAutoLayout()
+        // 내 글이면 수정하기, 공유하기, 삭제하기 보이게
     }
     
     private func setAutoLayout() {
         NSLayoutConstraint.activate([
-            bottomSheetView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            bottomSheetView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            bottomSheetView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            bottomSheetView.topAnchor.constraint(equalTo: view.topAnchor),
-            bottomSheetView.heightAnchor.constraint(equalToConstant: 150),
+            bottomView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            bottomView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            bottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0),
+            bottomView.heightAnchor.constraint(equalToConstant: 150),
             
-            bottomStackView.leadingAnchor.constraint(equalTo: bottomSheetView.leadingAnchor),
-            bottomStackView.trailingAnchor.constraint(equalTo: bottomSheetView.trailingAnchor),
-            bottomStackView.bottomAnchor.constraint(equalTo: bottomSheetView.bottomAnchor),
-            bottomStackView.topAnchor.constraint(equalTo: bottomSheetView.topAnchor),
-            
-            editButton.leadingAnchor.constraint(equalTo: bottomStackView.leadingAnchor, constant: 0),
-            editButton.trailingAnchor.constraint(equalTo: bottomStackView.trailingAnchor, constant: 0),
-            shareButton.leadingAnchor.constraint(equalTo: bottomStackView.leadingAnchor, constant: 0),
-            shareButton.trailingAnchor.constraint(equalTo: bottomStackView.trailingAnchor, constant: 0),
-            deleteButton.leadingAnchor.constraint(equalTo: bottomStackView.leadingAnchor, constant: 0),
-            deleteButton.trailingAnchor.constraint(equalTo: bottomStackView.trailingAnchor, constant: 0)
+            bottomStackView.leadingAnchor.constraint(equalTo: bottomView.leadingAnchor, constant: 16),
+            bottomStackView.trailingAnchor.constraint(equalTo: bottomView.trailingAnchor,constant: 16),
+            bottomStackView.bottomAnchor.constraint(equalTo: bottomView.bottomAnchor),
+            bottomStackView.topAnchor.constraint(equalTo: bottomView.topAnchor)
         ])
     }
     
     @objc private func editButtonTapped(){
-        print("edit button tapped")
+        print("editButtonTapped")
+//        게시판 수정 화면으로 넘어감
+    }
+    
+    @objc private func shareButtonTapped(){
+        print("shareButtonTapped")
+//        url 이 공유됨
+//        url 클릭 시
+//        : 앱이 있는 경우 해당 게시글로 이동
+//        : 앱이 없는 경우 앱스토어/구글스토어로 이동
+//        (우린 이 경우 무시)
+        
+    }
+    
+    @objc private func deleteButtonTapped(){
+        print("deleteButtonTapped")
+//        '삭제하겠습니까' 얼럿뜸
+        
+    }
+    
+    @objc private func reportButtonTapped(){
+        print("reportButtonTapped")
+//        이유 작성 없이 바로 신고 접수되는 걸로..
+        DetailBoardViewModel.shared.reportButtonTapped()
+        
         
     }
 }

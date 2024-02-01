@@ -18,6 +18,7 @@ class DetailBoardViewModel {
     private var isAnonymous: Bool = false
     private var headerSection: Int = 99999
     var comments: [CommentContent] = []
+    var isWriter: Bool = false
     
     var getBoardComplete: ((Bool) -> Void)?
     var onBoardComplete: ((Boards) -> Void)?
@@ -164,6 +165,23 @@ class DetailBoardViewModel {
             }
         }
         
+    }
+    
+    func reportButtonTapped() {
+        let provider = MoyaProvider<BoardMenuService>(session: Session(interceptor: AuthManager()))
+        
+        provider.request(BoardMenuService.report(id: boardIdString)) { result in
+            switch result {
+            case let .success(response):
+                print("통신성공")
+                let data = response
+                print("response \(data)")
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+            
+        }
     }
     
 }
