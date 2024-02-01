@@ -554,7 +554,7 @@ class RegisterViewModel {
         let encoder = JSONEncoder()
         encoder.keyEncodingStrategy = .convertToSnakeCase // Use snake case for keys
         encoder.outputFormatting = .prettyPrinted // Add indentation and line breaks for readability
-        
+    
         do {
             let jsonData = try encoder.encode(params)
             if let jsonString = String(data: jsonData, encoding: .utf8) {

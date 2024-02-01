@@ -101,6 +101,7 @@ class LoginViewModel {
                     
                     print("test", UserDefaults.standard.bool(forKey: "autoLogin"))
                     
+                    
                 case .failure(let error):
                     print("통신실패")
                     print(error.localizedDescription)
@@ -110,8 +111,6 @@ class LoginViewModel {
                     //                    HttpStatusClass().HttpStatusException(from: error.response!)
                     //                        HttpStatusException(from: error.response!)
                 }
-                
-                
             }
             
         }
@@ -119,11 +118,4 @@ class LoginViewModel {
             print("미인증 아이디")
         }
     }
-    
-    // Logic
-    func getMainViewModel() -> MainViewModel {
-        let mainVM = MainViewModel(userEmail: self.emailString)
-        return mainVM
-    }
-    
 }

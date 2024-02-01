@@ -48,7 +48,6 @@
 		0787AE092A3EE96700DEFE2A /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0787AE082A3EE96700DEFE2A /* LoginService.swift */; };
 		0787AE0B2A3EEAD200DEFE2A /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0787AE0A2A3EEAD200DEFE2A /* LoginRequest.swift */; };
 		0787AE0D2A3EF0AA00DEFE2A /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0787AE0C2A3EF0AA00DEFE2A /* TabBarViewController.swift */; };
-		0787AE0F2A3EF13C00DEFE2A /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0787AE0E2A3EF13C00DEFE2A /* MainViewModel.swift */; };
 		0787AE112A40322B00DEFE2A /* KeyChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0787AE102A40322B00DEFE2A /* KeyChain.swift */; };
 		0787AE132A40368A00DEFE2A /* MessageTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0787AE122A40368A00DEFE2A /* MessageTabViewController.swift */; };
 		0787AE152A40370D00DEFE2A /* HomeTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0787AE142A40370D00DEFE2A /* HomeTabViewController.swift */; };
@@ -125,6 +124,9 @@
 		07D7E0F82ADFAEE50080F31F /* PopularTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D7E0F72ADFAEE50080F31F /* PopularTableView.swift */; };
 		07D7E0FA2ADFDA2D0080F31F /* CategoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07D7E0F92ADFDA2D0080F31F /* CategoryView.xib */; };
 		07D7E0FC2ADFDA450080F31F /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D7E0FB2ADFDA450080F31F /* CategoryView.swift */; };
+		07E87D642B67B94600D5A2D9 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 07E87D632B67B94600D5A2D9 /* Lottie */; };
+		07E87D6B2B6B8BAA00D5A2D9 /* MemberInfoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E87D6A2B6B8BAA00D5A2D9 /* MemberInfoResponse.swift */; };
+		07E87D6D2B6B8D2900D5A2D9 /* MemberInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E87D6C2B6B8D2900D5A2D9 /* MemberInfoViewModel.swift */; };
 		07ED74DB2A7B878700568C12 /* PreviewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07ED74DA2A7B878700568C12 /* PreviewExtension.swift */; };
 		D0F4513D4F61A66CFF485838 /* Pods_HighSchoolFish.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A3C611A54ACCD33140CD42A /* Pods_HighSchoolFish.framework */; };
 /* End PBXBuildFile section */
@@ -173,7 +175,6 @@
 		0787AE082A3EE96700DEFE2A /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
 		0787AE0A2A3EEAD200DEFE2A /* LoginRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequest.swift; sourceTree = "<group>"; };
 		0787AE0C2A3EF0AA00DEFE2A /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
-		0787AE0E2A3EF13C00DEFE2A /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		0787AE102A40322B00DEFE2A /* KeyChain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChain.swift; sourceTree = "<group>"; };
 		0787AE122A40368A00DEFE2A /* MessageTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTabViewController.swift; sourceTree = "<group>"; };
 		0787AE142A40370D00DEFE2A /* HomeTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabViewController.swift; sourceTree = "<group>"; };
@@ -219,6 +220,8 @@
 		07D7E0F72ADFAEE50080F31F /* PopularTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularTableView.swift; sourceTree = "<group>"; };
 		07D7E0F92ADFDA2D0080F31F /* CategoryView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoryView.xib; sourceTree = "<group>"; };
 		07D7E0FB2ADFDA450080F31F /* CategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
+		07E87D6A2B6B8BAA00D5A2D9 /* MemberInfoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberInfoResponse.swift; sourceTree = "<group>"; };
+		07E87D6C2B6B8D2900D5A2D9 /* MemberInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberInfoViewModel.swift; sourceTree = "<group>"; };
 		07ED74DA2A7B878700568C12 /* PreviewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewExtension.swift; sourceTree = "<group>"; };
 		3C5E49F49C3305B7AE1D5224 /* Pods-HighSchoolFish.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HighSchoolFish.debug.xcconfig"; path = "Target Support Files/Pods-HighSchoolFish/Pods-HighSchoolFish.debug.xcconfig"; sourceTree = "<group>"; };
 		9724AFCC7E013FC76EF48DE9 /* Pods-HighSchoolFish.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HighSchoolFish.release.xcconfig"; path = "Target Support Files/Pods-HighSchoolFish/Pods-HighSchoolFish.release.xcconfig"; sourceTree = "<group>"; };
@@ -253,6 +256,7 @@
 				0791ED782B53D3B1007D241D /* FirebaseMessaging in Frameworks */,
 				D0F4513D4F61A66CFF485838 /* Pods_HighSchoolFish.framework in Frameworks */,
 				0791ED822B53D3B1007D241D /* FirebaseStorageCombine-Community in Frameworks */,
+				07E87D642B67B94600D5A2D9 /* Lottie in Frameworks */,
 				0791ED682B53D3B1007D241D /* FirebaseFirestoreCombine-Community in Frameworks */,
 				0791ED722B53D3B1007D241D /* FirebaseInAppMessagingSwift-Beta in Frameworks */,
 				0791ED502B53D3B1007D241D /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
@@ -345,6 +349,7 @@
 				077F834C2B4FC6E40089571B /* Notice.swift */,
 				0717A5482B4FEFE1000E91DA /* NotificationSettingRequest.swift */,
 				0717A54A2B4FEFFD000E91DA /* FCMRequest.swift */,
+				07E87D6A2B6B8BAA00D5A2D9 /* MemberInfoResponse.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -353,7 +358,6 @@
 			isa = PBXGroup;
 			children = (
 				0787AE042A3EE44100DEFE2A /* LoginViewModel.swift */,
-				0787AE0E2A3EF13C00DEFE2A /* MainViewModel.swift */,
 				0787AE342A4573B100DEFE2A /* AgreementViewModel.swift */,
 				0787AE362A556F2D00DEFE2A /* RegisterViewModel.swift */,
 				07C8CEC22A8DF5EE00FBB750 /* FindViewModel.swift */,
@@ -362,6 +366,7 @@
 				073CC3062AF228F500EDD5AA /* CommunityViewModel.swift */,
 				07D1E9402AFCA8C3000268AB /* DetailBoardViewModel.swift */,
 				077F834A2B4EA00D0089571B /* NoticeViewModel.swift */,
+				07E87D6C2B6B8D2900D5A2D9 /* MemberInfoViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -483,6 +488,7 @@
 				0791ED7D2B53D3B1007D241D /* FirebaseRemoteConfigSwift */,
 				0791ED7F2B53D3B1007D241D /* FirebaseStorage */,
 				0791ED812B53D3B1007D241D /* FirebaseStorageCombine-Community */,
+				07E87D632B67B94600D5A2D9 /* Lottie */,
 			);
 			productName = HighSchoolFish_MVVM;
 			productReference = 0787ADE52A3C429B00DEFE2A /* HighSchoolFish.app */;
@@ -516,6 +522,7 @@
 				0791ED362B53CB7B007D241D /* XCRemoteSwiftPackageReference "Alamofire" */,
 				0791ED392B53CBCC007D241D /* XCRemoteSwiftPackageReference "Moya" */,
 				0791ED4C2B53D3B1007D241D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				07E87D622B67B94600D5A2D9 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			productRefGroup = 0787ADE62A3C429B00DEFE2A /* Products */;
 			projectDirPath = "";
@@ -614,7 +621,6 @@
 				07C8CEBB2A8CBDE800FBB750 /* CertificationService.swift in Sources */,
 				07C8CEBF2A8CBE2900FBB750 /* ConfirmCertificationNumberRequest.swift in Sources */,
 				0787AE0D2A3EF0AA00DEFE2A /* TabBarViewController.swift in Sources */,
-				0787AE0F2A3EF13C00DEFE2A /* MainViewModel.swift in Sources */,
 				07C8CEC52A8E136D00FBB750 /* FindIdResponse.swift in Sources */,
 				07D7E0FC2ADFDA450080F31F /* CategoryView.swift in Sources */,
 				0787AE172A40371800DEFE2A /* MyPageTabViewController.swift in Sources */,
@@ -624,6 +630,7 @@
 				07C8CEBD2A8CBE1000FBB750 /* SendCertificationNumberRequest.swift in Sources */,
 				0754607C2A7BB633004539F1 /* RegisterService.swift in Sources */,
 				0787AE2F2A456EC100DEFE2A /* WebViewController.swift in Sources */,
+				07E87D6D2B6B8D2900D5A2D9 /* MemberInfoViewModel.swift in Sources */,
 				0787AE3B2A652FC100DEFE2A /* RegisterPageData.swift in Sources */,
 				0787AE192A456E3F00DEFE2A /* FindIDViewController.swift in Sources */,
 				071F8F292AFF78760011DBBC /* Comment.swift in Sources */,
@@ -654,6 +661,7 @@
 				07C8CEB52A8CA45A00FBB750 /* School.swift in Sources */,
 				0787AE212A456E7400DEFE2A /* RegisterUserInfoViewController.swift in Sources */,
 				075FA4A92AA0764B002471C7 /* FindPwResponse.swift in Sources */,
+				07E87D6B2B6B8BAA00D5A2D9 /* MemberInfoResponse.swift in Sources */,
 				07C8CEB92A8CB63000FBB750 /* SchoolViewCell.swift in Sources */,
 				072FFAE02AB9722100A07FA7 /* NationwideCommunityViewController.swift in Sources */,
 				07B5ECF02B1714E0000B9157 /* CommunityTableViewCell.swift in Sources */,
@@ -943,6 +951,14 @@
 				minimumVersion = 10.19.1;
 			};
 		};
+		07E87D622B67B94600D5A2D9 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.4.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1105,6 +1121,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0791ED4C2B53D3B1007D241D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseStorageCombine-Community";
+		};
+		07E87D632B67B94600D5A2D9 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 07E87D622B67B94600D5A2D9 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

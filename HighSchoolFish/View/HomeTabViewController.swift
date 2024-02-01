@@ -517,6 +517,8 @@ class HomeTabViewController: UIViewController {
         setShadow()
         addDimmingView()
         
+        
+        
     }
     
     private func configure() {
@@ -534,6 +536,11 @@ class HomeTabViewController: UIViewController {
         
         let gesture = UIPanGestureRecognizer(target: self, action: #selector(type(of: self).wasDragged(gestureRecognizer:)))
         cardView.addGestureRecognizer(gesture)
+        
+        MemberInfoViewModel.shared.decodeJWT()
+        MemberInfoViewModel.shared.getUserInfo()
+        
+        setCardUI()
         
     }
     
@@ -703,6 +710,33 @@ class HomeTabViewController: UIViewController {
             
             
         ])
+    }
+    
+    private func setCardUI() {
+        var userName = MemberInfoViewModel.shared.userNameString
+        var userProfile = MemberInfoViewModel.shared.userProfileString
+        var userGrade = MemberInfoViewModel.shared.userGradeString
+        var userNickname = MemberInfoViewModel.shared.userNicknameString
+        var userSchoolName = MemberInfoViewModel.shared.userSchoolNameString
+        
+        self.cardNameLabel.text = userName
+        
+        if userProfile == "" {
+            self.cardImageView.image = UIImage(named: "profileIcon")
+        }
+        else {
+            // userProfile 기본 아닌 경우
+        }
+        
+        if userGrade == "HIGH_FIRST" {
+            self.cardGradeLabel.text = "1학년"
+        }else if userGrade == "HIGH_SECOND" {
+            self.cardGradeLabel.text = "2학년"
+        }else if userGrade == "HIGH_THIRD" {
+            self.cardGradeLabel.text = "3학년"
+        }
+        
+        self.cardSchoolNameLabel.text = userSchoolName
     }
     
     private func cardClose() {

@@ -13,8 +13,8 @@ class CommunityViewModel {
     static let shared = CommunityViewModel()
     var onBoardsResult: (([Boards]) -> Void)?
 
-    private var categoryNameString: String = ""
-    private var communityNameString: String = ""
+    var categoryNameString: String = ""
+    var communityNameString: String = ""
     
     func setCategoryNameString(_ categoryNameString: String) {
         self.categoryNameString = categoryNameString
@@ -41,6 +41,7 @@ class CommunityViewModel {
         .validate(statusCode: 200..<300)
         .responseJSON { (response) in
             let result = response.result
+            print(header)
             var boardsResult = [Boards]()
             switch result {
             case .success(let value as [String:Any]) :

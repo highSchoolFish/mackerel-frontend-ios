@@ -170,9 +170,6 @@ class CommunityViewController: UIViewController {
         view.addSubview(tableView)
         view.addSubview(writingButton)
         view.addSubview(goUpButton)
-        
-        
-        
     }
     
     private func setautoLayout() {

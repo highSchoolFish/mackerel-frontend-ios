@@ -169,6 +169,7 @@ class MySchoolCommunityViewController: UIViewController {
         configure()
         setupAutoLayout()
         setShadow()
+        CommunityViewModel.shared.setCommunityNameString("schools")
         handleCategoryPresent()
     }
     
@@ -266,6 +267,30 @@ class MySchoolCommunityViewController: UIViewController {
             case .free:
                    print("categoryName: free")
                 CommunityViewModel.shared.setCategoryNameString("자유")
+                let vc = CommunityViewController()
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: true)
+            case .academy:
+                   print("categoryName: academy")
+                CommunityViewModel.shared.setCategoryNameString("학원")
+                let vc = CommunityViewController()
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: true)
+            case .university:
+                   print("categoryName: university")
+                CommunityViewModel.shared.setCategoryNameString("대학")
+                let vc = CommunityViewController()
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: true)
+            case .secret:
+                   print("categoryName: secret")
+                CommunityViewModel.shared.setCategoryNameString("비밀")
+                let vc = CommunityViewController()
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: true)
+            case .heart:
+                   print("categoryName: heart")
+                CommunityViewModel.shared.setCategoryNameString("연애")
                 let vc = CommunityViewController()
                 vc.modalPresentationStyle = .fullScreen
                 self.present(vc, animated: true)

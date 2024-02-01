@@ -19,7 +19,6 @@ enum CategoryName {
 class CategoryViewModel {
     static let shared = CategoryViewModel()
     
-    // 로그인 상태 데이터 ⭐️⭐️⭐️
     private var categoryName: CategoryName = .none {
         didSet {
             categoryNameChanged(categoryName)
@@ -28,11 +27,23 @@ class CategoryViewModel {
     
     var categoryNameChanged: (CategoryName) -> Void = { _ in }
     
-    
     func categoryViewTapped(categoryName: String) {
         if categoryName  == "free"{
             self.categoryName = .free
         }
+        if categoryName  == "academy"{
+            self.categoryName = .academy
+        }
+        if categoryName  == "university"{
+            self.categoryName = .university
+        }
+        if categoryName  == "secret"{
+            self.categoryName = .secret
+        }
+        if categoryName  == "heart"{
+            self.categoryName = .heart
+        }
+        
     }
         
 

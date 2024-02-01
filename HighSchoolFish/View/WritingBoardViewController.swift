@@ -85,31 +85,15 @@ class WritingBoardViewController: UIViewController, UIImagePickerControllerDeleg
     
     private lazy var contentTextView: UITextView = {
         var textView = UITextView()
-        textView.backgroundColor = .yellow
         textView.font = UIFont.systemFont(ofSize: 13)
         textView.textAlignment = .left
         textView.contentMode = .topLeft
+        textView.backgroundColor = UIColor(named: "backgroundColor")
+        textView.textContainerInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16);
+        textView.text = "내용을 입력해주세요.\n\n(개인 정보 도용방지를 위해 연락처나 이메일주소, 카카오톡 아이디, 상호를 포함한 글은 사전 동의없이 삭제됩니다. 또한 비방성 글 또는 성인광고, 사이트 홍보 글을 등록하는 경우 행당 게시글 삭제 후 제한 처리 됩니다.)"
+        textView.textColor = UIColor.lightGray
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
-    }()
-    
-    private lazy var contentLabel1: UILabel = {
-        var label = UILabel()
-        label.text = "내용을 입력해주세요."
-        label.font = UIFont.systemFont(ofSize: 15)
-        label.textColor = UIColor(named: "lightGray")
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    private lazy var contentLabel2: UILabel = {
-        var label = UILabel()
-        label.text = "(개인 정보 도용방지를 위해 연락처나 이메일주소, 카카오톡 아이디, 상호를 포함한 글은 사전 동의없이 삭제됩니다. 또한 비방성 글 또는 성인광고, 사이트 홍보 글을 등록하는 경우 행당 게시글 삭제 후 제한 처리 됩니다.)"
-        label.numberOfLines = 6
-        label.font = UIFont.systemFont(ofSize: 13)
-        label.textColor = UIColor(named: "lightGray")
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
     }()
     
     private lazy var contentLineView: UIView = {
@@ -158,13 +142,14 @@ class WritingBoardViewController: UIViewController, UIImagePickerControllerDeleg
         var imageView = UIImageView()
         imageView.image = UIImage(named: "camera")
         imageView.contentMode = .scaleAspectFit
+        imageView.backgroundColor = UIColor(named: "backgroundColor")
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
     private lazy var addImageLabel: UILabel = {
         var label = UILabel()
-        label.text = "6/10"
+        label.text = "0/10"
         label.textColor = UIColor(named: "gray")
         label.font = UIFont.systemFont(ofSize: 11)
         label.textAlignment = .center
@@ -176,6 +161,7 @@ class WritingBoardViewController: UIViewController, UIImagePickerControllerDeleg
         var collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.register(UINib(nibName: "BoardImageCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "BoardImageCell")
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.backgroundColor = UIColor(named: "backgroundColor")
         return collectionView
     }()
     
@@ -244,10 +230,9 @@ class WritingBoardViewController: UIViewController, UIImagePickerControllerDeleg
         configure()
         setupAutoLayout()
         makeGesture()
-        self.view.bringSubviewToFront(contentLabel1)
-        self.view.bringSubviewToFront(contentLabel2)
         self.contentTextView.delegate = self
         view.backgroundColor = UIColor(named: "backgroundColor")
+        getCommunityCategoryName()
     }
     
     private func configure() {
@@ -257,8 +242,6 @@ class WritingBoardViewController: UIViewController, UIImagePickerControllerDeleg
         view.addSubview(titleTextFieldLine)
         view.addSubview(anonymousStackView)
         view.addSubview(anonymousViewLine)
-        view.addSubview(contentLabel1)
-        view.addSubview(contentLabel2)
         view.addSubview(contentTextView)
         view.addSubview(contentLineView)
         view.addSubview(imageStackView)
@@ -309,14 +292,6 @@ class WritingBoardViewController: UIViewController, UIImagePickerControllerDeleg
             contentTextView.topAnchor.constraint(equalTo: anonymousViewLine.bottomAnchor, constant: 12),
             contentTextView.bottomAnchor.constraint(equalTo: contentLineView.topAnchor, constant: -12),
             
-            contentLabel1.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            contentLabel1.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            contentLabel1.topAnchor.constraint(equalTo: contentTextView.topAnchor, constant: 20),
-            
-            contentLabel2.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            contentLabel2.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            contentLabel2.topAnchor.constraint(equalTo: contentLabel1.bottomAnchor, constant: 20),
-            
             contentLineView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             contentLineView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             contentLineView.heightAnchor.constraint(equalToConstant: 1),
@@ -342,6 +317,34 @@ class WritingBoardViewController: UIViewController, UIImagePickerControllerDeleg
             buttonStackView.heightAnchor.constraint(equalToConstant: 50)
             
         ])
+    }
+    
+    
+    // mark
+    private func getCommunityCategoryName(){
+        var categoryName = CommunityViewModel.shared.categoryNameString
+        var communityName = CommunityViewModel.shared.communityNameString
+        
+        print("CategoryName : \(categoryName)")
+        print("CommunityName : \(communityName)")
+
+        if communityName == "schools" {
+            print("SCHOOL")
+            // 학교
+            WritingBoardViewModel.shared.setVisibilityTypeString("SCHOOL")
+        }
+        else if communityName == "national" {
+            print("NATIONAL")
+            // 전국
+            WritingBoardViewModel.shared.setVisibilityTypeString("NATIONAL")
+        }
+        else if communityName == "school_district" {
+            print("SCHOOL_DISTRICT")
+            // 학군
+            WritingBoardViewModel.shared.setVisibilityTypeString("SCHOOL_DISTRICT")
+        }
+        
+        WritingBoardViewModel.shared.setCategoryString(categoryName)
     }
     
     @objc private func checkboxButtonTapped(_ sender: Any) {
@@ -428,50 +431,53 @@ class WritingBoardViewController: UIViewController, UIImagePickerControllerDeleg
         print("openAlbum images count : ", images.count)
         print("pick start ", self.selectedAssets.count)
         
-        
-        var deSelectedAssets: [PHAsset] = []
-        self.imagePicker.settings.selection.max = 10
-        self.imagePicker.settings.fetch.assets.supportedMediaTypes = [.image]
-        self.imagePicker.settings.theme.selectionFillColor = UIColor(named: "main")! // 선택 배경 색상 (Circle)
-        self.imagePicker.settings.theme.selectionStrokeColor = .white // 선택 표시 색상 (Circle)
-        presentImagePicker(self.imagePicker,
-                           select: { (asset) in
-            print("Selected: \(asset)")
-        }, deselect: { (asset) in
-            print("Deselected: \(asset)")
-            // 선택 취소하면 arr에서 빼야지
-            deSelectedAssets.append(asset)
-        }, cancel: { (assets) in
-            print("Canceled with selections: \(assets)")
-        }, finish: { (assets) in
-            print("Finished with selections: \(assets)")
-            for i in 0..<deSelectedAssets.count {
-                if let index = self.selectedAssets.firstIndex(of: deSelectedAssets[i]) {
-                    self.selectedAssets.remove(at: index)
+        DispatchQueue.main.sync{
+            var deSelectedAssets: [PHAsset] = []
+            self.imagePicker.settings.selection.max = 10
+            self.imagePicker.settings.fetch.assets.supportedMediaTypes = [.image]
+            self.imagePicker.settings.theme.selectionFillColor = UIColor(named: "main")! // 선택 배경 색상 (Circle)
+            self.imagePicker.settings.theme.selectionStrokeColor = .white // 선택 표시 색상 (Circle)
+            presentImagePicker(self.imagePicker,
+                               select: { (asset) in
+                print("Selected: \(asset)")
+            }, deselect: { (asset) in
+                print("Deselected: \(asset)")
+                // 선택 취소하면 arr에서 빼야지
+                deSelectedAssets.append(asset)
+            }, cancel: { (assets) in
+                print("Canceled with selections: \(assets)")
+            }, finish: { (assets) in
+                print("Finished with selections: \(assets)")
+                for i in 0..<deSelectedAssets.count {
+                    if let index = self.selectedAssets.firstIndex(of: deSelectedAssets[i]) {
+                        self.selectedAssets.remove(at: index)
+                    }
                 }
-            }
-            for i in 0..<assets.count {
-                if self.selectedAssets.contains(assets[i]) != true {
-                    self.selectedAssets.append(assets[i])
+                for i in 0..<assets.count {
+                    if self.selectedAssets.contains(assets[i]) != true {
+                        self.selectedAssets.append(assets[i])
+                    }
+                    // 이미 asset이 image에 존재하면 포함하면 안됨..
                 }
-                // 이미 asset이 image에 존재하면 포함하면 안됨..
-            }
-            
-            self.images.removeAll()
-            self.imageDataArray.removeAll()
-            for i in 0..<self.selectedAssets.count {
-                self.convertAssetToImages(image: self.selectedAssets[i])
-            }
-            print("images count \(self.images.count)")
-            self.imageCollectionView.reloadData()
-            print("pick finish ", self.selectedAssets.count)
-            
-            for image in self.images {
-                self.imageDataArray.append(image.jpegData(compressionQuality: 0.7)!)
-            }
-            print("imageData ", self.imageDataArray.count)
-        })
-        self.imageLabel.text = "\(self.imageDataArray.count)/10"
+                
+                self.images.removeAll()
+                self.imageDataArray.removeAll()
+                for i in 0..<self.selectedAssets.count {
+                    self.convertAssetToImages(image: self.selectedAssets[i])
+                }
+                print("images count \(self.images.count)")
+                self.imageCollectionView.reloadData()
+                print("pick finish ", self.selectedAssets.count)
+                
+                for image in self.images {
+                    self.imageDataArray.append(image.jpegData(compressionQuality: 0.7)!)
+                }
+                print("imageData ", self.imageDataArray.count)
+                self.addImageLabel.text = "\(self.imageDataArray.count)/10"
+
+            })
+            self.addImageLabel.text = "\(self.imageDataArray.count)/10"
+        }
     }
     
     func convertAssetToImages(image: PHAsset) {
@@ -486,7 +492,6 @@ class WritingBoardViewController: UIViewController, UIImagePickerControllerDeleg
                                   options: option) { (result, info) in
             thumbnail = result!
         }
-        
         let data = thumbnail.jpegData(compressionQuality: 0.7)
         let newImage = UIImage(data: data!)
         self.images.append(newImage! as UIImage)
@@ -502,10 +507,20 @@ class WritingBoardViewController: UIViewController, UIImagePickerControllerDeleg
     
     @objc private func createButtonTapped(_ sender: Any) {
         WritingBoardViewModel.shared.setImagesArray(imageDataArray ?? [])
-        WritingBoardViewModel.shared.setTitleString(self.titleLabel.text!)
+        WritingBoardViewModel.shared.setTitleString(self.titleTextField.text!)
         WritingBoardViewModel.shared.setContentString(self.contentTextView.text)
-        WritingBoardViewModel.shared.setAnonymous(self.checkboxButton.isSelected)
         WritingBoardViewModel.shared.checkFilled()
+    }
+    
+    func textViewSetupView() {
+        if contentTextView.text == "내용을 입력해주세요.\n\n(개인 정보 도용방지를 위해 연락처나 이메일주소, 카카오톡 아이디, 상호를 포함한 글은 사전 동의없이 삭제됩니다. 또한 비방성 글 또는 성인광고, 사이트 홍보 글을 등록하는 경우 행당 게시글 삭제 후 제한 처리 됩니다.)" {
+            contentTextView.text = ""
+            contentTextView.textColor = UIColor.black
+            
+        } else if contentTextView.text == "" {
+            contentTextView.text = "내용을 입력해주세요.\n\n(개인 정보 도용방지를 위해 연락처나 이메일주소, 카카오톡 아이디, 상호를 포함한 글은 사전 동의없이 삭제됩니다. 또한 비방성 글 또는 성인광고, 사이트 홍보 글을 등록하는 경우 행당 게시글 삭제 후 제한 처리 됩니다.)"
+            contentTextView.textColor = UIColor.lightGray
+        }
     }
 }
 
@@ -546,34 +561,31 @@ extension WritingBoardViewController: UICollectionViewDelegate, UICollectionView
         
         print(images.count)
         print(selectedAssets.count)
-
+        
         collectionView.reloadData()
     }
     
 }
 
 extension WritingBoardViewController: UITextViewDelegate {
+    // 편집이 시작될때
     func textViewDidBeginEditing(_ textView: UITextView) {
-        /// 플레이스홀더
-        if textView == contentTextView {
-            contentLabel1.isHidden = true
-            contentLabel2.isHidden = true
-        }
+        textViewSetupView()
+    }
+    
+    // 편집이 종료될때
+    func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text == "" {
-            contentLabel1.isHidden = false
-            contentLabel2.isHidden = false
+            textViewSetupView()
         }
     }
     
-    func textViewDidEndEditing(_ textView: UITextView) {
-        /// 플레이스홀더
-        if textView == contentTextView {
-            contentLabel1.isHidden = true
-            contentLabel2.isHidden = true
+    // 텍스트가 입력될때
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        // 개행시 최초 응답자 제거
+        if text == "\n" {
+            textView.resignFirstResponder()
         }
-        if textView.text == "" {
-            contentLabel1.isHidden = false
-            contentLabel2.isHidden = false
-        }
+        return true
     }
 }

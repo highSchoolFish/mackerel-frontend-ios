@@ -15,6 +15,7 @@ import Firebase
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
         FirebaseApp.configure()
         
         // 원격알림 등록: 푸시든 로컬이든 알람 허용해야 그 이후에 가능
@@ -56,7 +57,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         
         // 앱을 삭제 했다가 다시 깔면 토큰 갱신
         let token = deviceToken.map { String(format: "%02.2hhx", $0) }.joined()
-        print("Apple token: " ,token)
+//        print("Apple token: " ,token)
     }
 }
 

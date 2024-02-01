@@ -9,7 +9,7 @@ import UIKit
 import SwiftUI
 import SafeAreaBrush
 
-class DetailBoardViewController: UIViewController {
+class DetailBoardViewController: UIViewController, UITextFieldDelegate {
     
     private lazy var navigationBar: UINavigationBar = {
         let naviBar = UINavigationBar()
@@ -329,6 +329,7 @@ class DetailBoardViewController: UIViewController {
         textField.placeholder = "댓글을 입력해주세요."
         textField.font = UIFont.systemFont(ofSize: 12)
         textField.isEnabled = true
+        textField.delegate = self
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
@@ -341,12 +342,23 @@ class DetailBoardViewController: UIViewController {
         return button
     }()
     
+    private func addDimmingView() {
+        dimmingView = UIView(frame: self.view.bounds)
+        dimmingView?.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        dimmingView?.isHidden = true
+        view.addSubview(dimmingView!)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleDimmingViewTap))
+        dimmingView?.addGestureRecognizer(tapGesture)
+    }
+    
     var images: [UIImage] = []
     var photos: [URL] = []
     var comments: [CommentContent] = []
     var totalheight: CGFloat = 0
     var bottomViewContraint: NSLayoutConstraint?
-    
+    private var dimmingView: UIView?
+    private var boardBottomViewController = BoardBottomSheetViewController()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
@@ -368,6 +380,7 @@ class DetailBoardViewController: UIViewController {
         self.commentTableView.reloadData()
         
         setKeyboardObserver()
+        addDimmingView()
     }
     
     override func viewDidLayoutSubviews() {
@@ -383,7 +396,6 @@ class DetailBoardViewController: UIViewController {
         scrollView.addSubview(contentView)
         view.addSubview(bottomView)
         view.addSubview(uploadCommentView)
-        commentTextField.delegate = self
         
         commentTableView.delegate = self
         commentTableView.dataSource = self
@@ -447,9 +459,13 @@ class DetailBoardViewController: UIViewController {
         let photosCount = board.photos.count
         if photosCount == 1 {
             // 1장 photosView 하나 통으로
-            
+            photosView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16).isActive = true
+            photosView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16).isActive = true
+            photosView.topAnchor.constraint(equalTo: contextTextView.bottomAnchor, constant: 20).isActive = true
+            photosView.heightAnchor.constraint(equalToConstant: 200).isActive = true
             let imageView = UIImageView()
             let url = URL(string: "\(board.photos[0])")
+            
             imageView.load(url: url!)
             imageView.contentMode = .scaleAspectFill
             imageView.clipsToBounds = true
@@ -462,6 +478,10 @@ class DetailBoardViewController: UIViewController {
             imageView.bottomAnchor.constraint(equalTo: photosView.bottomAnchor).isActive = true
         }
         else if photosCount == 2 {
+            photosView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16).isActive = true
+            photosView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16).isActive = true
+            photosView.topAnchor.constraint(equalTo: contextTextView.bottomAnchor, constant: 20).isActive = true
+            photosView.heightAnchor.constraint(equalToConstant: 200).isActive = true
             // 2장 photosView 반반 width 반 나누기 or stackView 만들어서 하나 추가?
             let imageView1 = UIImageView()
             let url1 = URL(string: "\(board.photos[0])")
@@ -491,6 +511,10 @@ class DetailBoardViewController: UIViewController {
             stackView.bottomAnchor.constraint(equalTo: photosView.bottomAnchor).isActive = true
         }
         else if photosCount >= 3 {
+            photosView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16).isActive = true
+            photosView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16).isActive = true
+            photosView.topAnchor.constraint(equalTo: contextTextView.bottomAnchor, constant: 20).isActive = true
+            photosView.heightAnchor.constraint(equalToConstant: 200).isActive = true
             // 3이상
             let imageView1 = UIImageView()
             let url1 = URL(string: "\(board.photos[0])")
@@ -547,8 +571,10 @@ class DetailBoardViewController: UIViewController {
         }
         else {
             print("photosView.height 0")
-            self.photosView.heightAnchor.constraint(equalToConstant: 0).isActive = true
-            
+            photosView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16).isActive = true
+            photosView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16).isActive = true
+            photosView.topAnchor.constraint(equalTo: contextTextView.bottomAnchor, constant: 20).isActive = true
+            photosView.heightAnchor.constraint(equalToConstant: 0).isActive = true
         }
     }
     
@@ -604,11 +630,6 @@ class DetailBoardViewController: UIViewController {
             contextTextView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             contextTextView.topAnchor.constraint(equalTo: titleLineView.bottomAnchor, constant: 10),
             
-            photosView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            photosView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            photosView.topAnchor.constraint(equalTo: contextTextView.bottomAnchor, constant: 20),
-            photosView.heightAnchor.constraint(equalToConstant: 200),
-            
             imageLineView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
             imageLineView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0),
             imageLineView.topAnchor.constraint(equalTo: photosView.bottomAnchor, constant: 15),
@@ -638,7 +659,7 @@ class DetailBoardViewController: UIViewController {
             
             bottomView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             bottomView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            bottomView.heightAnchor.constraint(equalToConstant: 50),
+            bottomView.heightAnchor.constraint(equalToConstant: 100),
             
             uploadCommentView.centerYAnchor.constraint(equalTo: bottomView.centerYAnchor, constant: 0),
             uploadCommentView.leadingAnchor.constraint(equalTo: bottomView.leadingAnchor, constant: 0),
@@ -669,11 +690,49 @@ class DetailBoardViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
+    @objc private func handleDimmingViewTap() {
+        let bottomSheetVC = self.boardBottomViewController
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            // 사이드 메뉴를 원래 위치로 되돌림.
+            bottomSheetVC.view.frame = CGRect(x: self.view.frame.width, y: 0, width: self.view.frame.width, height: self.view.frame.height)
+            // 어두운 배경 뷰를 숨김.
+            self.dimmingView?.alpha = 0
+        }) { (finished) in
+            // 애니메이션이 완료된 후 사이드 메뉴를 뷰 계층 구조에서 제거.
+            bottomSheetVC.view.removeFromSuperview()
+            bottomSheetVC.removeFromParent()
+            self.dimmingView?.isHidden = true
+        }
+    }
+    
+    
     @objc private func menuButtonTapped() {
         print("menu button tapped")
-        let bottomSheetVC = BoardBottomSheetViewController()
-        bottomSheetVC.modalPresentationStyle = .overFullScreen
-        self.present(bottomSheetVC, animated: false, completion: nil)
+        
+        let bottomSheetVC = self.boardBottomViewController
+        self.addChild(bottomSheetVC)
+        self.view.addSubview(bottomSheetVC.view)
+        
+        let sheetWidth = self.view.frame.width
+        let sheetHeight = 180
+        
+        let yPos = self.view.frame.height - CGFloat(sheetHeight)
+        
+        // 사이드 메뉴의 시작 위치를 화면 왼쪽 바깥으로 설정.
+
+        bottomSheetVC.view.frame = CGRect(x: 0, y: yPos, width: sheetWidth, height: CGFloat(sheetHeight))
+        
+        // 어두운 배경 뷰를 보이게 합니다.
+        self.dimmingView?.isHidden = false
+        self.dimmingView?.alpha = 0
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            // 사이드 메뉴를 화면에 표시.
+            bottomSheetVC.view.frame = CGRect(x: 0, y: yPos, width: sheetWidth, height: CGFloat(sheetHeight))
+            // 어두운 배경 뷰의 투명도를 조절.
+            self.dimmingView?.alpha = 0.5
+        })
     }
     
     @objc func likeButtonTapped() {
@@ -708,7 +767,6 @@ class DetailBoardViewController: UIViewController {
             print("comment 새로고침")
             self.commentTableView.reloadData()
         }
-        
     }
     
     func setKeyboardObserver() {
@@ -744,9 +802,13 @@ class DetailBoardViewController: UIViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
     }
-}
-
-extension DetailBoardViewController: UITextFieldDelegate {
+    
+    // 텍스트 필드의 편집을 시작할 때 호출
+        func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+            print("텍스트 필드의 편집이 시작됩니다.")
+            return true // false를 리턴하면 편집되지 않는다.
+        }
+    
     func textFieldDidBeginEditing(_ textField: UITextField) {
         textField.becomeFirstResponder()
         
@@ -764,7 +826,33 @@ extension DetailBoardViewController: UITextFieldDelegate {
         return true
     }
     
+    // 텍스트 필드 편집이 종료될 때 호출
+        func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+            print("텍스트 필드의 편집이 종료됩니다.")
+            return true
+        }
+    
 }
+
+//extension DetailBoardViewController: UITextFieldDelegate {
+//    func textFieldDidBeginEditing(_ textField: UITextField) {
+//        textField.becomeFirstResponder()
+//        
+//    }
+//    
+//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+//        
+//        let text = (textField.text! as NSString).replacingCharacters(in: range, with: string)
+//        
+//        if !text.isEmpty {
+//            self.commentUploadButton.isEnabled = true
+//        } else {
+//            self.commentUploadButton.isEnabled = false
+//        }
+//        return true
+//    }
+//    
+//}
 
 extension UIScrollView {
     func updateContentSize() {

@@ -11,6 +11,7 @@ import Moya
 enum LoginService {
     case memberCertify(id: String? = nil)
     case signIn(params: LoginRequest)
+    case memberInfo
 }
 
 extension LoginService: TargetType {
@@ -26,6 +27,8 @@ extension LoginService: TargetType {
             return "/api/v1/login"
         case .memberCertify(id: let id):
             return "/api/test/v1/members/\(id!)/certify"
+        case .memberInfo:
+            return "/api/v1/members/info"
         }
     }
     
@@ -34,9 +37,10 @@ extension LoginService: TargetType {
         switch self {
         case .signIn:
             return .post
-            
         case .memberCertify(id: let id):
             return .put
+        case .memberInfo:
+            return .get
         }
     }
     
@@ -55,6 +59,9 @@ extension LoginService: TargetType {
                         }
                         """.utf8
             )
+        case .memberInfo:
+            return "@@".data(using: .utf8)!
+            
         }
     }
     
@@ -68,6 +75,8 @@ extension LoginService: TargetType {
                 "id": id!
             ]
             return .requestParameters(parameters: params, encoding: URLEncoding.queryString)
+        case .memberInfo:
+            return .requestPlain
         }
     }
     
@@ -80,6 +89,8 @@ extension LoginService: TargetType {
         case .signIn:
             return ["Content-Type": "application/json"]
         case .memberCertify(id: let id):
+            return ["Content-Type": "application/json"]
+        case .memberInfo:
             return ["Content-Type": "application/json"]
         }
     }

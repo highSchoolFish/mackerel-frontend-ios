@@ -27,7 +27,7 @@ extension TokenService: TargetType {
     var method: Moya.Method {
         switch self {
         case .refreshToken:
-            return .get
+            return .post
         }
     }
     
@@ -40,8 +40,8 @@ extension TokenService: TargetType {
     
     var task: Task {
         switch self {
-        case .refreshToken:
-            return .requestPlain
+        case .refreshToken(let params):
+            return .requestJSONEncodable(params)
         }
     }
     

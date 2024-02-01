@@ -12,16 +12,19 @@ import Alamofire
 import SwiftyJSON
 
 class AuthManager: RequestInterceptor {
-    
+    static let shared = AuthManager()
+
     // 미 로그인 상태(토큰 X)에서도 동작이 가능한 앱이기 때문에 guard문으로 토큰이 없는 경우 completion을 통해 받은 request 그대로 success를 전달하여 api요청이 실행되게 하였습니다.
     // urlString == API_REFRESH_TOKEN 조건을 통해 현재 요청한 request의 url이 토큰 갱신을 위한 url인지 판단하여 맞는 경우 헤더에 refreshToken을 추가합니다.
     // 모든 요청은 adapt 메서드를 통하므로 urlRequest.headers.add(.authorization(bearerToken: accessToken))을 통해 기본적으로 accessToken을 포함시키는 코드도 있습니다.
     
     
     func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
-        guard urlRequest.url?.absoluteString.hasPrefix("http://high-school-fish.com:8080") == true,
-              let accessToken = KeyChain.shared.read("api/v1/auth/token", account: "accessToken") else {
+        guard urlRequest.url?.absoluteString.hasPrefix("http://43.203.76.213:8080") == true,
+              let accessToken = KeyChain.shared.read("api/v1/auth/token", account:
+                                                        "accessToken") else {
             
+            print("refresh 성공")
             completion(.success(urlRequest))
             return
         }
@@ -63,7 +66,11 @@ class AuthManager: RequestInterceptor {
                     print("responseJson:  \(responseJson)")
                     print("accessToken: ", responseJson["data"]["accessToken"])
                     
-                    
+                    KeyChain.shared.create("api/v1/auth/token", account: "accessToken", value: responseJson["data"]["accessToken"].rawValue as! String)
+                    KeyChain.shared.create("api/v1/auth/token", account: "refreshToken", value: responseJson["data"]["refreshToken"].rawValue as! String)
+
+                    print("keychain create success")
+                    completion(.retry)
                 }catch(let err) {
                     print(err.localizedDescription)
                 }

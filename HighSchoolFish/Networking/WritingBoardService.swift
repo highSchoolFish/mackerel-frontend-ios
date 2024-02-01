@@ -7,6 +7,7 @@
 
 import Foundation
 import Moya
+import SwiftyJSON
 
 enum WritingBoardService {
     case writingBoard(params: WritingBoardRequest, images: [Data])
@@ -40,23 +41,20 @@ extension WritingBoardService: TargetType {
     
     var task: Task {
         switch self {
-        case .writingBoard(let params, let imagesData):
+        case .writingBoard(let requestDto, let photos):
+            var multipartData: [MultipartFormData] = []
             
-            var formData: [Moya.MultipartFormData] = []
-                    
-                    for imageData in imagesData {
-                        let photoFormData = Moya.MultipartFormData(provider: .data(imageData), name: "photos", fileName: "photo.jpg", mimeType: "image/jpg")
-                        formData.append(photoFormData)
-                    }
-                    
-                    let boardData = try? JSONEncoder().encode(params)
-                    formData.append(Moya.MultipartFormData(provider: .data(boardData!), name: "requestDto", mimeType: "application/json"))
-//                    
-//            let boardData = try? JSONEncoder().encode(params)
-//            var formData: [Moya.MultipartFormData] = [Moya.MultipartFormData(provider: .data(imagesData), name: "photos", fileName: "photo.jpg", mimeType: "image/jpg")]
-//            formData.append(Moya.MultipartFormData(provider: .data(boardData!), name: "requestDto", mimeType: "application/json"))
-
-            return .uploadMultipart(formData)
+            // `requestDto`를 JSON으로 인코딩하여 멀티파트 폼 데이터에 추가
+            if let requestData = try? JSONEncoder().encode(requestDto) {
+                multipartData.append(MultipartFormData(provider: .data(requestData), name: "requestDto"))
+            }
+            
+            // `images` 배열의 각 `Data` 객체를 멀티파트 폼 데이터에 추가
+            for (index, image) in photos.enumerated() {
+                multipartData.append(MultipartFormData(provider: .data(image), name: "photos", fileName: "image\(index).jpg", mimeType: "image/jpeg"))
+            }
+            
+            return .uploadMultipart(multipartData)
         }
     }
     
