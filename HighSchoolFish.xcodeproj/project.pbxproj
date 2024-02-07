@@ -23,7 +23,6 @@
 		073CC3092AF22D3A00EDD5AA /* Boards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073CC3082AF22D3A00EDD5AA /* Boards.swift */; };
 		073CC30D2AF38F2D00EDD5AA /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073CC30C2AF38F2D00EDD5AA /* AuthManager.swift */; };
 		074254CB2B53824900C8CE55 /* BoardBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074254CA2B53824900C8CE55 /* BoardBottomSheetViewController.swift */; };
-		074254CD2B53B9EF00C8CE55 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 074254CC2B53B9EF00C8CE55 /* GoogleService-Info.plist */; };
 		0754607C2A7BB633004539F1 /* RegisterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0754607B2A7BB633004539F1 /* RegisterService.swift */; };
 		075FA47F2A8F3AEA002471C7 /* RegisterRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075FA47E2A8F3AEA002471C7 /* RegisterRequest.swift */; };
 		075FA4A52AA06FAB002471C7 /* FindPwRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075FA4A42AA06FAB002471C7 /* FindPwRequest.swift */; };
@@ -35,7 +34,6 @@
 		077F83492B4BE8C10089571B /* NoticeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077F83482B4BE8C10089571B /* NoticeTableViewCell.swift */; };
 		077F834B2B4EA00D0089571B /* NoticeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077F834A2B4EA00D0089571B /* NoticeViewModel.swift */; };
 		077F834D2B4FC6E40089571B /* Notice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077F834C2B4FC6E40089571B /* Notice.swift */; };
-		077F834F2B4FC8FE0089571B /* CustomAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 077F834E2B4FC8FE0089571B /* CustomAlertView.xib */; };
 		0787ADE92A3C429B00DEFE2A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0787ADE82A3C429B00DEFE2A /* AppDelegate.swift */; };
 		0787ADEB2A3C429B00DEFE2A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0787ADEA2A3C429B00DEFE2A /* SceneDelegate.swift */; };
 		0787ADED2A3C429B00DEFE2A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0787ADEC2A3C429B00DEFE2A /* LoginViewController.swift */; };
@@ -68,6 +66,9 @@
 		0787AE352A4573B100DEFE2A /* AgreementViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0787AE342A4573B100DEFE2A /* AgreementViewModel.swift */; };
 		0787AE372A556F2D00DEFE2A /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0787AE362A556F2D00DEFE2A /* RegisterViewModel.swift */; };
 		0787AE3B2A652FC100DEFE2A /* RegisterPageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0787AE3A2A652FC100DEFE2A /* RegisterPageData.swift */; };
+		0789D0122B73620200040CEB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0789D0112B73620200040CEB /* GoogleService-Info.plist */; };
+		0789D0142B7365F200040CEB /* CustomAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0789D0132B7365F200040CEB /* CustomAlertViewModel.swift */; };
+		0789D0162B73674900040CEB /* CustomAlertData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0789D0152B73674900040CEB /* CustomAlertData.swift */; };
 		0791ED382B53CB7B007D241D /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 0791ED372B53CB7B007D241D /* Alamofire */; };
 		0791ED3B2B53CBCC007D241D /* CombineMoya in Frameworks */ = {isa = PBXBuildFile; productRef = 0791ED3A2B53CBCC007D241D /* CombineMoya */; };
 		0791ED3D2B53CBCC007D241D /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 0791ED3C2B53CBCC007D241D /* Moya */; };
@@ -100,6 +101,7 @@
 		0791ED7E2B53D3B1007D241D /* FirebaseRemoteConfigSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 0791ED7D2B53D3B1007D241D /* FirebaseRemoteConfigSwift */; };
 		0791ED802B53D3B1007D241D /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 0791ED7F2B53D3B1007D241D /* FirebaseStorage */; };
 		0791ED822B53D3B1007D241D /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 0791ED812B53D3B1007D241D /* FirebaseStorageCombine-Community */; };
+		079578982B7350BE00A6470B /* CustomAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079578972B7350BE00A6470B /* CustomAlertViewController.swift */; };
 		07A13C822A669CF700522B0B /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A13C812A669CF700522B0B /* Observable.swift */; };
 		07A5A7152AEA3AB000245041 /* BoardImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A5A7132AEA3AB000245041 /* BoardImageCollectionViewCell.swift */; };
 		07A5A7162AEA3AB000245041 /* BoardImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07A5A7142AEA3AB000245041 /* BoardImageCollectionViewCell.xib */; };
@@ -149,7 +151,6 @@
 		073CC3082AF22D3A00EDD5AA /* Boards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Boards.swift; sourceTree = "<group>"; };
 		073CC30C2AF38F2D00EDD5AA /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		074254CA2B53824900C8CE55 /* BoardBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardBottomSheetViewController.swift; sourceTree = "<group>"; };
-		074254CC2B53B9EF00C8CE55 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0754607B2A7BB633004539F1 /* RegisterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterService.swift; sourceTree = "<group>"; };
 		075FA47E2A8F3AEA002471C7 /* RegisterRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterRequest.swift; sourceTree = "<group>"; };
 		075FA4A42AA06FAB002471C7 /* FindPwRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindPwRequest.swift; sourceTree = "<group>"; };
@@ -161,7 +162,6 @@
 		077F83482B4BE8C10089571B /* NoticeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeTableViewCell.swift; sourceTree = "<group>"; };
 		077F834A2B4EA00D0089571B /* NoticeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeViewModel.swift; sourceTree = "<group>"; };
 		077F834C2B4FC6E40089571B /* Notice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notice.swift; sourceTree = "<group>"; };
-		077F834E2B4FC8FE0089571B /* CustomAlertView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomAlertView.xib; sourceTree = "<group>"; };
 		0787ADE52A3C429B00DEFE2A /* HighSchoolFish.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HighSchoolFish.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0787ADE82A3C429B00DEFE2A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0787ADEA2A3C429B00DEFE2A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -196,7 +196,11 @@
 		0787AE342A4573B100DEFE2A /* AgreementViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementViewModel.swift; sourceTree = "<group>"; };
 		0787AE362A556F2D00DEFE2A /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
 		0787AE3A2A652FC100DEFE2A /* RegisterPageData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterPageData.swift; sourceTree = "<group>"; };
+		0789D0112B73620200040CEB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		0789D0132B7365F200040CEB /* CustomAlertViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertViewModel.swift; sourceTree = "<group>"; };
+		0789D0152B73674900040CEB /* CustomAlertData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertData.swift; sourceTree = "<group>"; };
 		0791ED832B5524A8007D241D /* HighSchoolFish.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HighSchoolFish.entitlements; sourceTree = "<group>"; };
+		079578972B7350BE00A6470B /* CustomAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertViewController.swift; sourceTree = "<group>"; };
 		07A13C812A669CF700522B0B /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		07A5A7132AEA3AB000245041 /* BoardImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		07A5A7142AEA3AB000245041 /* BoardImageCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BoardImageCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -306,10 +310,10 @@
 				0787ADF12A3C429B00DEFE2A /* Assets.xcassets */,
 				0787ADF32A3C429B00DEFE2A /* SplashViewController.storyboard */,
 				0787ADF62A3C429B00DEFE2A /* Info.plist */,
+				0789D0112B73620200040CEB /* GoogleService-Info.plist */,
 				0787AE102A40322B00DEFE2A /* KeyChain.swift */,
 				07ED74DA2A7B878700568C12 /* PreviewExtension.swift */,
 				073CC30C2AF38F2D00EDD5AA /* AuthManager.swift */,
-				074254CC2B53B9EF00C8CE55 /* GoogleService-Info.plist */,
 			);
 			path = HighSchoolFish;
 			sourceTree = "<group>";
@@ -353,6 +357,7 @@
 				0717A5482B4FEFE1000E91DA /* NotificationSettingRequest.swift */,
 				0717A54A2B4FEFFD000E91DA /* FCMRequest.swift */,
 				07E87D6A2B6B8BAA00D5A2D9 /* MemberInfoResponse.swift */,
+				0789D0152B73674900040CEB /* CustomAlertData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -370,6 +375,7 @@
 				07D1E9402AFCA8C3000268AB /* DetailBoardViewModel.swift */,
 				077F834A2B4EA00D0089571B /* NoticeViewModel.swift */,
 				07E87D6C2B6B8D2900D5A2D9 /* MemberInfoViewModel.swift */,
+				0789D0132B7365F200040CEB /* CustomAlertViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -404,8 +410,8 @@
 				072FFADF2AB9722100A07FA7 /* NationwideCommunityViewController.swift */,
 				071DD3A32ADFA94B005151C9 /* PopularTableView.xib */,
 				07D7E0F72ADFAEE50080F31F /* PopularTableView.swift */,
-				07D7E0F92ADFDA2D0080F31F /* CategoryView.xib */,
 				07D7E0FB2ADFDA450080F31F /* CategoryView.swift */,
+				07D7E0F92ADFDA2D0080F31F /* CategoryView.xib */,
 				07A5A7132AEA3AB000245041 /* BoardImageCollectionViewCell.swift */,
 				07A5A7142AEA3AB000245041 /* BoardImageCollectionViewCell.xib */,
 				07B5ECED2B1714DB000B9157 /* CommunityTableViewCell.xib */,
@@ -417,8 +423,8 @@
 				077F83442B4BDD060089571B /* NoticeViewController.swift */,
 				077F83462B4BE8440089571B /* NoticeTableViewCell.xib */,
 				077F83482B4BE8C10089571B /* NoticeTableViewCell.swift */,
-				077F834E2B4FC8FE0089571B /* CustomAlertView.xib */,
 				074254CA2B53824900C8CE55 /* BoardBottomSheetViewController.swift */,
+				079578972B7350BE00A6470B /* CustomAlertViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -541,10 +547,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				074254CD2B53B9EF00C8CE55 /* GoogleService-Info.plist in Resources */,
+				0789D0122B73620200040CEB /* GoogleService-Info.plist in Resources */,
 				07D7E0FA2ADFDA2D0080F31F /* CategoryView.xib in Resources */,
 				07A5A7162AEA3AB000245041 /* BoardImageCollectionViewCell.xib in Resources */,
-				077F834F2B4FC8FE0089571B /* CustomAlertView.xib in Resources */,
 				07C8CEB72A8CB56600FBB750 /* SchoolViewCell.xib in Resources */,
 				071DD3A42ADFA94B005151C9 /* PopularTableView.xib in Resources */,
 				07B5ECEA2B16012D000B9157 /* CommentTableHeaderView.xib in Resources */,
@@ -625,6 +630,7 @@
 				07C8CEBB2A8CBDE800FBB750 /* CertificationService.swift in Sources */,
 				07C8CEBF2A8CBE2900FBB750 /* ConfirmCertificationNumberRequest.swift in Sources */,
 				0787AE0D2A3EF0AA00DEFE2A /* TabBarViewController.swift in Sources */,
+				079578982B7350BE00A6470B /* CustomAlertViewController.swift in Sources */,
 				07C8CEC52A8E136D00FBB750 /* FindIdResponse.swift in Sources */,
 				07D7E0FC2ADFDA450080F31F /* CategoryView.swift in Sources */,
 				0787AE172A40371800DEFE2A /* MyPageTabViewController.swift in Sources */,
@@ -642,6 +648,7 @@
 				07A13C822A669CF700522B0B /* Observable.swift in Sources */,
 				0787AE152A40370D00DEFE2A /* HomeTabViewController.swift in Sources */,
 				074254CB2B53824900C8CE55 /* BoardBottomSheetViewController.swift in Sources */,
+				0789D0162B73674900040CEB /* CustomAlertData.swift in Sources */,
 				073CC3012AF0E9D800EDD5AA /* WritingBoardViewModel.swift in Sources */,
 				077F834D2B4FC6E40089571B /* Notice.swift in Sources */,
 				0717A5472B4FEFA9000E91DA /* FCMService.swift in Sources */,
@@ -649,6 +656,7 @@
 				07D1E9412AFCA8C3000268AB /* DetailBoardViewModel.swift in Sources */,
 				0787AE1F2A456E6100DEFE2A /* ChangePWViewController.swift in Sources */,
 				07ED74DB2A7B878700568C12 /* PreviewExtension.swift in Sources */,
+				0789D0142B7365F200040CEB /* CustomAlertViewModel.swift in Sources */,
 				07C8CEC32A8DF5EE00FBB750 /* FindViewModel.swift in Sources */,
 				0787AE312A456EC900DEFE2A /* WritingBoardViewController.swift in Sources */,
 				07A5A7152AEA3AB000245041 /* BoardImageCollectionViewCell.swift in Sources */,
@@ -835,7 +843,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 5KW2M7M6X9;
+				DEVELOPMENT_TEAM = M8NBY6RTGH;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HighSchoolFish/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Camera permissions for taking photos";
@@ -853,7 +861,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = bhyn.HighSchoolFish;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bhyn.HighSchoolFish;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -876,7 +884,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 5KW2M7M6X9;
+				DEVELOPMENT_TEAM = M8NBY6RTGH;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HighSchoolFish/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Camera permissions for taking photos";
@@ -894,7 +902,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = bhyn.HighSchoolFish;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bhyn.HighSchoolFish;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

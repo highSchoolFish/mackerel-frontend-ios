@@ -6,24 +6,141 @@
 //
 
 import UIKit
+import SwiftUI
 
 class CustomAlertViewController: UIViewController {
 
+    private lazy var backView: UIView = {
+        var view = UIView()
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 10
+        view.clipsToBounds = true
+        view.addSubview(titleLabel)
+        view.addSubview(lineView)
+        view.addSubview(contentLabel)
+        view.addSubview(buttonStackView)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
+    private lazy var titleLabel: UILabel = {
+        var label = UILabel()
+        label.text = "titleLabel"
+        label.font = UIFont.systemFont(ofSize: 14)
+        label.textColor = UIColor(named: "red")
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
+    private lazy var lineView: UIView = {
+        var view = UIView()
+        view.backgroundColor = UIColor(named: "gray")
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
+    private lazy var contentLabel: UILabel = {
+        var label = UILabel()
+        label.text = "contentLabel"
+        label.font = UIFont.systemFont(ofSize: 13)
+        label.textColor = UIColor(named: "blue")
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
+    private lazy var buttonStackView: UIStackView = {
+        var stView = UIStackView()
+        stView.addArrangedSubview(cancelButton)
+        stView.addArrangedSubview(confirmButton)
+        stView.axis = .horizontal
+        stView.distribution = .fillEqually
+        stView.translatesAutoresizingMaskIntoConstraints = false
+        return stView
+    }()
+
+    private lazy var cancelButton: UIButton = {
+        var button = UIButton()
+        button.backgroundColor = UIColor(named: "lightGray")
+        button.setTitleColor(UIColor(named: "darkGray"), for: .normal)
+        button.setTitle("닫기", for: .normal)
+        button.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
+    private lazy var confirmButton: UIButton = {
+        var button = UIButton()
+        button.backgroundColor = UIColor(named: "main")
+        button.setTitleColor(.white, for: .normal)
+        button.setTitle("확인", for: .normal)
+        button.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        view.addSubview(backView)
+        setAutoLayout()
+        
     }
     
+    private func setAutoLayout() {
+        NSLayoutConstraint.activate([
+            backView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            backView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            backView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            backView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            backView.heightAnchor.constraint(equalToConstant: 200),
 
-    /*
-    // MARK: - Navigation
+            titleLabel.topAnchor.constraint(equalTo: backView.topAnchor, constant: 10),
+            titleLabel.leadingAnchor.constraint(equalTo: backView.leadingAnchor, constant: 16),
+            titleLabel.trailingAnchor.constraint(equalTo: backView.trailingAnchor, constant: -16),
+            titleLabel.heightAnchor.constraint(equalToConstant: 30),
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+            lineView.leadingAnchor.constraint(equalTo: backView.leadingAnchor, constant: 16),
+            lineView.trailingAnchor.constraint(equalTo: backView.trailingAnchor, constant: -16),
+            lineView.heightAnchor.constraint(equalToConstant: 1),
+            lineView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
+
+            contentLabel.leadingAnchor.constraint(equalTo: backView.leadingAnchor, constant: 16),
+            contentLabel.trailingAnchor.constraint(equalTo: backView.trailingAnchor, constant: -16),
+            contentLabel.topAnchor.constraint(equalTo: lineView.bottomAnchor, constant: 10),
+            contentLabel.bottomAnchor.constraint(equalTo: buttonStackView.topAnchor, constant: -10),
+
+            buttonStackView.leadingAnchor.constraint(equalTo: backView.leadingAnchor, constant: 0),
+            buttonStackView.trailingAnchor.constraint(equalTo: backView.trailingAnchor, constant: 0),
+            buttonStackView.bottomAnchor.constraint(equalTo: backView.bottomAnchor, constant: 0),
+            buttonStackView.heightAnchor.constraint(equalToConstant: 50)
+        
+        ])
     }
-    */
 
+    @objc func confirmButtonTapped() {
+        print("confirmButtonTapped")
+        CustomAlertViewModel.shared.confirmButtonTapped()
+        
+//        CustomAlertViewModel.shared.onConfirmComplete = { result in
+//            if result {
+//                // 확인버튼 누르면
+//                
+//            }
+//        }
+    }
+
+    @objc func cancelButtonTapped() {
+        print("cancelButtonTapped")
+        CustomAlertViewModel.shared.cancelButtonTapped()
+        
+        CustomAlertViewModel.shared.onCancelComplete = { result in
+            if result {
+                // 닫기 버튼
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
+    }
 }
+

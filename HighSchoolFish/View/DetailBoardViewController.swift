@@ -704,7 +704,7 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
         
         UIView.animate(withDuration: 0.3, animations: {
             // 사이드 메뉴를 원래 위치로 되돌림.
-            bottomSheetVC.view.frame = CGRect(x: self.view.frame.width, y: 0, width: self.view.frame.width, height: self.view.frame.height)
+            bottomSheetVC.view.frame = CGRect(x: 0, y: self.view.frame.height, width: self.view.frame.width, height: self.view.frame.height)
             // 어두운 배경 뷰를 숨김.
             self.dimmingView?.alpha = 0
         }) { (finished) in
@@ -724,7 +724,7 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
         self.view.addSubview(bottomSheetVC.view)
         
         let sheetWidth = self.view.frame.width // 메뉴의 너비를 전체 뷰의 너비로 설정합니다.
-        let sheetHeight: CGFloat = 150 // 메뉴의 높이를 200으로 설정합니다.
+        let sheetHeight: CGFloat = 120 // 메뉴의 높이를 설정합니다.
 
         // 사이드 메뉴의 시작 위치를 화면 하단 바로 아래로 설정합니다.
         let startPos = self.view.frame.height // 화면 하단의 y 위치

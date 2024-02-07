@@ -6,3 +6,13 @@
 //
 
 import Foundation
+
+class AlertData {
+    var alertTitle : String = ""
+    var alertMessage : String = ""
+    
+    init(alertTitle: String, alertMessage: String) {
+        self.alertTitle = alertTitle
+        self.alertMessage = alertMessage
+    }
+}

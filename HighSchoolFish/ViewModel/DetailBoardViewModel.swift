@@ -28,6 +28,7 @@ class DetailBoardViewModel {
     var onCommentCursor: ((Bool) -> Void)?
     var checkCommentTextField: ((Bool) -> Void)?
     var writeCommentComplete: ((Bool) -> Void)?
+    var onDeleteButtonComplete: ((Bool) -> Void)?
     
     private var boardIdString: String = ""
     
@@ -184,5 +185,14 @@ class DetailBoardViewModel {
         }
     }
     
+    func deleteButtonTapped() {
+        // alert 떠야함
+        // alert 뜨기 전에 BoardBottomSheetVC dismiss
+        self.onDeleteButtonComplete?(true)
+    }
+    
+    func shareButtonTapped() {
+        
+    }
 }
 
