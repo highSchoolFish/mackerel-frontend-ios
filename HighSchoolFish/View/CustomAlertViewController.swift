@@ -8,6 +8,8 @@
 import UIKit
 import SwiftUI
 
+
+
 class CustomAlertViewController: UIViewController {
 
     private lazy var backView: UIView = {
@@ -79,7 +81,7 @@ class CustomAlertViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
@@ -122,6 +124,7 @@ class CustomAlertViewController: UIViewController {
     @objc func confirmButtonTapped() {
         print("confirmButtonTapped")
         CustomAlertViewModel.shared.confirmButtonTapped()
+        // 경우에 따라 처리 다르게 해야함
         
 //        CustomAlertViewModel.shared.onConfirmComplete = { result in
 //            if result {
@@ -143,4 +146,12 @@ class CustomAlertViewController: UIViewController {
         }
     }
 }
-
+//
+//extension CustomAlertDelegate where Self: UIViewController {
+//    func show(alertTitle: String, alertMessage: String) {
+//        print("alert show func called")
+//        view.delegate = self
+//        
+//
+//    }
+//}

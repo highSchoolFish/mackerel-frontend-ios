@@ -115,7 +115,7 @@ class BoardBottomSheetViewController: UIViewController {
     
     @objc private func shareButtonTapped(){
         print("shareButtonTapped")
-        DetailBoardViewModel.shared.shareButtonTapped()
+        BottomSheetViewModel.shared.shareButtonTapped()
 //        url 이 공유됨
 //        url 클릭 시
 //        : 앱이 있는 경우 해당 게시글로 이동
@@ -126,11 +126,12 @@ class BoardBottomSheetViewController: UIViewController {
     
     @objc private func deleteButtonTapped(){
         print("deleteButtonTapped")
-        DetailBoardViewModel.shared.deleteButtonTapped()
+        BottomSheetViewModel.shared.deleteButtonTapped()
 //        '삭제하겠습니까' 얼럿뜸
-        DetailBoardViewModel.shared.onDeleteButtonComplete = { result in
+        BottomSheetViewModel.shared.onDeleteButtonComplete = { result in
             if result {
                 // 삭제 버튼 눌림
+                // alert present
                 let nextVC = CustomAlertViewController()
                 nextVC.modalPresentationStyle = .overFullScreen
                 self.present(nextVC, animated: true)
@@ -142,20 +143,7 @@ class BoardBottomSheetViewController: UIViewController {
     @objc private func reportButtonTapped(){
         print("reportButtonTapped")
 //        이유 작성 없이 바로 신고 접수되는 걸로..
-//        DetailBoardViewModel.shared.reportButtonTapped()
-        print("deleteButtonTapped")
-        DetailBoardViewModel.shared.deleteButtonTapped()
-//        '삭제하겠습니까' 얼럿뜸
-        DetailBoardViewModel.shared.onDeleteButtonComplete = { result in
-            if result {
-                // 삭제 버튼 눌림
-                let nextVC = CustomAlertViewController()
-                nextVC.modalPresentationStyle = .overFullScreen
-                self.present(nextVC, animated: true) 
-            }
-        }
-        
-        
+        BottomSheetViewModel.shared.reportButtonTapped()
     }
 }
 

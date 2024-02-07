@@ -126,6 +126,9 @@
 		07D7E0F82ADFAEE50080F31F /* PopularTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D7E0F72ADFAEE50080F31F /* PopularTableView.swift */; };
 		07D7E0FA2ADFDA2D0080F31F /* CategoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07D7E0F92ADFDA2D0080F31F /* CategoryView.xib */; };
 		07D7E0FC2ADFDA450080F31F /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D7E0FB2ADFDA450080F31F /* CategoryView.swift */; };
+		07D8975D2B738BA5004C84F3 /* BottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D8975C2B738BA5004C84F3 /* BottomSheetViewModel.swift */; };
+		07D8975F2B73939C004C84F3 /* AlertStatusViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D8975E2B73939C004C84F3 /* AlertStatusViewModel.swift */; };
+		07D897612B739409004C84F3 /* ErrorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D897602B739409004C84F3 /* ErrorResponse.swift */; };
 		07E87D642B67B94600D5A2D9 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 07E87D632B67B94600D5A2D9 /* Lottie */; };
 		07E87D6B2B6B8BAA00D5A2D9 /* MemberInfoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E87D6A2B6B8BAA00D5A2D9 /* MemberInfoResponse.swift */; };
 		07E87D6D2B6B8D2900D5A2D9 /* MemberInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E87D6C2B6B8D2900D5A2D9 /* MemberInfoViewModel.swift */; };
@@ -225,6 +228,9 @@
 		07D7E0F72ADFAEE50080F31F /* PopularTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularTableView.swift; sourceTree = "<group>"; };
 		07D7E0F92ADFDA2D0080F31F /* CategoryView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoryView.xib; sourceTree = "<group>"; };
 		07D7E0FB2ADFDA450080F31F /* CategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
+		07D8975C2B738BA5004C84F3 /* BottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetViewModel.swift; sourceTree = "<group>"; };
+		07D8975E2B73939C004C84F3 /* AlertStatusViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertStatusViewModel.swift; sourceTree = "<group>"; };
+		07D897602B739409004C84F3 /* ErrorResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorResponse.swift; sourceTree = "<group>"; };
 		07E87D6A2B6B8BAA00D5A2D9 /* MemberInfoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberInfoResponse.swift; sourceTree = "<group>"; };
 		07E87D6C2B6B8D2900D5A2D9 /* MemberInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberInfoViewModel.swift; sourceTree = "<group>"; };
 		07E87D6E2B6BA97000D5A2D9 /* BoardMenuService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardMenuService.swift; sourceTree = "<group>"; };
@@ -358,6 +364,7 @@
 				0717A54A2B4FEFFD000E91DA /* FCMRequest.swift */,
 				07E87D6A2B6B8BAA00D5A2D9 /* MemberInfoResponse.swift */,
 				0789D0152B73674900040CEB /* CustomAlertData.swift */,
+				07D897602B739409004C84F3 /* ErrorResponse.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -376,6 +383,8 @@
 				077F834A2B4EA00D0089571B /* NoticeViewModel.swift */,
 				07E87D6C2B6B8D2900D5A2D9 /* MemberInfoViewModel.swift */,
 				0789D0132B7365F200040CEB /* CustomAlertViewModel.swift */,
+				07D8975C2B738BA5004C84F3 /* BottomSheetViewModel.swift */,
+				07D8975E2B73939C004C84F3 /* AlertStatusViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -642,6 +651,7 @@
 				0787AE2F2A456EC100DEFE2A /* WebViewController.swift in Sources */,
 				07E87D6D2B6B8D2900D5A2D9 /* MemberInfoViewModel.swift in Sources */,
 				0787AE3B2A652FC100DEFE2A /* RegisterPageData.swift in Sources */,
+				07D8975D2B738BA5004C84F3 /* BottomSheetViewModel.swift in Sources */,
 				0787AE192A456E3F00DEFE2A /* FindIDViewController.swift in Sources */,
 				071F8F292AFF78760011DBBC /* Comment.swift in Sources */,
 				0787AE252A456E8A00DEFE2A /* RegisterAuthenticationViewController.swift in Sources */,
@@ -651,6 +661,7 @@
 				0789D0162B73674900040CEB /* CustomAlertData.swift in Sources */,
 				073CC3012AF0E9D800EDD5AA /* WritingBoardViewModel.swift in Sources */,
 				077F834D2B4FC6E40089571B /* Notice.swift in Sources */,
+				07D897612B739409004C84F3 /* ErrorResponse.swift in Sources */,
 				0717A5472B4FEFA9000E91DA /* FCMService.swift in Sources */,
 				077F83492B4BE8C10089571B /* NoticeTableViewCell.swift in Sources */,
 				07D1E9412AFCA8C3000268AB /* DetailBoardViewModel.swift in Sources */,
@@ -681,6 +692,7 @@
 				0787AE092A3EE96700DEFE2A /* LoginService.swift in Sources */,
 				077F834B2B4EA00D0089571B /* NoticeViewModel.swift in Sources */,
 				0787AE132A40368A00DEFE2A /* MessageTabViewController.swift in Sources */,
+				07D8975F2B73939C004C84F3 /* AlertStatusViewModel.swift in Sources */,
 				073CC3052AF1062A00EDD5AA /* WritingBoardService.swift in Sources */,
 				0787AE332A456ED500DEFE2A /* DetailBoardViewController.swift in Sources */,
 				0787AE2D2A456EB700DEFE2A /* CommunityViewController.swift in Sources */,

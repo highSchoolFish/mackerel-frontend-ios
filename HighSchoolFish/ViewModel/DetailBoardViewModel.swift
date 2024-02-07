@@ -28,7 +28,6 @@ class DetailBoardViewModel {
     var onCommentCursor: ((Bool) -> Void)?
     var checkCommentTextField: ((Bool) -> Void)?
     var writeCommentComplete: ((Bool) -> Void)?
-    var onDeleteButtonComplete: ((Bool) -> Void)?
     
     private var boardIdString: String = ""
     
@@ -79,7 +78,7 @@ class DetailBoardViewModel {
                     var board = Boards(detailBoardDictionary: data)
                     self.getBoardComplete?(true)
                     self.onBoardComplete?(board)
-                    
+                    BottomSheetViewModel.shared.setBoardIdString(self.boardIdString)
                     // dic 성공하면 completion -> board
                 }
                 print("getDetailBoard success")
@@ -168,31 +167,6 @@ class DetailBoardViewModel {
         
     }
     
-    func reportButtonTapped() {
-        let provider = MoyaProvider<BoardMenuService>(session: Session(interceptor: AuthManager()))
-        
-        provider.request(BoardMenuService.report(id: boardIdString)) { result in
-            switch result {
-            case let .success(response):
-                print("통신성공")
-                let data = response
-                print("response \(data)")
-                
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-            
-        }
-    }
-    
-    func deleteButtonTapped() {
-        // alert 떠야함
-        // alert 뜨기 전에 BoardBottomSheetVC dismiss
-        self.onDeleteButtonComplete?(true)
-    }
-    
-    func shareButtonTapped() {
-        
-    }
+
 }
 

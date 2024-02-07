@@ -10,6 +10,7 @@ import Moya
 
 enum BoardMenuService {
     case report(id: String)
+    case delete(id: String)
 }
 
 extension BoardMenuService: TargetType {
@@ -21,6 +22,8 @@ extension BoardMenuService: TargetType {
         switch self {
         case .report(id: let id):
             return "/api/v1/schools/boards/\(id)/reports"
+        case .delete(id: let id):
+            return "/api/v1/schools/boards/\(id)"
         }
     }
     
@@ -28,12 +31,16 @@ extension BoardMenuService: TargetType {
         switch self {
         case .report(id: let id):
             return .post
+        case .delete(id: let id):
+            return .delete
         }
     }
     
     var sampleData: Data {
         switch self {
         case .report:
+            return "@@".data(using: .utf8)!
+        case .delete:
             return "@@".data(using: .utf8)!
         }
     }
@@ -45,6 +52,11 @@ extension BoardMenuService: TargetType {
                 "id": id
             ]
             return .requestParameters(parameters: params, encoding: URLEncoding.queryString)
+        case .delete(id: let id):
+            let params: [String: Any] = [
+                "id": id
+            ]
+            return .requestPlain
         }
     }
     
@@ -54,7 +66,7 @@ extension BoardMenuService: TargetType {
     
     var headers: [String: String]? {
         switch self {
-        case .report:
+        case .report, .delete:
             return ["Content-Type": "application/json"]
         }
     }

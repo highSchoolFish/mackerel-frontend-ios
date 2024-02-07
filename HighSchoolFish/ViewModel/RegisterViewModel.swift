@@ -14,7 +14,7 @@ import Alamofire
 class RegisterViewModel {
     
     static let shared = RegisterViewModel()
-
+    
     private var adNotifications: Bool = true
     
     private var idString: String = ""
@@ -26,7 +26,7 @@ class RegisterViewModel {
     private var gradeString: String = ""
     var imageData : NSData? = nil
     var schoolIdString: String = ""
-
+    
     private var userNameString: String = ""
     private var certificationNumberString: String = ""
     private var phoneNumberString: String = ""
@@ -71,7 +71,7 @@ class RegisterViewModel {
     var onCertifyNumberChecked: ((Bool) -> Void)?
     var onCompleteCertification: ((Bool) -> Void)?
     var onRegisterComplete: ((Bool) -> Void)?
-
+    
     func setIsCheckedId(_ isCheckedId: Bool) {
         self.isCheckedId = isCheckedId
         checkInfoFilled()
@@ -121,7 +121,7 @@ class RegisterViewModel {
     func setId(_ id: String) {
         self.idString = id
         print("agreements", Agreements.init(adNotifications: adNotifications))
-
+        
         idTextFieldTyped()
     }
     
@@ -469,7 +469,7 @@ class RegisterViewModel {
                 print(data.data)
                 print(data.statusCode)
                 self.setIsCheckedPhoneNumber(true)
-
+                
                 // use the data here
             case .failure(let error):
                 print(error.localizedDescription)
@@ -498,7 +498,7 @@ class RegisterViewModel {
             case .failure(let error):
                 print(error.localizedDescription)
                 self.setIsCertified(false)
-
+                
                 //                var alert = HttpStatusClass().HttpStatusExceptionAlert(from: error.response!)
                 //                show(alertTitle: alert.alertTitle, alertMessage: alert.alertMessage)
             }
@@ -520,7 +520,7 @@ class RegisterViewModel {
         // 0 페이지 확인
         if isCheckedId == true && isCheckedPw == true && isCheckedNickname == true && isSchoolNameFilled == true && isImagePicked == true && isGradePicked == true && isCheckedName == true && isCheckedPhoneNumber == true && isCertified == true {
             print("all true")
-
+            
             result = true
             observableResult.value = result
             //            self.registerButton.backgroundColor = UIColor(named: "main")
@@ -530,7 +530,7 @@ class RegisterViewModel {
             print("false")
             result = false
             observableResult.value = result
-
+            
             //            self.registerButton.backgroundColor = UIColor(named: "gray")
             //            self.registerButton.isEnabled = false
         }
@@ -548,13 +548,13 @@ class RegisterViewModel {
         print("phone", phoneNumberString)
         let suffixPhoneNumberString = phoneNumberString.suffix(8)
         print(suffixPhoneNumberString)
-
+        
         let params = RegisterRequest(memberID: idString, password: password2String, nickname: nicknameString, school: schoolIdString, grade: gradeString, name: userNameString, agreements: Agreements.init(adNotifications: adNotifications), phone: String(suffixPhoneNumberString))
         
         let encoder = JSONEncoder()
         encoder.keyEncodingStrategy = .convertToSnakeCase // Use snake case for keys
         encoder.outputFormatting = .prettyPrinted // Add indentation and line breaks for readability
-    
+        
         do {
             let jsonData = try encoder.encode(params)
             if let jsonString = String(data: jsonData, encoding: .utf8) {
@@ -565,10 +565,10 @@ class RegisterViewModel {
         }
         let provider = MoyaProvider<RegisterService>()
         
-//                let imageToData = userImage.jpegData(compressionQuality: 0.7)!
-//                let multipartFormData = MultipartFormData(provider: .data(imageToData), name: "image", fileName: "image.jpg", mimeType: "image/jpg")
-//                multipartFormData.bodyParts.append(params, withName: "info")
-
+        //                let imageToData = userImage.jpegData(compressionQuality: 0.7)!
+        //                let multipartFormData = MultipartFormData(provider: .data(imageToData), name: "image", fileName: "image.jpg", mimeType: "image/jpg")
+        //                multipartFormData.bodyParts.append(params, withName: "info")
+        
         provider.request(RegisterService.register(params: params, userImage: imageData! as Data)) { result in
             switch result {
             case .success(let response):
@@ -584,9 +584,8 @@ class RegisterViewModel {
                 print(error.response?.statusCode)
                 print(error.localizedDescription)
                 self.onRegisterComplete?(false)
-
-                //                var alert = HttpStatusClass().HttpStatusExceptionAlert(from: error.response!)
-                //                self.show(alertTitle: alert.alertTitle, alertMessage: alert.alertMessage)
+                var alert = AlertStatusViewModel.shared.HttpStatusExceptionAlert(from: error.response!)
+                self.show(alertTitle: alert.alertTitle, alertMessage: alert.alertMessage)
                 
                 
             }

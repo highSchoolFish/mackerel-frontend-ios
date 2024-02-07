@@ -6,23 +6,22 @@
 //
 
 import Foundation
-//
-//
-//protocol CustomAlertDelegate {
-//    func action()   // confirm button event
-//}
+
+protocol CustomAlertDelegate {
+    func action()
+}
 
 class CustomAlertViewModel {
-    
+    var delegate: CustomAlertDelegate?
     static var shared = CustomAlertViewModel()
     var onCancelComplete: ((Bool) -> Void)?
     var onConfirmComplete: ((Bool) -> Void)?
-//    var delegate: CustomAlertDelegate?
 
     func confirmButtonTapped() {
         print("confirmButtonTapped VM")
         self.onConfirmComplete?(true)
         // 상황애 따른 통신
+        
     }
     
     func cancelButtonTapped() {
