@@ -29,16 +29,18 @@ enum HttpStatusCode: Int {
 }
 
 enum CheckStatus{
+    case none
     case deleteBoard
     case deleteComment
 }
 
 class AlertStatusViewModel {
     static let shared = AlertStatusViewModel()
+
     var errorCode = 0
-    var checkStatus: CheckStatus // CheckStatus 인스턴스를 추가
+    var checkStatus: CheckStatus = .none // CheckStatus 인스턴스를 추가
     
-    init(checkStatus: CheckStatus) {
+    private func setCheckStatus(checkStatus: CheckStatus) {
         self.checkStatus = checkStatus
     }
     
@@ -46,11 +48,11 @@ class AlertStatusViewModel {
         let alertData = AlertData.init(alertTitle: "title", alertMessage: "message")
         
         //        let statusCode = errorResponse.statusCode
-        let signInErrorResponse = try? JSONDecoder().decode(ErrorResponse.self, from: errorResponse.data)
-        print("error code : \(signInErrorResponse?.code)")
-        print("error message : \(signInErrorResponse?.message)")
+        let errorResponse = try? JSONDecoder().decode(ErrorResponse.self, from: errorResponse.data)
+        print("error code : \(errorResponse?.code)")
+        print("error message : \(errorResponse?.message)")
         
-        let errorCode = signInErrorResponse!.code
+        let errorCode = errorResponse!.code
         switch errorCode {
         case 10411:
             alertData.alertTitle = "아이디 중복"
@@ -103,18 +105,23 @@ class AlertStatusViewModel {
         default:
             return AlertData(alertTitle: "default", alertMessage: "defaultMessage")
         }
+        alertData.alertType = .onlyConfirm
         return alertData
     }
     
-    func AlertForCheck() -> AlertData {
+    func AlertForCheck(checkStatus: CheckStatus) -> AlertData {
         let alertData = AlertData.init(alertTitle: "title", alertMessage: "message")
         switch checkStatus {
         case .deleteComment:
             alertData.alertTitle = ""
             alertData.alertMessage = ""
+            alertData.alertType = .defaultAlert
+
         case .deleteBoard:
-            alertData.alertTitle = ""
-            alertData.alertMessage = ""
+            alertData.alertTitle = "삭제"
+            alertData.alertMessage = "해당 글을 삭제하시겠습니까? \n삭제 시 되돌릴 수 없습니다."
+            alertData.alertType = .defaultAlert
+
         default:
             return AlertData(alertTitle: "Alert for checking (Title)", alertMessage: "Alert for checking (Content)")
         }
@@ -122,5 +129,7 @@ class AlertStatusViewModel {
         
     }
     
+    func alertResult() {
+    }
 }
 

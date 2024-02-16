@@ -62,6 +62,8 @@ class WritingBoardViewModel {
             // 제목이랑 내용 비어있는지 확인
             // 안비어있으면 서버통신 ㄱㄱ
             
+            // 비어있으면 alert 띄우래요 if 문 바꿔야함
+            
             let params = WritingBoardRequest(requestDto: RequestDto(title: titleString, context: contentString, categoryName: categoryString, visibilityType: visibilityTypeString, isAnonymous: isAnonymous))
            
             let encoder = JSONEncoder()

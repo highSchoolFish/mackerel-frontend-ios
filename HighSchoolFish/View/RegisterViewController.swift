@@ -189,6 +189,15 @@ class RegisterViewController: UIViewController, IndexDelegate {
                 nextVC.modalPresentationStyle = .fullScreen
                 self.present(nextVC, animated: true)
             }
+            else {
+                // result false
+                var alertTitle = CustomAlertViewModel.shared.titleString
+                var alertMessage = CustomAlertViewModel.shared.contentString
+                var alertType = CustomAlertViewModel.shared.alertType
+                let customAlertVC = CustomAlertViewController()
+                customAlertVC.show(alertTitle: alertTitle, alertMessage: alertMessage, alertType: alertType, on: self)
+                
+            }
         }
     }
     
@@ -226,30 +235,30 @@ extension RegisterViewController: UIPageViewControllerDataSource {
 //extension UIViewController {
 //    private struct Preview: UIViewControllerRepresentable {
 //        let viewController: UIViewController
-//        
+//
 //        func makeUIViewController(context: Context) -> UIViewController {
 //            return viewController
 //        }
-//        
+//
 //        func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
 //        }
 //    }
-//    
+//
 //    func toPreview() -> some View {
 //        Group {
 //            Preview(viewController: self)
 //                .previewDevice(PreviewDevice(rawValue: "iPhone 13 Pro Max"))
 //                .previewDisplayName("iPhone 13 Pro Max")
-//            
+//
 //            Preview(viewController: self)
 //                .previewDevice(PreviewDevice(rawValue: "iPhone 8"))
 //                .previewDisplayName("iPhone 8")
-//            
+//
 //            Preview(viewController: self)
 //                .previewDevice(PreviewDevice(rawValue: "iPhone XS"))
 //                .previewDisplayName("xs 미리보기")
 //        }
-//        
+//
 //    }
 //}
 //#endif

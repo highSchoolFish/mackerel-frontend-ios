@@ -14,14 +14,24 @@ protocol CustomAlertDelegate {
 class CustomAlertViewModel {
     var delegate: CustomAlertDelegate?
     static var shared = CustomAlertViewModel()
+    
+    var titleString: String = ""
+    var contentString: String = ""
+    var alertType: AlertType = .defaultAlert
+    
     var onCancelComplete: ((Bool) -> Void)?
     var onConfirmComplete: ((Bool) -> Void)?
-
+    
+    func setCustomAlertData(alert: AlertData) {
+        self.titleString = alert.alertTitle
+        self.contentString = alert.alertMessage
+        self.alertType = alert.alertType
+    }
+    
     func confirmButtonTapped() {
         print("confirmButtonTapped VM")
         self.onConfirmComplete?(true)
-        // 상황애 따른 통신
-        
+        // 상황에 따른 통신
     }
     
     func cancelButtonTapped() {
@@ -29,4 +39,3 @@ class CustomAlertViewModel {
         self.onCancelComplete?(true)
     }
 }
-

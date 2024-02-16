@@ -8,8 +8,6 @@
 import UIKit
 import SwiftUI
 
-
-
 class CustomAlertViewController: UIViewController {
 
     private lazy var backView: UIView = {
@@ -82,6 +80,8 @@ class CustomAlertViewController: UIViewController {
         return button
     }()
     
+    var delegate: CustomAlertDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
@@ -145,13 +145,25 @@ class CustomAlertViewController: UIViewController {
             }
         }
     }
+    
+    func show(alertTitle: String, alertMessage: String, alertType: AlertType, on viewController: UIViewController) {
+        // 제목과 내용 설정
+        titleLabel.text = alertTitle
+        contentLabel.text = alertMessage
+        switch alertType {
+        case .defaultAlert:
+            self.cancelButton.isHidden = false
+            self.confirmButton.isHidden = false
+        case .onlyConfirm:
+            self.cancelButton.isHidden = true
+            self.confirmButton.isHidden = false
+        }
+        
+        // 상황에 따라서 닫기 버튼 없애야함..
+        
+        // 애니메이션과 함께 모달 형태로 CustomAlertViewController 표시
+        self.modalPresentationStyle = .overFullScreen
+        self.modalTransitionStyle = .crossDissolve
+        viewController.present(self, animated: true, completion: nil)
+    }
 }
-//
-//extension CustomAlertDelegate where Self: UIViewController {
-//    func show(alertTitle: String, alertMessage: String) {
-//        print("alert show func called")
-//        view.delegate = self
-//        
-//
-//    }
-//}

@@ -583,11 +583,12 @@ class RegisterViewModel {
                 print(error.errorCode)
                 print(error.response?.statusCode)
                 print(error.localizedDescription)
-                self.onRegisterComplete?(false)
+                
                 var alert = AlertStatusViewModel.shared.HttpStatusExceptionAlert(from: error.response!)
-                self.show(alertTitle: alert.alertTitle, alertMessage: alert.alertMessage)
                 
+                CustomAlertViewModel.shared.setCustomAlertData(alert: alert)
                 
+                self.onRegisterComplete?(false)
             }
         }
     }

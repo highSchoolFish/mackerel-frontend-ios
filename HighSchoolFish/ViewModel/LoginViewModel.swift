@@ -108,6 +108,9 @@ class LoginViewModel {
                     print(error.response!.statusCode)
                     
                     self.loginStatus = .loginDenied
+                    var alert = AlertStatusViewModel.shared.HttpStatusExceptionAlert(from: error.response!)
+                    
+                    
                     //                    HttpStatusClass().HttpStatusException(from: error.response!)
                     //                        HttpStatusException(from: error.response!)
                 }

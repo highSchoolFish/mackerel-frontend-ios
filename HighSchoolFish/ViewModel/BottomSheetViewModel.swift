@@ -44,6 +44,8 @@ class BottomSheetViewModel {
     func deleteButtonTapped() {
         // alert 떠야함
         // alert 뜨기 전에 BoardBottomSheetVC dismiss
+        var alert = AlertStatusViewModel.shared.AlertForCheck(checkStatus: .deleteBoard)
+        CustomAlertViewModel.shared.setCustomAlertData(alert: alert)
         self.onDeleteButtonComplete?(true)
     }
     

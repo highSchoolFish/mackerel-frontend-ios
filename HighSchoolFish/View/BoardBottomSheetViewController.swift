@@ -131,10 +131,12 @@ class BoardBottomSheetViewController: UIViewController {
         BottomSheetViewModel.shared.onDeleteButtonComplete = { result in
             if result {
                 // 삭제 버튼 눌림
-                // alert present
-                let nextVC = CustomAlertViewController()
-                nextVC.modalPresentationStyle = .overFullScreen
-                self.present(nextVC, animated: true)
+                var alertTitle = CustomAlertViewModel.shared.titleString
+                var alertMessage = CustomAlertViewModel.shared.contentString
+                var alertType = CustomAlertViewModel.shared.alertType
+                
+                let customAlertVC = CustomAlertViewController()
+                customAlertVC.show(alertTitle: alertTitle, alertMessage: alertMessage, alertType: alertType, on: self)
             }
         }
         
