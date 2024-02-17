@@ -31,7 +31,7 @@ class HomeTabViewController: UIViewController {
         view.addSubview(boardStackView)
         view.addSubview(articleImageView)
         view.addSubview(popularCommunityView)
-        view.addSubview(selfDiagnosisView)
+        view.addSubview(ebsButtonView)
         view.addSubview(cardView)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -406,28 +406,19 @@ class HomeTabViewController: UIViewController {
         return view
     }()
     
-    private lazy var selfDiagnosisView: UIView = {
+    private lazy var ebsButtonView: UIView = {
         var view = UIView()
-        view.addSubview(syringeImageView)
-        view.addSubview(selfDiagnosisLabel)
+        view.addSubview(ebsButtonLabel)
         view.addSubview(rightArrowImageView)
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(selfDiagnosisViewTapped)) // UIImageView 클릭 제스쳐
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(ebsButtonViewTapped)) // UIImageView 클릭 제스쳐
         view.addGestureRecognizer(tapGesture)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    private lazy var syringeImageView: UIImageView = {
-        var image = UIImageView()
-        image.image = UIImage(named: "syringeIcon")
-        image.translatesAutoresizingMaskIntoConstraints = false
-        return image
-    }()
-    
-    
-    private lazy var selfDiagnosisLabel: UILabel = {
+    private lazy var ebsButtonLabel: UILabel = {
         var label = UILabel()
-        label.text = "교육부 건강상태 자가진단 바로가기"
+        label.text = "ebs 바로가기"
         label.textColor = .black
         label.font = UIFont.boldSystemFont(ofSize: 15)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -506,7 +497,7 @@ class HomeTabViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        viewArrayForShadow = [mealView, timeView, mySchoolCommunityView, schoolDistrictCommunityView, nationwideCommunityView, selfDiagnosisView]
+        viewArrayForShadow = [mealView, timeView, mySchoolCommunityView, schoolDistrictCommunityView, nationwideCommunityView, ebsButtonView]
         cardCloseConstraint = cardView.heightAnchor.constraint(equalToConstant: 60)
         cardOpenConstraint = cardView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 200)
         
@@ -669,21 +660,16 @@ class HomeTabViewController: UIViewController {
             popularCommunityTableView.topAnchor.constraint(equalTo: popularCommunityTopStackView.bottomAnchor, constant: 10),
             popularCommunityTableView.bottomAnchor.constraint(equalTo: popularCommunityView.bottomAnchor, constant: -10),
             
-            selfDiagnosisView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            selfDiagnosisView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            selfDiagnosisView.topAnchor.constraint(equalTo: popularCommunityView.bottomAnchor, constant: 12),
-            selfDiagnosisView.heightAnchor.constraint(equalToConstant: 80),
+            ebsButtonView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            ebsButtonView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            ebsButtonView.topAnchor.constraint(equalTo: popularCommunityView.bottomAnchor, constant: 12),
+            ebsButtonView.heightAnchor.constraint(equalToConstant: 80),
             
-            selfDiagnosisLabel.centerXAnchor.constraint(equalTo: selfDiagnosisView.centerXAnchor, constant: 0),
-            selfDiagnosisLabel.centerYAnchor.constraint(equalTo: selfDiagnosisView.centerYAnchor, constant: 0),
+            ebsButtonLabel.centerXAnchor.constraint(equalTo: ebsButtonView.centerXAnchor, constant: 0),
+            ebsButtonLabel.centerYAnchor.constraint(equalTo: ebsButtonView.centerYAnchor, constant: 0),
             
-            syringeImageView.trailingAnchor.constraint(equalTo: selfDiagnosisLabel.leadingAnchor, constant: -10),
-            syringeImageView.centerYAnchor.constraint(equalTo: selfDiagnosisView.centerYAnchor, constant: 0),
-            syringeImageView.heightAnchor.constraint(equalToConstant: 20),
-            syringeImageView.widthAnchor.constraint(equalToConstant: 20),
-            
-            rightArrowImageView.leadingAnchor.constraint(equalTo: selfDiagnosisLabel.trailingAnchor, constant: 20),
-            rightArrowImageView.centerYAnchor.constraint(equalTo: selfDiagnosisView.centerYAnchor, constant: 0),
+            rightArrowImageView.leadingAnchor.constraint(equalTo: ebsButtonLabel.trailingAnchor, constant: 20),
+            rightArrowImageView.centerYAnchor.constraint(equalTo: ebsButtonView.centerYAnchor, constant: 0),
             cardView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
             cardView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
             cardView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0),
@@ -878,7 +864,7 @@ class HomeTabViewController: UIViewController {
         self.present(vc, animated: true)
     }
     
-    @objc func selfDiagnosisViewTapped(sender: UITapGestureRecognizer) {
+    @objc func ebsButtonViewTapped(sender: UITapGestureRecognizer) {
         //        let vc = NationwideCommunityViewController()
         //        vc.modalPresentationStyle = .fullScreen
         //        self.present(vc, animated: true)

@@ -164,7 +164,9 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
         let view = UIView()
         // collection view 넣거나
         // uiview 이미지 갯수만큼 넣고 constraint 조정
-        view.backgroundColor = .gray
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(photosViewTapped)) // UIImageView 클릭 제스쳐
+        view.addGestureRecognizer(tapGesture)
+        view.backgroundColor = .white
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -262,12 +264,11 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
     
     private lazy var commentTableView: UITableView = {
         var tableView = UITableView(frame: CGRect.zero, style: .grouped)
-        //        tableView.backgroundColor = .brown
         tableView.register(UINib(nibName: "CommentTableHeaderView", bundle: nil), forHeaderFooterViewReuseIdentifier: "CommentTableHeaderView")
         tableView.register(UINib(nibName: "CommentTableViewCell", bundle: nil), forCellReuseIdentifier: "CommentTableViewCell")
         tableView.isScrollEnabled = false
         tableView.sectionFooterHeight = 0
-        
+        tableView.backgroundColor = .white
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
@@ -358,7 +359,7 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
     var bottomViewContraint: NSLayoutConstraint?
     private var dimmingView: UIView?
     private var boardBottomViewController = BoardBottomSheetViewController()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
@@ -381,6 +382,9 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
         
         setKeyboardObserver()
         addDimmingView()
+        commentAnonymousButton.isEnabled = true
+        commentTextField.isUserInteractionEnabled = true
+        commentUploadButton.isUserInteractionEnabled = true
     }
     
     override func viewDidLayoutSubviews() {
@@ -400,7 +404,7 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
         commentTableView.delegate = self
         commentTableView.dataSource = self
         commentTableView.sectionHeaderHeight = UITableView.automaticDimension
-        
+        uploadCommentView.isUserInteractionEnabled = true
     }
     
     private func setComment(comment: Comment) {
@@ -466,6 +470,9 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
         }
         
         let photosCount = board.photos.count
+        
+        print("photosCount \(photosCount)")
+        DetailBoardViewModel.shared.setimageArray(board.photos)
         if photosCount == 1 {
             // 1장 photosView 하나 통으로
             photosView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16).isActive = true
@@ -476,7 +483,7 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
             let url = URL(string: "\(board.photos[0])")
             
             imageView.load(url: url!)
-            imageView.contentMode = .scaleAspectFill
+            imageView.contentMode = .scaleAspectFit
             imageView.clipsToBounds = true
             photosView.addSubview(imageView)
             imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -495,14 +502,14 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
             let imageView1 = UIImageView()
             let url1 = URL(string: "\(board.photos[0])")
             imageView1.load(url: url1!)
-            imageView1.contentMode = .scaleToFill
+            imageView1.contentMode = .scaleAspectFit
             imageView1.clipsToBounds = true
             imageView1.translatesAutoresizingMaskIntoConstraints = false
             
             let imageView2 = UIImageView()
             let url2 = URL(string: "\(board.photos[1])")
             imageView2.load(url: url2!)
-            imageView2.contentMode = .scaleAspectFill
+            imageView2.contentMode = .scaleAspectFit
             imageView2.clipsToBounds = true
             imageView2.translatesAutoresizingMaskIntoConstraints = false
             let stackView = UIStackView()
@@ -715,6 +722,12 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    @objc func photosViewTapped(sender: UITapGestureRecognizer) {
+        print("photosViewTapped")
+        let view = BoardImageViewController()
+        view.modalPresentationStyle = .fullScreen
+        self.present(view, animated: true, completion: nil)
+    }
     
     @objc private func menuButtonTapped() {
         print("menu button tapped")
@@ -725,20 +738,20 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
         
         let sheetWidth = self.view.frame.width // 메뉴의 너비를 전체 뷰의 너비로 설정합니다.
         let sheetHeight: CGFloat = 120 // 메뉴의 높이를 설정합니다.
-
+        
         // 사이드 메뉴의 시작 위치를 화면 하단 바로 아래로 설정합니다.
         let startPos = self.view.frame.height // 화면 하단의 y 위치
         bottomSheetVC.view.frame = CGRect(x: 0, y: startPos, width: sheetWidth, height: sheetHeight)
-
+        
         // 어두운 배경 뷰를 보이게 합니다.
         self.dimmingView?.isHidden = false
         self.dimmingView?.alpha = 0
         UIView.animate(withDuration: 0.3, animations: {
             let endPos = self.view.frame.height - sheetHeight // 화면 하단에서 메뉴 높이를 뺀 y 위치
-                bottomSheetVC.view.frame = CGRect(x: 0, y: endPos, width: sheetWidth, height: sheetHeight)
-                
-                // 어두운 배경 뷰의 투명도를 조절합니다.
-                self.dimmingView?.alpha = 0.5
+            bottomSheetVC.view.frame = CGRect(x: 0, y: endPos, width: sheetWidth, height: sheetHeight)
+            
+            // 어두운 배경 뷰의 투명도를 조절합니다.
+            self.dimmingView?.alpha = 0.5
         })
     }
     
@@ -750,16 +763,28 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
         print("headerLikeButtonTapped")
     }
     
-    @objc func commentAnonymousButtonTapped() {
-        
+    @objc func commentAnonymousButtonTapped(_ sender: UIButton) {
+        print("commentAnonymousButtonTapped")
+        if sender.isSelected {
+            sender.isSelected = false
+            commentAnonymousButton.isSelected = false
+            commentAnonymousButton.setImage(UIImage(named: "checkedButton"), for: .normal)
+        }
+        else {
+            sender.isSelected = true
+            commentAnonymousButton.setImage(UIImage(named: "uncheckedButton"), for: .normal)
+        }
+        // 익명여부
     }
     
-    @objc func commentUploadButtonTapped() {
+    @objc func commentUploadButtonTapped(_ sender: UIButton) {
         print("commentUploadButtonTapped VC")
         if commentAnonymousButton.isSelected {
+            print("comment anonymous true")
             DetailBoardViewModel.shared.setAnonymous(true)
         }
         else {
+            print("comment anonymous false")
             DetailBoardViewModel.shared.setAnonymous(false)
         }
         print("commentAnonymous \(commentAnonymousButton.isSelected)")
@@ -792,7 +817,7 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardHeight = keyboardFrame.cgRectValue.height
             bottomViewContraint?.constant = -keyboardHeight
-        
+            
             self.view.layoutIfNeeded()
         }
     }
@@ -802,7 +827,7 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
             let keyboardHeight = keyboardFrame.cgRectValue.height
             bottomViewContraint?.constant = -20
             self.view.layoutIfNeeded()
-
+            
         }
     }
     
@@ -811,14 +836,13 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
     }
     
     // 텍스트 필드의 편집을 시작할 때 호출
-        func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-            print("텍스트 필드의 편집이 시작됩니다.")
-            return true // false를 리턴하면 편집되지 않는다.
-        }
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        print("텍스트 필드의 편집이 시작됩니다.")
+        return true // false를 리턴하면 편집되지 않는다.
+    }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        textField.becomeFirstResponder()
-        
+        self.commentTextField.becomeFirstResponder()
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -834,32 +858,11 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
     }
     
     // 텍스트 필드 편집이 종료될 때 호출
-        func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-            print("텍스트 필드의 편집이 종료됩니다.")
-            return true
-        }
-    
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        print("텍스트 필드의 편집이 종료됩니다.")
+        return true
+    }
 }
-
-//extension DetailBoardViewController: UITextFieldDelegate {
-//    func textFieldDidBeginEditing(_ textField: UITextField) {
-//        textField.becomeFirstResponder()
-//        
-//    }
-//    
-//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-//        
-//        let text = (textField.text! as NSString).replacingCharacters(in: range, with: string)
-//        
-//        if !text.isEmpty {
-//            self.commentUploadButton.isEnabled = true
-//        } else {
-//            self.commentUploadButton.isEnabled = false
-//        }
-//        return true
-//    }
-//    
-//}
 
 extension UIScrollView {
     func updateContentSize() {

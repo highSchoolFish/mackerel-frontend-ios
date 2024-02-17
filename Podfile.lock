@@ -1,13 +1,21 @@
 PODS:
   - BSImagePicker (3.3.1)
+  - ImageSlideshow (1.9.2):
+    - ImageSlideshow/Core (= 1.9.2)
+  - ImageSlideshow/Core (1.9.2)
   - JWTDecode (3.1.0)
+  - Kingfisher (5.15.8):
+    - Kingfisher/Core (= 5.15.8)
+  - Kingfisher/Core (5.15.8)
   - SafeAreaBrush (1.0.4)
   - SideMenu (6.5.0)
   - SwiftyJSON (5.0.1)
 
 DEPENDENCIES:
   - BSImagePicker (~> 3.1)
+  - ImageSlideshow (~> 1.9.0)
   - JWTDecode (~> 3.0)
+  - Kingfisher (~> 5.0)
   - SafeAreaBrush
   - SideMenu
   - SwiftyJSON
@@ -15,18 +23,22 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - BSImagePicker
+    - ImageSlideshow
     - JWTDecode
+    - Kingfisher
     - SafeAreaBrush
     - SideMenu
     - SwiftyJSON
 
 SPEC CHECKSUMS:
   BSImagePicker: 0fe04b574d4d6b81093785d2af6c26227efc8428
+  ImageSlideshow: be305b54eaf2b2cfc7a7141c7c734605d44dc07d
   JWTDecode: 3eaab1e06b6f4dcbdd6716aff09ba4c2104ca8b7
+  Kingfisher: a3c03d702433fa6cfedabb2bddbe076fb8f2e902
   SafeAreaBrush: 282315ce500e436c04b2c26b46e8ac0ad4288bbd
   SideMenu: f583187d21c5b1dd04c72002be544b555a2627a2
   SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
 
-PODFILE CHECKSUM: 3da25fcabf64c3110c21a04bc23d5bdabbcf2fb0
+PODFILE CHECKSUM: 34161698efdef125a57d1556bf0eb3634c3f9f17
 
 COCOAPODS: 1.14.3

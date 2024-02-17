@@ -42,20 +42,19 @@ extension WritingBoardService: TargetType {
     var task: Task {
         switch self {
         case .writingBoard(let requestDto, let photos):
-            var multipartData: [MultipartFormData] = []
-            
-            // `requestDto`를 JSON으로 인코딩하여 멀티파트 폼 데이터에 추가
+
+            var formData: [MultipartFormData] = []
             if let requestData = try? JSONEncoder().encode(requestDto) {
-                multipartData.append(MultipartFormData(provider: .data(requestData), name: "requestDto"))
+                formData.append(MultipartFormData(provider: .data(requestData), name: "requestDto"))
             }
-            
-            // `images` 배열의 각 `Data` 객체를 멀티파트 폼 데이터에 추가
-            for (index, image) in photos.enumerated() {
-                multipartData.append(MultipartFormData(provider: .data(image), name: "photos", fileName: "image\(index).jpg", mimeType: "image/jpeg"))
+            // 이미지 데이터 추가
+            photos.enumerated().forEach { index, photoData in
+                formData.append(MultipartFormData(provider: .data(photoData), name: "photos", fileName: "photo\(index).jpg", mimeType: "image/jpeg"))
             }
-            
-            return .uploadMultipart(multipartData)
+
+            return .uploadMultipart(formData)
         }
+        
     }
     
     var validationType: Moya.ValidationType {

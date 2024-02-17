@@ -112,7 +112,7 @@ class CommunityViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: "CommunityTableViewCell", bundle: nil), forCellReuseIdentifier: "CommunityTableViewCell")
-        
+        tableView.backgroundColor = .white
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
@@ -262,7 +262,7 @@ extension CommunityViewController: UITableViewDelegate, UITableViewDataSource {
             print("cell error")
             return .init()
         }
-        
+        cell.selectionStyle = .none
         cell.generateCell(board: boards[indexPath.item])
         
         print("print cell index \(cell.index)")

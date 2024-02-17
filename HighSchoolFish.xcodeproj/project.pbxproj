@@ -129,6 +129,7 @@
 		07D8975D2B738BA5004C84F3 /* BottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D8975C2B738BA5004C84F3 /* BottomSheetViewModel.swift */; };
 		07D8975F2B73939C004C84F3 /* AlertStatusViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D8975E2B73939C004C84F3 /* AlertStatusViewModel.swift */; };
 		07D897612B739409004C84F3 /* ErrorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D897602B739409004C84F3 /* ErrorResponse.swift */; };
+		07D897632B805929004C84F3 /* BoardImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D897622B805929004C84F3 /* BoardImageViewController.swift */; };
 		07E87D642B67B94600D5A2D9 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 07E87D632B67B94600D5A2D9 /* Lottie */; };
 		07E87D6B2B6B8BAA00D5A2D9 /* MemberInfoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E87D6A2B6B8BAA00D5A2D9 /* MemberInfoResponse.swift */; };
 		07E87D6D2B6B8D2900D5A2D9 /* MemberInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E87D6C2B6B8D2900D5A2D9 /* MemberInfoViewModel.swift */; };
@@ -231,6 +232,7 @@
 		07D8975C2B738BA5004C84F3 /* BottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetViewModel.swift; sourceTree = "<group>"; };
 		07D8975E2B73939C004C84F3 /* AlertStatusViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertStatusViewModel.swift; sourceTree = "<group>"; };
 		07D897602B739409004C84F3 /* ErrorResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorResponse.swift; sourceTree = "<group>"; };
+		07D897622B805929004C84F3 /* BoardImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardImageViewController.swift; sourceTree = "<group>"; };
 		07E87D6A2B6B8BAA00D5A2D9 /* MemberInfoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberInfoResponse.swift; sourceTree = "<group>"; };
 		07E87D6C2B6B8D2900D5A2D9 /* MemberInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberInfoViewModel.swift; sourceTree = "<group>"; };
 		07E87D6E2B6BA97000D5A2D9 /* BoardMenuService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardMenuService.swift; sourceTree = "<group>"; };
@@ -434,6 +436,7 @@
 				077F83482B4BE8C10089571B /* NoticeTableViewCell.swift */,
 				074254CA2B53824900C8CE55 /* BoardBottomSheetViewController.swift */,
 				079578972B7350BE00A6470B /* CustomAlertViewController.swift */,
+				07D897622B805929004C84F3 /* BoardImageViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -631,6 +634,7 @@
 				0787ADED2A3C429B00DEFE2A /* LoginViewController.swift in Sources */,
 				0787ADE92A3C429B00DEFE2A /* AppDelegate.swift in Sources */,
 				0787AE072A3EE93800DEFE2A /* LoginResponse.swift in Sources */,
+				07D897632B805929004C84F3 /* BoardImageViewController.swift in Sources */,
 				072FFADE2AB9720800A07FA7 /* SchoolDistrictCommunityViewController.swift in Sources */,
 				0787ADEB2A3C429B00DEFE2A /* SceneDelegate.swift in Sources */,
 				075FA47F2A8F3AEA002471C7 /* RegisterRequest.swift in Sources */,

@@ -19,7 +19,7 @@ class DetailBoardViewModel {
     private var headerSection: Int = 99999
     var comments: [CommentContent] = []
     var isWriter: Bool = false
-    
+    var imagesArray: [String] = []
     var getBoardComplete: ((Bool) -> Void)?
     var onBoardComplete: ((Boards) -> Void)?
     var onCommentsResult: ((Comment) -> Void)?
@@ -50,6 +50,10 @@ class DetailBoardViewModel {
     
     func setHeaderSection(_ headerSection: Int) {
         self.headerSection = headerSection
+    }
+    
+    func setimageArray(_ imageArray: [String]) {
+        self.imagesArray = imageArray
     }
     
     func getDetailBoard() {
@@ -135,6 +139,7 @@ class DetailBoardViewModel {
         if headerSection != 99999 {
             // header section 값 정해졌으면
             parentCommentId = comments[headerSection].id
+            print("parentCommentId : \(parentCommentId)")
         }
         
         if self.commentString.trimmingCharacters(in:  .whitespaces).isEmpty {

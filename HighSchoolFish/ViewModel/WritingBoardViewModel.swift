@@ -64,7 +64,8 @@ class WritingBoardViewModel {
             
             // 비어있으면 alert 띄우래요 if 문 바꿔야함
             
-            let params = WritingBoardRequest(requestDto: RequestDto(title: titleString, context: contentString, categoryName: categoryString, visibilityType: visibilityTypeString, isAnonymous: isAnonymous))
+            let params = WritingBoardRequest(title: titleString, context: contentString, categoryName: categoryString, visibilityType: visibilityTypeString, isAnonymous: isAnonymous)
+            
            
             let encoder = JSONEncoder()
             encoder.outputFormatting = .prettyPrinted // Add indentation and line breaks for readability
@@ -83,7 +84,7 @@ class WritingBoardViewModel {
             let provider = MoyaProvider<WritingBoardService>(session: Session(interceptor: AuthManager()))
 
             provider.request(WritingBoardService.writingBoard(params: params, images: imagesArray as [Data])) { result in
-                
+
                 switch result {
                 case .success(let response):
                     print("통신성공")

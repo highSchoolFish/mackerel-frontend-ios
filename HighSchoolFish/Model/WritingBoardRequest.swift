@@ -10,15 +10,6 @@ import Foundation
 
 // MARK: - WritingBoardRequest
 struct WritingBoardRequest: Codable {
-    let requestDto: RequestDto
-    
-    enum CodingKeys: CodingKey {
-        case requestDto
-    }
-}
-
-// MARK: - RequestDto
-struct RequestDto: Codable {
     let title, context, categoryName, visibilityType: String
     let isAnonymous: Bool
 }

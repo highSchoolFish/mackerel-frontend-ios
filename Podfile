@@ -11,4 +11,6 @@ target 'HighSchoolFish' do
   pod 'BSImagePicker','~>3.1'
   pod 'SideMenu'
   pod 'SafeAreaBrush'
+  pod 'ImageSlideshow', '~> 1.9.0'
+  pod 'Kingfisher', '~> 5.0'
 end

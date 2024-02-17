@@ -549,7 +549,7 @@ class RegisterViewModel {
         let suffixPhoneNumberString = phoneNumberString.suffix(8)
         print(suffixPhoneNumberString)
         
-        let params = RegisterRequest(memberID: idString, password: password2String, nickname: nicknameString, school: schoolIdString, grade: gradeString, name: userNameString, agreements: Agreements.init(adNotifications: adNotifications), phone: String(suffixPhoneNumberString))
+        let params = RegisterRequest(memberID: idString, password: password2String, nickname: nicknameString, schoolId: schoolIdString, grade: gradeString, name: userNameString, agreements: Agreements.init(adNotifications: adNotifications), phone: String(suffixPhoneNumberString))
         
         let encoder = JSONEncoder()
         encoder.keyEncodingStrategy = .convertToSnakeCase // Use snake case for keys
