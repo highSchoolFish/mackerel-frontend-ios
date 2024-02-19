@@ -389,7 +389,7 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        self.scrollView.updateContentSize()
+        updateContentSize()
     }
     
     private func configure() {
@@ -613,8 +613,8 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
             
             contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 0),
             contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: 0),
-            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 0),
-            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 0),
+            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 16),
+            contentView.bottomAnchor.constraint(equalTo: commentTableView.bottomAnchor, constant: 0),
             contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
             
             profileHStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
@@ -694,6 +694,7 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
             
             commentTextField.leadingAnchor.constraint(equalTo: commentAnonymousButton.trailingAnchor, constant: 10),
             commentTextField.centerYAnchor.constraint(equalTo: commentAnonymousLabel.centerYAnchor, constant: 0),
+            commentTextField.heightAnchor.constraint(equalToConstant: 40),
             
             commentLineView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
             commentLineView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
@@ -862,27 +863,28 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
         print("텍스트 필드의 편집이 종료됩니다.")
         return true
     }
-}
 
-extension UIScrollView {
+
     func updateContentSize() {
-        let unionCalculatedTotalRect = recursiveUnionInDepthFor(view: self)
-        // 계산된 크기로 컨텐츠 사이즈 설정
-        self.contentSize = CGSize(width: self.frame.width, height: unionCalculatedTotalRect.height)
+        // 프사height + 제목height + 내용height + 사진height + tableView height
+        
+        self.scrollView.contentSize = CGSize(width: self.scrollView.frame.width, height: recursiveUnionInDepthFor())
     }
     
-    private func recursiveUnionInDepthFor(view: UIView) -> CGRect {
-        var totalRect: CGRect = .zero
+    func recursiveUnionInDepthFor() -> CGFloat {
+        var totalHeight: CGFloat = 0
         
         // 모든 자식 View의 컨트롤의 크기를 재귀적으로 호출하며 최종 영역의 크기를 설정
-        //        print("view \(view)", view.frame.height)
-        
-        for subView in view.subviews {
-            totalRect = totalRect.union(recursiveUnionInDepthFor(view: subView))
+                print("view \(view)", view.frame.height)
+        var viewsHeight = [self.profileHStackView.frame.height, self.titleLabel.frame.height, self.contextTextView.frame.height, self.photosView.frame.height, self.viewsCountView.frame.height, self.commentTableView.frame.height]
+        for viewHeight in viewsHeight {
+            totalHeight += viewHeight
+            print("scrollView viewHeight \(viewHeight)")
         }
         
+        totalHeight = totalHeight + 200
         // 최종 계산 영역의 크기를 반환
-        return totalRect.union(view.frame)
+        return totalHeight
     }
 }
 
