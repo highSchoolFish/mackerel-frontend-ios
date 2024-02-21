@@ -298,12 +298,6 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
         view.addSubview(commentAnonymousButton)
         view.addSubview(commentTextField)
         view.addSubview(commentUploadButton)
-        print("border")
-        view.layer.borderColor = UIColor.gray.cgColor
-        view.layer.borderWidth = 1
-        view.layer.cornerRadius = 10
-        print("back")
-        view.backgroundColor = .green
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -313,6 +307,7 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
         label.text = "익명"
         label.font = UIFont.systemFont(ofSize: 13)
         label.textColor = UIColor(named: "darkGray")
+        label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -321,6 +316,7 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
         let button = UIButton(type: .custom)
         button.setImage(UIImage(named: "uncheckedButton"), for: .normal)
         button.addTarget(self, action: #selector(commentAnonymousButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(buttonIsSelected), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -372,24 +368,28 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
             self.setBoard(board: result)
         }
         
-        DetailBoardViewModel.shared.onCommentsResult = { result in
-            print("comment result ", result)
-            print("comment result.data.content ", result.data.content)
-            self.setComment(comment: result)
-            self.commentTableView.reloadData()
-        }
-        self.commentTableView.reloadData()
-        
+        settingComment()
+                
         setKeyboardObserver()
         addDimmingView()
         commentAnonymousButton.isEnabled = true
         commentTextField.isUserInteractionEnabled = true
         commentUploadButton.isUserInteractionEnabled = true
+        self.bottomView.bringSubviewToFront(uploadCommentView)
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         updateContentSize()
+    }
+    
+    func settingComment() {
+        DetailBoardViewModel.shared.onCommentsResult = { result in
+            print("comment result ", result)
+            print("comment result.data.content ", result.data.content)
+            
+            self.setComment(comment: result)
+        }
     }
     
     private func configure() {
@@ -399,19 +399,20 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         view.addSubview(bottomView)
-        view.addSubview(uploadCommentView)
         
         commentTableView.delegate = self
         commentTableView.dataSource = self
         commentTableView.sectionHeaderHeight = UITableView.automaticDimension
-        uploadCommentView.isUserInteractionEnabled = true
     }
     
     private func setComment(comment: Comment) {
         self.comments = comment.data.content
         print("tableview height : \(calculateTotalHeight())")
+        commentTableView.reloadData()
         commentTableView.heightAnchor.constraint(equalToConstant: CGFloat(calculateTotalHeight())).isActive = true
         
+        // get board 정보? 너무 비싼데
+//        self.commentLabel.text = "댓글 \(board.numberOfComments)"
     }
     
     func calculateTotalHeight() -> CGFloat {
@@ -453,6 +454,9 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
             self.profileImageView.image = UIImage(named: "profileIcon")
         }
         self.nicknameLabel.text = board.writerNickname
+        if board.writerNickname == nil {
+            self.nicknameLabel.text = "익명"
+        }
         self.timeLabel.text = createdAt(createTime: board.createdAt)
         self.titleLabel.text = board.title
         self.contextTextView.text = board.context
@@ -675,26 +679,32 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
             
             bottomView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             bottomView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            bottomView.heightAnchor.constraint(equalToConstant: 100),
+            bottomView.heightAnchor.constraint(equalToConstant: 60),
+            bottomView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
             
             uploadCommentView.centerYAnchor.constraint(equalTo: bottomView.centerYAnchor, constant: 0),
             uploadCommentView.leadingAnchor.constraint(equalTo: bottomView.leadingAnchor, constant: 0),
             uploadCommentView.trailingAnchor.constraint(equalTo: bottomView.trailingAnchor, constant: 0),
+            uploadCommentView.heightAnchor.constraint(equalToConstant: 55),
             
-            commentAnonymousLabel.leadingAnchor.constraint(equalTo: bottomView.leadingAnchor, constant: 5),
+            commentAnonymousLabel.leadingAnchor.constraint(equalTo: uploadCommentView.leadingAnchor, constant: 5),
+            commentAnonymousLabel.widthAnchor.constraint(equalToConstant: 30),
             commentAnonymousLabel.centerYAnchor.constraint(equalTo: uploadCommentView.centerYAnchor, constant: 0),
             
-            commentUploadButton.trailingAnchor.constraint(equalTo: bottomView.trailingAnchor, constant: 0),
-            commentUploadButton.centerYAnchor.constraint(equalTo: commentAnonymousLabel.centerYAnchor, constant: 0),
-            commentUploadButton.heightAnchor.constraint(equalToConstant: 40),
-            commentUploadButton.widthAnchor.constraint(equalToConstant: 40),
-            
+            commentAnonymousButton.heightAnchor.constraint(equalToConstant: 40),
+            commentAnonymousButton.widthAnchor.constraint(equalToConstant: 40),
             commentAnonymousButton.leadingAnchor.constraint(equalTo: commentAnonymousLabel.trailingAnchor, constant: 3),
             commentAnonymousButton.centerYAnchor.constraint(equalTo: commentAnonymousLabel.centerYAnchor, constant: 0),
             
             commentTextField.leadingAnchor.constraint(equalTo: commentAnonymousButton.trailingAnchor, constant: 10),
             commentTextField.centerYAnchor.constraint(equalTo: commentAnonymousLabel.centerYAnchor, constant: 0),
+            commentTextField.trailingAnchor.constraint(equalTo: commentUploadButton.leadingAnchor, constant: -10),
             commentTextField.heightAnchor.constraint(equalToConstant: 40),
+            
+            commentUploadButton.trailingAnchor.constraint(equalTo: uploadCommentView.trailingAnchor, constant: 0),
+            commentUploadButton.centerYAnchor.constraint(equalTo: commentAnonymousLabel.centerYAnchor, constant: 0),
+            commentUploadButton.heightAnchor.constraint(equalToConstant: 40),
+            commentUploadButton.widthAnchor.constraint(equalToConstant: 40),
             
             commentLineView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
             commentLineView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
@@ -769,13 +779,20 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
         if sender.isSelected {
             sender.isSelected = false
             commentAnonymousButton.isSelected = false
-            commentAnonymousButton.setImage(UIImage(named: "checkedButton"), for: .normal)
         }
         else {
             sender.isSelected = true
-            commentAnonymousButton.setImage(UIImage(named: "uncheckedButton"), for: .normal)
         }
         // 익명여부
+    }
+    
+    @objc func buttonIsSelected(button: UIButton) {
+        if self.commentAnonymousButton.isSelected == true {
+            commentAnonymousButton.setImage(UIImage(named: "checkedButton"), for: .normal)
+        }
+        if self.commentAnonymousButton.isSelected == false {
+            commentAnonymousButton.setImage(UIImage(named: "uncheckedButton"), for: .normal)
+        }
     }
     
     @objc func commentUploadButtonTapped(_ sender: UIButton) {
@@ -797,8 +814,18 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
         // borttomView에 commentTextField로 바로 했으면 parentId nil
         
         DetailBoardViewModel.shared.writeCommentComplete = { result in
-            print("comment 새로고침")
-            self.commentTableView.reloadData()
+            if result {
+                print("comment 새로고침")
+                DetailBoardViewModel.shared.getComment()
+                self.settingComment()
+                
+                self.view.endEditing(true)
+                self.commentTextField.text = ""
+                
+            }
+            else {
+                print("comment 새로고침 x")
+            }
         }
     }
     
@@ -863,8 +890,8 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
         print("텍스트 필드의 편집이 종료됩니다.")
         return true
     }
-
-
+    
+    
     func updateContentSize() {
         // 프사height + 제목height + 내용height + 사진height + tableView height
         
@@ -875,7 +902,7 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
         var totalHeight: CGFloat = 0
         
         // 모든 자식 View의 컨트롤의 크기를 재귀적으로 호출하며 최종 영역의 크기를 설정
-                print("view \(view)", view.frame.height)
+        print("view \(view)", view.frame.height)
         var viewsHeight = [self.profileHStackView.frame.height, self.titleLabel.frame.height, self.contextTextView.frame.height, self.photosView.frame.height, self.viewsCountView.frame.height, self.commentTableView.frame.height]
         for viewHeight in viewsHeight {
             totalHeight += viewHeight
@@ -952,11 +979,8 @@ extension DetailBoardViewController: UITableViewDelegate, UITableViewDataSource 
                 self.commentWriteButtonTapped(section: indexPath.section)
             }
             commentCell.generateCell(comment: childComment)
-            
         }
-        
         return commentCell
-        
     }
     
     func commentWriteButtonTapped(section: Int) {
@@ -965,9 +989,7 @@ extension DetailBoardViewController: UITableViewDelegate, UITableViewDataSource 
         self.commentTextField.becomeFirstResponder()
         // VM 전달
         DetailBoardViewModel.shared.setHeaderSection(section)
-        
     }
-    
 }
 
 extension UIImageView {

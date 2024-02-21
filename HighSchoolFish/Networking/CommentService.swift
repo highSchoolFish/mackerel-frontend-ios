@@ -10,7 +10,8 @@ import Moya
 
 enum CommentService {
     case readComment(boardId: String, page: Int, size: Int)
-    case uploadComment(boardId: String, parentCommentId: String?, context: String, isAnonymous: Bool)
+    case uploadComment(boardId: String, parentCommentId: String, context: String, isAnonymous: Bool)
+    case uploadCommentRe(boardId: String, context: String, isAnonymous: Bool)
     case likeComment(id: String)
 }
 
@@ -25,6 +26,8 @@ extension CommentService: TargetType {
             return "/api/v1/schools/boards/\(boardId)/comments"
         case .uploadComment:
             return "/api/v1/schools/boards/comments"
+        case .uploadCommentRe:
+            return "/api/v1/schools/boards/comments"
         case .likeComment:
             return "/api/v1/schools/boards/likes"
         }
@@ -36,6 +39,8 @@ extension CommentService: TargetType {
             return .get
         case .uploadComment(_):
             return .post
+        case .uploadCommentRe(_):
+            return .post
         case .likeComment(_):
             return .post
         }
@@ -43,7 +48,7 @@ extension CommentService: TargetType {
     
     var sampleData: Data {
         switch self {
-        case .readComment, .uploadComment, .likeComment:
+        case .readComment, .uploadComment, .uploadCommentRe, .likeComment:
             return "@@".data(using: .utf8)!
         }
     }
@@ -61,13 +66,19 @@ extension CommentService: TargetType {
             var params: [String: Any] = [
                 "boardId": boardId,
                 "context": context,
+                "parentCommentId": parentCommentId,
                 "isAnonymous": isAnonymous
             ]
-            if let parentCommentId = parentCommentId {
-                params["parentCommentId"] = parentCommentId
-            }
             return .requestParameters(parameters: params, encoding: JSONEncoding.default)
 
+        case .uploadCommentRe(boardId: let boardId, context: let context, isAnonymous: let isAnonymous):
+            var params: [String: Any] = [
+                "boardId": boardId,
+                "context": context,
+                "isAnonymous": isAnonymous
+            ]
+            return .requestParameters(parameters: params, encoding: JSONEncoding.default)
+            
         case .likeComment(id: let id):
             return .requestParameters(parameters: ["id": id], encoding: JSONEncoding.default)
         }
@@ -75,7 +86,7 @@ extension CommentService: TargetType {
     
     var headers: [String : String]? {
         switch self {
-        case .readComment, .uploadComment, .likeComment:
+        case .readComment, .uploadComment, .uploadCommentRe, .likeComment:
             return ["Content-Type": "application/json"]
         }
     }

@@ -135,43 +135,81 @@ class DetailBoardViewModel {
         print("comment upload button tapped")
         // upload button tapped
         print("comment String : \(commentString)")
+        
         var parentCommentId = ""
+        print("headerSection \(headerSection)")
+        
         if headerSection != 99999 {
             // header section 값 정해졌으면
             parentCommentId = comments[headerSection].id
             print("parentCommentId : \(parentCommentId)")
-        }
-        
-        if self.commentString.trimmingCharacters(in:  .whitespaces).isEmpty {
-            // 댓글 비어있음
-            print("댓글 비어있음")
-        }
-        else {
-            print("댓글쓰기 통신")
-            print("parentCommentId \(parentCommentId)")
-            let provider = MoyaProvider<CommentService>(session: Session(interceptor: AuthManager()))
             
-            provider.request(CommentService.uploadComment(boardId: self.boardIdString, parentCommentId: parentCommentId, context: self.commentString, isAnonymous: self.isAnonymous)) { result in
-                switch result {
-                case let .success(response):
-                    print("통신성공")
-                    let data = response
-                    print("response \(data)")
-                    do {
-                        self.writeCommentComplete?(true)
-                    }
-                    catch(let err) {
-                        print(err.localizedDescription)
-                    }
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
+            if self.commentString.trimmingCharacters(in:  .whitespaces).isEmpty {
+                // 댓글 비어있음
+                print("댓글 비어있음")
+            }
+            else {
+                print("댓글쓰기 통신")
+                print("parentCommentId \(parentCommentId)")
+                let provider = MoyaProvider<CommentService>(session: Session(interceptor: AuthManager()))
                 
+                provider.request(CommentService.uploadComment(boardId: self.boardIdString, parentCommentId: parentCommentId, context: self.commentString, isAnonymous: self.isAnonymous)) { result in
+                    switch result {
+                    case let .success(response):
+                        print("통신성공")
+                        let data = response
+                        print("response \(data)")
+                        do {
+                            self.writeCommentComplete?(true)
+                        }
+                        catch(let err) {
+                            print(err.localizedDescription)
+                            print("catched")
+                        }
+                    case .failure(let error):
+                        
+                        self.writeCommentComplete?(false)
+                        print(error.localizedDescription)
+                        print("failure")
+                    }
+                    
+                }
             }
         }
-        
+        else {
+            if self.commentString.trimmingCharacters(in:  .whitespaces).isEmpty {
+                // 댓글 비어있음
+                print("댓글 비어있음")
+            }
+            else {
+                print("댓글쓰기 통신")
+                let provider = MoyaProvider<CommentService>(session: Session(interceptor: AuthManager()))
+                
+                provider.request(CommentService.uploadCommentRe(boardId: self.boardIdString, context: self.commentString, isAnonymous: self.isAnonymous)) { result in
+                    switch result {
+                    case let .success(response):
+                        print("통신성공")
+                        let data = response
+                        print("response \(data)")
+                        do {
+                            
+                            self.writeCommentComplete?(true)
+                        }
+                        catch(let err) {
+                            print(err.localizedDescription)
+                            print("catched")
+                        }
+                    case .failure(let error):
+                        
+                        print(error.localizedDescription)
+                        print("failure")
+                    }
+                    
+                }
+            }
+        }
     }
     
-
+    
 }
 
