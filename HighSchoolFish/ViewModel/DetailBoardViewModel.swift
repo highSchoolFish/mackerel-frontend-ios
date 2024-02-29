@@ -28,6 +28,7 @@ class DetailBoardViewModel {
     var onCommentCursor: ((Bool) -> Void)?
     var checkCommentTextField: ((Bool) -> Void)?
     var writeCommentComplete: ((Bool) -> Void)?
+    var showMoreCellComplete: ((Bool) -> Void)?
     
     private var boardIdString: String = ""
     
@@ -54,6 +55,10 @@ class DetailBoardViewModel {
     
     func setimageArray(_ imageArray: [String]) {
         self.imagesArray = imageArray
+    }
+    
+    func getHeaderSection() -> Int {
+        return headerSection
     }
     
     func getDetailBoard() {
@@ -113,7 +118,7 @@ class DetailBoardViewModel {
                     let json = JSON(data.data)
                     print(json)
                     self.onCommentsResult?(commentResponse)
-                    self.onCommentsCount?(commentResponse.data.totalElements)
+//                    self.onCommentsCount?(commentResponse.data.totalElements)
                     self.comments = commentResponse.data.content
                 }
                 

@@ -77,9 +77,6 @@
                             <state key="normal" image="heart.fill" catalog="system">
                                 <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </state>
-                            <connections>
-                                <action selector="headerLikeButtonTapped" destination="iN0-l3-epB" eventType="touchUpInside" id="r8g-xp-hZW"/>
-                            </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pp2-bc-Nzl">
                             <rect key="frame" x="0.0" y="22" width="30" height="9.6666666666666643"/>
@@ -103,20 +100,22 @@
                                 <constraint firstAttribute="width" constant="30" id="A3J-1R-eeP"/>
                             </constraints>
                         </view>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="답글 1개" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ItH-qq-zb7">
-                            <rect key="frame" x="35" y="37" width="40.333333333333343" height="14.333333333333336"/>
-                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
-                            <color key="textColor" name="gray"/>
-                            <nil key="highlightedColor"/>
-                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u1I-Th-eOj">
+                            <rect key="frame" x="34.999999999999993" y="30" width="64.333333333333314" height="28.333333333333329"/>
+                            <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" title="답글 1개" titleAlignment="leading">
+                                <fontDescription key="titleFontDescription" type="system" pointSize="12"/>
+                            </buttonConfiguration>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" systemColor="tableBackgroundColor"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="120" id="6Aj-ds-zwc"/>
                         <constraint firstItem="Q3c-O9-ZxN" firstAttribute="centerY" secondItem="kqb-3S-RAO" secondAttribute="centerY" id="Liy-Oo-3JC"/>
-                        <constraint firstItem="ItH-qq-zb7" firstAttribute="centerY" secondItem="kqb-3S-RAO" secondAttribute="centerY" id="Oxt-GI-SnF"/>
-                        <constraint firstItem="ItH-qq-zb7" firstAttribute="leading" secondItem="Q3c-O9-ZxN" secondAttribute="trailing" constant="5" id="XVS-ou-bML"/>
+                        <constraint firstItem="u1I-Th-eOj" firstAttribute="centerY" secondItem="kqb-3S-RAO" secondAttribute="centerY" id="gGV-vh-oOu"/>
                         <constraint firstItem="Q3c-O9-ZxN" firstAttribute="leading" secondItem="kqb-3S-RAO" secondAttribute="leading" id="vwQ-bI-OXU"/>
+                        <constraint firstItem="u1I-Th-eOj" firstAttribute="leading" secondItem="Q3c-O9-ZxN" secondAttribute="trailing" constant="5" id="yeR-no-Pz8"/>
                     </constraints>
                 </view>
             </subviews>
@@ -148,6 +147,7 @@
                 <outlet property="nameLabel" destination="0dn-Lt-anz" id="G5d-f7-j8a"/>
                 <outlet property="profileImage" destination="NVy-dr-1jD" id="jxR-UC-JE4"/>
                 <outlet property="showMoreView" destination="kqb-3S-RAO" id="Hky-aA-sMk"/>
+                <outlet property="showMoreViewButton" destination="u1I-Th-eOj" id="dlP-nd-oNM"/>
                 <outlet property="timeLabel" destination="M17-Tp-6jG" id="VAm-Zb-2Fz"/>
             </connections>
             <point key="canvasLocation" x="309.92366412213738" y="46.478873239436624"/>

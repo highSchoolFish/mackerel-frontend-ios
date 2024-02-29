@@ -355,6 +355,7 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
     var bottomViewContraint: NSLayoutConstraint?
     private var dimmingView: UIView?
     private var boardBottomViewController = BoardBottomSheetViewController()
+    var isViewOpen: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -369,7 +370,7 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
         }
         
         settingComment()
-                
+        
         setKeyboardObserver()
         addDimmingView()
         commentAnonymousButton.isEnabled = true
@@ -411,8 +412,9 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
         commentTableView.reloadData()
         commentTableView.heightAnchor.constraint(equalToConstant: CGFloat(calculateTotalHeight())).isActive = true
         
+        
         // get board 정보? 너무 비싼데
-//        self.commentLabel.text = "댓글 \(board.numberOfComments)"
+        //        self.commentLabel.text = "댓글 \(comment.data.numberOfcommment)"
     }
     
     func calculateTotalHeight() -> CGFloat {
@@ -815,12 +817,14 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
         
         DetailBoardViewModel.shared.writeCommentComplete = { result in
             if result {
+                // 댓글쓰기 완료 후 새로고침
                 print("comment 새로고침")
                 DetailBoardViewModel.shared.getComment()
                 self.settingComment()
                 
                 self.view.endEditing(true)
                 self.commentTextField.text = ""
+                self.commentTableView.reloadData()
                 
             }
             else {
@@ -891,6 +895,11 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
+    //리턴키 델리게이트 처리
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()//텍스트필드 비활성화
+        return true
+    }
     
     func updateContentSize() {
         // 프사height + 제목height + 내용height + 사진height + tableView height
@@ -937,6 +946,7 @@ extension DetailBoardViewController: UITableViewDelegate, UITableViewDataSource 
         print("comment.text \(comment.context)")
         if comment.childComments!.count >= 1 {
             headerView.showMoreView.isHidden = false
+            headerView.showMoreViewButton.setTitle("답글 \(comment.childComments!.count)개", for: .normal)
             headerView.showMoreView.heightAnchor.constraint(equalToConstant: 20).isActive = true
         }
         else {
@@ -948,11 +958,17 @@ extension DetailBoardViewController: UITableViewDelegate, UITableViewDataSource 
         headerView.generateCell(comment: comment)
         headerView.likeButton.addTarget(self, action: #selector(headerLikeButtonTapped), for: .touchUpInside)
         headerView.configure(section: section) {
-            // 클로저 내에서 버튼이 선택되었을 때의 동작을 정의합니다.
             self.commentWriteButtonTapped(section: section)
         }
-        headerView.contentView.backgroundColor = .white
+        headerView.moreButtonConfigure(section: section) {
+            self.showMoreViewButtonTapped(section: section)
+        }
         
+        headerView.likeButtonConfigure(section: section) {
+            self.likeButtonTapped(section: section)
+        }
+        headerView.contentView.backgroundColor = .white
+
         return headerView
     }
     
@@ -971,9 +987,12 @@ extension DetailBoardViewController: UITableViewDelegate, UITableViewDataSource 
         
         guard let commentCell = tableView.dequeueReusableCell(withIdentifier: "CommentTableViewCell", for: indexPath) as? CommentTableViewCell else { return UITableViewCell() }
         
+        commentCell.isHidden = true
         if let childComment = self.comments[indexPath.section].childComments?[indexPath.item] {
+            
+            
             print("childComment context ", childComment.context)
-            commentCell.likeButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
+//            commentCell.likeButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
             commentCell.configure(section: indexPath.section) {
                 // 클로저 내에서 버튼이 선택되었을 때의 동작을 정의합니다.
                 self.commentWriteButtonTapped(section: indexPath.section)
@@ -988,6 +1007,22 @@ extension DetailBoardViewController: UITableViewDelegate, UITableViewDataSource 
         print("Button tapped in section VC \(section)")
         self.commentTextField.becomeFirstResponder()
         // VM 전달
+        DetailBoardViewModel.shared.setHeaderSection(section)
+    }
+    
+    func showMoreViewButtonTapped(section: Int) {
+        // 여기에서 선택된 섹션 값을 사용하여 작업을 수행합니다.
+        print("Button tapped in section VC \(section)")
+        // VM 전달
+        DetailBoardViewModel.shared.setHeaderSection(section)
+
+        print("section \(section)")
+        // 더보기 버튼 눌린 section확인
+    }
+    
+    func likeButtonTapped(section: Int) {
+        print("likeButtonTapped")
+        
         DetailBoardViewModel.shared.setHeaderSection(section)
     }
 }

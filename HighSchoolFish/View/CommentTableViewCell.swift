@@ -27,7 +27,6 @@ class CommentTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
         if selected {
                     // 셀이 선택되었을 때의 동작
-            self.contentView.backgroundColor = UIColor.systemYellow
                 } else {
                     // 셀이 선택 해제되었을 때의 동작
                     self.contentView.backgroundColor = UIColor.white

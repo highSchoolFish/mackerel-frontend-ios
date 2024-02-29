@@ -18,6 +18,7 @@ struct Comment: Codable {
 struct CommentData: Codable {
     let content: [CommentContent]
     let pageNumber, pageSize, totalPages, totalElements: Int
+//    let numberOfcommment: Int
 }
 
 // MARK: - CommentContent

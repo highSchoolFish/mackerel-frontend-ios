@@ -17,48 +17,51 @@ class CommentTableHeaderView: UITableViewHeaderFooterView {
     @IBOutlet weak var likeCountLabel: UILabel!
     @IBOutlet weak var commentWriteButton: UIButton!
     @IBOutlet weak var showMoreView: UIView!
+    @IBOutlet weak var showMoreViewButton: UIButton!
+    
     private var buttonAction: (() -> Void)?
     private var section: Int = 0
     
+    private var moreButtonAction: (() -> Void)?
+    private var likeButtonAction: (() -> Void)?
+    
     override func awakeFromNib() {
         self.backgroundColor = .white
-        let gesture = UIGestureRecognizer(target: self, action: #selector(headerViewTapped))
-        self.showMoreView.addGestureRecognizer(gesture)
     }
     
     func configure(section: Int, buttonAction: @escaping () -> Void) {
         self.section = section
         self.buttonAction = buttonAction
         commentWriteButton.addTarget(self, action: #selector(commentWriteButtonTapped), for: .touchUpInside)
-        // 나머지 UI 구성
+    }
+    
+    func moreButtonConfigure(section: Int, moreButtonAction: @escaping () -> Void) {
+        self.section = section
+        self.moreButtonAction = moreButtonAction
+        showMoreViewButton.addTarget(self, action: #selector(showMoreViewTapped), for: .touchUpInside)
+    }
+    
+    func likeButtonConfigure(section: Int, likeButtonAction: @escaping () -> Void) {
+        self.section = section
+        self.likeButtonAction = likeButtonAction
+        likeButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
+    }
+    
+    @objc private func showMoreViewTapped() {
+        print("more button tapped")
+        moreButtonAction?()
     }
     
     @objc private func commentWriteButtonTapped() {
         // 클로저 내에 정의된 동작을 호출하면서 섹션 값을 전달합니다.
+        print("ㅇ예?")
         buttonAction?()
     }
     
-    @objc func headerViewTapped() {
-        print("headerViewTapped")
-        // 추가적인 로직 처리
-        DetailBoardViewModel.shared.moreCommentButtonTapped()
-        DetailBoardViewModel.shared.onMoreCommentResult = { result in
-            print("result")
-            if result == false {
-                // 답글 \()개 버튼 안눌림
-                
-            }
-            else {
-                // 눌림
-                
-            }
-        }
+    @objc private func likeButtonTapped()  {
+        print("likeButtonTapped")
+        likeButtonAction?()
     }
-    
-    @IBAction func headerLikeButtonTapped() {
-        print("likeButtonTapped define on headerViewCustomClass")
-    }
-    
     func generateCell(comment: CommentContent) {
         print("generateCell comment")
         
@@ -81,6 +84,4 @@ class CommentTableHeaderView: UITableViewHeaderFooterView {
         //            // 본인이 단 댓글
         //        }
     }
-    
-    
 }
