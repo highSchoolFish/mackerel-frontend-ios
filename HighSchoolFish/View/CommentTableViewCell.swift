@@ -50,7 +50,7 @@ class CommentTableViewCell: UITableViewCell {
     func generateCell(comment: CommentContent) {
         print("generateCell comment")
         
-        self.backgroundColor = .green
+        self.backgroundColor = .white
 
         if comment.profile == nil {
             profileImage.image = UIImage(named: "profileIcon")

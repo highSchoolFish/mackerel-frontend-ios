@@ -24,6 +24,7 @@ class CommentTableHeaderView: UITableViewHeaderFooterView {
     
     private var moreButtonAction: (() -> Void)?
     private var likeButtonAction: (() -> Void)?
+    private var isViewOpen: Bool = false
     
     override func awakeFromNib() {
         self.backgroundColor = .white
@@ -50,6 +51,12 @@ class CommentTableHeaderView: UITableViewHeaderFooterView {
     @objc private func showMoreViewTapped() {
         print("more button tapped")
         moreButtonAction?()
+//        // 답글 n개
+//        if showMoreViewButton.titleLabel.text == "답글 숨기기" {
+//            showMoreViewButton.titleLabel?.text = "답글 \()개"
+//        }
+//        
+        // 답글 숨기기
     }
     
     @objc private func commentWriteButtonTapped() {

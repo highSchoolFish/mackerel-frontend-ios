@@ -143,7 +143,7 @@ class DetailBoardViewModel {
         
         var parentCommentId = ""
         print("headerSection \(headerSection)")
-        
+        print("")
         if headerSection != 99999 {
             // header section 값 정해졌으면
             parentCommentId = comments[headerSection].id
@@ -166,6 +166,7 @@ class DetailBoardViewModel {
                         print("response \(data)")
                         do {
                             self.writeCommentComplete?(true)
+                            self.headerSection = 99999
                         }
                         catch(let err) {
                             print(err.localizedDescription)
@@ -199,6 +200,7 @@ class DetailBoardViewModel {
                         do {
                             
                             self.writeCommentComplete?(true)
+                            self.headerSection = 99999
                         }
                         catch(let err) {
                             print(err.localizedDescription)

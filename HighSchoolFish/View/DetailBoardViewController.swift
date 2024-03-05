@@ -356,6 +356,10 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
     private var dimmingView: UIView?
     private var boardBottomViewController = BoardBottomSheetViewController()
     var isViewOpen: Bool = false
+    private var tableViewHeightConstraint: NSLayoutConstraint?
+    var hiddenSections = [Bool]()
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -408,33 +412,49 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
     
     private func setComment(comment: Comment) {
         self.comments = comment.data.content
+        hiddenSections = Array(repeating: true, count: comments.count)
+
         print("tableview height : \(calculateTotalHeight())")
-        commentTableView.reloadData()
-        commentTableView.heightAnchor.constraint(equalToConstant: CGFloat(calculateTotalHeight())).isActive = true
+        let newHeight = calculateTotalHeight()
         
+        if tableViewHeightConstraint == nil {
+            // 초기 제약조건 설정
+            tableViewHeightConstraint = commentTableView.heightAnchor.constraint(equalToConstant: newHeight)
+            tableViewHeightConstraint?.isActive = true
+        } else {
+            // 기존 제약조건 업데이트
+            tableViewHeightConstraint?.constant = newHeight
+        }
         
         // get board 정보? 너무 비싼데
         //        self.commentLabel.text = "댓글 \(comment.data.numberOfcommment)"
+        
+        
+        print("hiddenSections \(hiddenSections)")
+        print("hiddenSections.count \(hiddenSections.count)")
+        commentTableView.reloadData()
     }
     
     func calculateTotalHeight() -> CGFloat {
         var totalHeight: CGFloat = 0
         
         // Add 100 for each cell
-        for comment in comments {
+        for (index, comment) in comments.enumerated() {
             let headerHeight = calculateCommentHeight(text: comment.context, width: commentTableView.bounds.width)
             totalHeight += headerHeight + 100
             print(totalHeight)
-            
-            if let childComments = comment.childComments {
-                for childComment in childComments {
-                    let cellHeight = calculateCommentHeight(text: childComment.context, width: commentTableView.bounds.width)
-                    totalHeight += cellHeight + 80
-                    print(totalHeight)
+            if hiddenSections[index] == false {
+                // 숨김
+                if let childComments = comment.childComments {
+                    for childComment in childComments {
+                        let cellHeight = calculateCommentHeight(text: childComment.context, width: commentTableView.bounds.width)
+                        totalHeight += cellHeight + 80
+                        print(totalHeight)
+                    }
                 }
             }
-            
         }
+        
         print(totalHeight)
         return totalHeight
     }
@@ -911,11 +931,9 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
         var totalHeight: CGFloat = 0
         
         // 모든 자식 View의 컨트롤의 크기를 재귀적으로 호출하며 최종 영역의 크기를 설정
-        print("view \(view)", view.frame.height)
         var viewsHeight = [self.profileHStackView.frame.height, self.titleLabel.frame.height, self.contextTextView.frame.height, self.photosView.frame.height, self.viewsCountView.frame.height, self.commentTableView.frame.height]
         for viewHeight in viewsHeight {
             totalHeight += viewHeight
-            print("scrollView viewHeight \(viewHeight)")
         }
         
         totalHeight = totalHeight + 200
@@ -942,12 +960,20 @@ extension DetailBoardViewController: UITableViewDelegate, UITableViewDataSource 
             return UIView()
         }
         
+        headerView.showMoreViewButton.titleLabel?.font = UIFont.systemFont(ofSize: 11)
+
         let comment = comments[section]
         print("comment.text \(comment.context)")
         if comment.childComments!.count >= 1 {
             headerView.showMoreView.isHidden = false
-            headerView.showMoreViewButton.setTitle("답글 \(comment.childComments!.count)개", for: .normal)
-            headerView.showMoreView.heightAnchor.constraint(equalToConstant: 20).isActive = true
+            headerView.showMoreView.heightAnchor.constraint(equalToConstant: 15).isActive = true
+            if hiddenSections[section] == true {
+                // 숨김
+                headerView.showMoreViewButton.setTitle("답글 \(comment.childComments!.count)개", for: .normal)
+            }
+            if hiddenSections[section] == false {
+                headerView.showMoreViewButton.setTitle("답글 숨기기", for: .normal)
+            }
         }
         else {
             headerView.showMoreView.isHidden = true
@@ -963,12 +989,10 @@ extension DetailBoardViewController: UITableViewDelegate, UITableViewDataSource 
         headerView.moreButtonConfigure(section: section) {
             self.showMoreViewButtonTapped(section: section)
         }
-        
         headerView.likeButtonConfigure(section: section) {
             self.likeButtonTapped(section: section)
         }
         headerView.contentView.backgroundColor = .white
-
         return headerView
     }
     
@@ -986,20 +1010,38 @@ extension DetailBoardViewController: UITableViewDelegate, UITableViewDataSource 
         print("cellForRowAt")
         
         guard let commentCell = tableView.dequeueReusableCell(withIdentifier: "CommentTableViewCell", for: indexPath) as? CommentTableViewCell else { return UITableViewCell() }
+        if hiddenSections[indexPath.section] == false {
+            print("section hidden false")
+            commentCell.isHidden = false
+        }
+        if hiddenSections[indexPath.section] == true {
+            print("section hidden true")
+            commentCell.isHidden = true
+        }
         
-        commentCell.isHidden = true
         if let childComment = self.comments[indexPath.section].childComments?[indexPath.item] {
             
             
             print("childComment context ", childComment.context)
-//            commentCell.likeButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
+            //            commentCell.likeButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
             commentCell.configure(section: indexPath.section) {
                 // 클로저 내에서 버튼이 선택되었을 때의 동작을 정의합니다.
                 self.commentWriteButtonTapped(section: indexPath.section)
             }
             commentCell.generateCell(comment: childComment)
         }
+        
+        self.commentTableView.layoutIfNeeded()
         return commentCell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if hiddenSections[indexPath.section] {
+            print("hidden section height set 0")
+            return 0 // 숨겨진 셀의 높이를 0으로 설정
+        } else {
+            return UITableView.automaticDimension // 기본 높이
+        }
     }
     
     func commentWriteButtonTapped(section: Int) {
@@ -1015,10 +1057,21 @@ extension DetailBoardViewController: UITableViewDelegate, UITableViewDataSource 
         print("Button tapped in section VC \(section)")
         // VM 전달
         DetailBoardViewModel.shared.setHeaderSection(section)
-
-        print("section \(section)")
-        // 더보기 버튼 눌린 section확인
+        hiddenSections[section] = !hiddenSections[section] // 숨김 상태 토글
+        print("hiddenSections \(hiddenSections)")
+        let indexSet = IndexSet(arrayLiteral: section)
+        
+        self.commentTableView.reloadSections(indexSet, with: .fade)
+        
+        print("tableview height : \(calculateTotalHeight())")
+        let newHeight = calculateTotalHeight()
+        
+        tableViewHeightConstraint?.constant = newHeight
+        
+        
+        
     }
+    
     
     func likeButtonTapped(section: Int) {
         print("likeButtonTapped")
