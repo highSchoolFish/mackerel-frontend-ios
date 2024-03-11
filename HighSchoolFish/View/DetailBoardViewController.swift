@@ -413,7 +413,7 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
     private func setComment(comment: Comment) {
         self.comments = comment.data.content
         hiddenSections = Array(repeating: true, count: comments.count)
-
+        
         print("tableview height : \(calculateTotalHeight())")
         let newHeight = calculateTotalHeight()
         
@@ -816,7 +816,13 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
             commentAnonymousButton.setImage(UIImage(named: "uncheckedButton"), for: .normal)
         }
     }
-    
+    //
+    //    @objc func deleteCommentGesture() {
+    //        DetailBoardViewModel.shared.deleteCommentGesture()
+    //        // gesture 일어난 header, cell 몇번째인지 알아야하는데
+    //
+    //    }
+    //
     @objc func commentUploadButtonTapped(_ sender: UIButton) {
         print("commentUploadButtonTapped VC")
         if commentAnonymousButton.isSelected {
@@ -961,7 +967,7 @@ extension DetailBoardViewController: UITableViewDelegate, UITableViewDataSource 
         }
         
         headerView.showMoreViewButton.titleLabel?.font = UIFont.systemFont(ofSize: 11)
-
+        
         let comment = comments[section]
         print("comment.text \(comment.context)")
         if comment.childComments!.count >= 1 {
@@ -983,7 +989,7 @@ extension DetailBoardViewController: UITableViewDelegate, UITableViewDataSource 
         
         headerView.generateCell(comment: comment)
         headerView.likeButton.addTarget(self, action: #selector(headerLikeButtonTapped), for: .touchUpInside)
-        headerView.configure(section: section) {
+        headerView.commentWirteConfigure(section: section) {
             self.commentWriteButtonTapped(section: section)
         }
         headerView.moreButtonConfigure(section: section) {
@@ -992,6 +998,11 @@ extension DetailBoardViewController: UITableViewDelegate, UITableViewDataSource 
         headerView.likeButtonConfigure(section: section) {
             self.likeButtonTapped(section: section)
         }
+
+        headerView.swipeConfigure(section: section) {
+            self.headerSwipeForDelete(section: section)
+        }
+        
         headerView.contentView.backgroundColor = .white
         return headerView
     }
@@ -1021,12 +1032,15 @@ extension DetailBoardViewController: UITableViewDelegate, UITableViewDataSource 
         
         if let childComment = self.comments[indexPath.section].childComments?[indexPath.item] {
             
-            
             print("childComment context ", childComment.context)
             //            commentCell.likeButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
             commentCell.configure(section: indexPath.section) {
                 // 클로저 내에서 버튼이 선택되었을 때의 동작을 정의합니다.
                 self.commentWriteButtonTapped(section: indexPath.section)
+            }
+            
+            commentCell.swipeConfigure(indexPath: indexPath) {
+                self.cellSwipeForDelete(indexPath: indexPath)
             }
             commentCell.generateCell(comment: childComment)
         }
@@ -1043,7 +1057,7 @@ extension DetailBoardViewController: UITableViewDelegate, UITableViewDataSource 
             return UITableView.automaticDimension // 기본 높이
         }
     }
-    
+
     func commentWriteButtonTapped(section: Int) {
         // 여기에서 선택된 섹션 값을 사용하여 작업을 수행합니다.
         print("Button tapped in section VC \(section)")
@@ -1067,11 +1081,32 @@ extension DetailBoardViewController: UITableViewDelegate, UITableViewDataSource 
         let newHeight = calculateTotalHeight()
         
         tableViewHeightConstraint?.constant = newHeight
-        
-        
-        
     }
     
+    func headerSwipeForDelete(section: Int) {
+        print("swipe header")
+        var headerCommentId = comments[section].id
+        print("headerCommentId \(headerCommentId)")
+        if let childComments = comments[section].childComments{
+            for childComment in childComments {
+                print("id \(childComment.id)")
+                print(childComments.count)
+                //delete all child in VM
+
+            }
+        }
+        else {
+            //delete header in VM
+        }
+    }
+    
+    func cellSwipeForDelete(indexPath: IndexPath) {
+        print("swipe cell")
+        if let cellCommentId = comments[indexPath.section].childComments?[indexPath.row].id {
+            print("cellCommentId \(cellCommentId)")
+
+        }
+    }
     
     func likeButtonTapped(section: Int) {
         print("likeButtonTapped")
@@ -1093,4 +1128,3 @@ extension UIImageView {
         }
     }
 }
-

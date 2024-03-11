@@ -13,6 +13,7 @@ enum CommentService {
     case uploadComment(boardId: String, parentCommentId: String, context: String, isAnonymous: Bool)
     case uploadCommentRe(boardId: String, context: String, isAnonymous: Bool)
     case likeComment(id: String)
+    case deleteComment(id: String)
 }
 
 extension CommentService: TargetType {
@@ -30,6 +31,8 @@ extension CommentService: TargetType {
             return "/api/v1/schools/boards/comments"
         case .likeComment:
             return "/api/v1/schools/boards/likes"
+        case .deleteComment(let id):
+            return "/api/v1/schools/boards/comments/\(id)"
         }
     }
     
@@ -43,12 +46,14 @@ extension CommentService: TargetType {
             return .post
         case .likeComment(_):
             return .post
+        case .deleteComment(_):
+            return .delete
         }
     }
     
     var sampleData: Data {
         switch self {
-        case .readComment, .uploadComment, .uploadCommentRe, .likeComment:
+        case .readComment, .uploadComment, .uploadCommentRe, .likeComment, .deleteComment:
             return "@@".data(using: .utf8)!
         }
     }
@@ -81,12 +86,17 @@ extension CommentService: TargetType {
             
         case .likeComment(id: let id):
             return .requestParameters(parameters: ["id": id], encoding: JSONEncoding.default)
+        case .deleteComment(id: let id):
+            let params: [String: Any] = [
+                "id": id
+            ]
+            return .requestParameters(parameters: params, encoding: URLEncoding.queryString)
         }
     }
     
     var headers: [String : String]? {
         switch self {
-        case .readComment, .uploadComment, .uploadCommentRe, .likeComment:
+        case .readComment, .uploadComment, .uploadCommentRe, .likeComment, .deleteComment:
             return ["Content-Type": "application/json"]
         }
     }

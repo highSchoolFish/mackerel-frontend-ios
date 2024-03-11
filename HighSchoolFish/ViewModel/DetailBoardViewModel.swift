@@ -136,6 +136,13 @@ class DetailBoardViewModel {
         print("more comment button tapped in VM")
     }
     
+    func deleteCommet() {
+        print("deleteComment")
+        
+        
+        
+    }
+    
     func commentUploadButtonTapped() {
         print("comment upload button tapped")
         // upload button tapped

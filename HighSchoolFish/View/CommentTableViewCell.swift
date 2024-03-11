@@ -15,30 +15,90 @@ class CommentTableViewCell: UITableViewCell {
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var likeCountLabel: UILabel!
     @IBOutlet weak var commentWriteButton: UIButton!
+    @IBOutlet weak var deleteButtonView: UIView!
+    
     private var buttonAction: (() -> Void)?
     private var section: Int = 0
-
+    private var swipeAction: (() -> Void)?
+    @IBOutlet weak var commentSwipeChangingConstraint: NSLayoutConstraint!
+    @IBOutlet weak var stackViewTrailingConstraint: NSLayoutConstraint!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        self.deleteButtonView.isHidden = true
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         if selected {
-                    // 셀이 선택되었을 때의 동작
-                } else {
-                    // 셀이 선택 해제되었을 때의 동작
-                    self.contentView.backgroundColor = UIColor.white
-                }
+            // 셀이 선택되었을 때의 동작
+        } else {
+            // 셀이 선택 해제되었을 때의 동작
+            self.contentView.backgroundColor = UIColor.white
+        }
         // Configure the view for the selected state
     }
-
+    
     func configure(section: Int, buttonAction: @escaping () -> Void) {
         self.section = section
         self.buttonAction = buttonAction
         commentWriteButton.addTarget(self, action: #selector(commentWriteButtonTapped), for: .touchUpInside)
         // 나머지 UI 구성
+    }
+    
+    func swipeConfigure(indexPath: IndexPath, swipeAction: @escaping () -> Void) {
+        self.section = indexPath.section
+        self.swipeAction = swipeAction
+        let swipeGestrue = UISwipeGestureRecognizer(target: self, action: #selector(deleteChildCommentGesture))
+        swipeGestrue.direction = .left
+        
+        self.addGestureRecognizer(swipeGestrue)
+        
+        let initCommentGesture = UISwipeGestureRecognizer(target: self, action: #selector(initCommentGestrue))
+        initCommentGesture.direction = .right
+        self.addGestureRecognizer(initCommentGesture)
+    }
+    
+    @objc private func initCommentGestrue() {
+        if self.deleteButtonView.isHidden == false {
+            self.deleteButtonView.alpha = 1
+            self.deleteButtonView.isHidden = true
+            
+            UIView.animate(withDuration: 0.5, animations: {
+                self.deleteButtonView.alpha = 0
+                if self.commentSwipeChangingConstraint?.constant == -40 {
+                    // 초기 제약조건 설정
+                    self.commentSwipeChangingConstraint.constant = 40
+                    self.stackViewTrailingConstraint.constant = 10
+                }
+            }, completion: { _ in
+                
+            })
+        }
+        
+        
+    }
+    
+    @objc private func deleteChildCommentGesture() {
+        // isHidden 상태를 변경하기 전에 뷰의 투명도를 설정
+        if self.deleteButtonView.isHidden {
+            self.deleteButtonView.alpha = 0
+            self.deleteButtonView.isHidden = false
+            // 애니메이션 블록 안에서 투명도를 애니메이션 함
+            UIView.animate(withDuration: 0.5, animations: {
+                // 삭제 버튼을 보여주기 위해 알파 값을 1로 설정
+                self.deleteButtonView.alpha = 1
+                if self.commentSwipeChangingConstraint?.constant == 40 {
+                    // 초기 제약조건 설정
+                    self.commentSwipeChangingConstraint.constant = -40
+                    self.stackViewTrailingConstraint.constant = -90
+                }
+            }, completion: { _ in
+                // 애니메이션 완료 후, 필요한 추가 작업을 수행할 수 있습니다.
+            })
+        }
+        
+        swipeAction?()
     }
     
     @objc private func commentWriteButtonTapped() {
@@ -51,7 +111,7 @@ class CommentTableViewCell: UITableViewCell {
         print("generateCell comment")
         
         self.backgroundColor = .white
-
+        
         if comment.profile == nil {
             profileImage.image = UIImage(named: "profileIcon")
         }
@@ -61,24 +121,24 @@ class CommentTableViewCell: UITableViewCell {
         likeCountLabel.text = "\(comment.numberOfLikes)"
         
         if comment.childComments != nil {
-//            if comment.childComments!.count >= 1 {
-//                showCommentView.isHidden = false
-//            }
-//            else {
-//                showCommentView.isHidden = true
-//            }
+            //            if comment.childComments!.count >= 1 {
+            //                showCommentView.isHidden = false
+            //            }
+            //            else {
+            //                showCommentView.isHidden = true
+            //            }
         }
-//        if comment.isLike == false {
-//            // 좋아요 안눌려있음
-//            likeButton.tintColor = UIColor(named: "gray")
-//        }
-//        else {
-//            likeButton.tintColor = UIColor(named: "red")
-//        }
+        //        if comment.isLike == false {
+        //            // 좋아요 안눌려있음
+        //            likeButton.tintColor = UIColor(named: "gray")
+        //        }
+        //        else {
+        //            likeButton.tintColor = UIColor(named: "red")
+        //        }
         
-//        if comment.isWriter {
-//            // 본인이 단 댓글
-//        }
+        //        if comment.isWriter {
+        //            // 본인이 단 댓글
+        //        }
     }
     
     
