@@ -478,7 +478,7 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
             self.profileImageView.image = UIImage(named: "profileIcon")
         }
         self.nicknameLabel.text = board.writerNickname
-        if board.writerNickname == nil {
+        if board.writerNickname == "" {
             self.nicknameLabel.text = "익명"
         }
         self.timeLabel.text = createdAt(createTime: board.createdAt)
@@ -842,6 +842,7 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
             if result {
                 // 댓글쓰기 완료 후 새로고침
                 print("comment 새로고침")
+                self.commentTableView.reloadData()
                 DetailBoardViewModel.shared.getComment()
                 self.settingComment()
                 

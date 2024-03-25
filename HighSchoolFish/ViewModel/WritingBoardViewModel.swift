@@ -19,6 +19,8 @@ class WritingBoardViewModel {
     private var categoryString: String = ""
     private var schoolNameString: String = ""
     private var visibilityTypeString: String = ""
+    var writingBoardComplete: ((Bool) -> Void)?
+
     
     func setTitleString(_ titleString: String) {
         self.titleString = titleString
@@ -91,6 +93,9 @@ class WritingBoardViewModel {
                     print(response.data)
                     print(response.statusCode)
                     
+                    DispatchQueue.main.async {
+                        self.writingBoardComplete?(true)
+                    }
                 case .failure(let error):
                     print("통신실패")
                     print(error.errorCode)

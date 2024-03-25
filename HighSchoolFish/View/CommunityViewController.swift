@@ -223,6 +223,13 @@ class CommunityViewController: UIViewController {
         let vc = WritingBoardViewController()
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true)
+        
+        CommunityViewModel.shared.writingBoardComplete = { result in
+            if result {
+                // reload
+                self.tableView.reloadData()
+            }
+        }
     }
     
     @objc private func goUpButtonTapped() {
@@ -294,42 +301,3 @@ extension CommunityViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
 }
-
-//struct PreView: PreviewProvider {
-//    static var previews: some View {
-//        CommunityViewController().toPreview()
-//    }
-//}
-//
-//#if DEBUG
-//extension UIViewController {
-//    private struct Preview: UIViewControllerRepresentable {
-//        let viewController: UIViewController
-//
-//        func makeUIViewController(context: Context) -> UIViewController {
-//            return viewController
-//        }
-//
-//        func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
-//        }
-//    }
-//
-//    func toPreview() -> some View {
-//        Group {
-//            Preview(viewController: self)
-//                .previewDevice(PreviewDevice(rawValue: "iPhone 13 Pro Max"))
-//                .previewDisplayName("iPhone 13 Pro Max")
-//
-//            Preview(viewController: self)
-//                .previewDevice(PreviewDevice(rawValue: "iPhone 8"))
-//                .previewDisplayName("iPhone 8")
-//
-//            Preview(viewController: self)
-//                .previewDevice(PreviewDevice(rawValue: "iPhone XS"))
-//                .previewDisplayName("xs 미리보기")
-//        }
-//
-//    }
-//}
-//#endif
-

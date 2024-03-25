@@ -133,14 +133,36 @@ class CommentTableViewCell: UITableViewCell {
         contextLabel.text = comment.context
         likeCountLabel.text = "\(comment.numberOfLikes)"
         
-        if comment.childComments != nil {
-            //            if comment.childComments!.count >= 1 {
-            //                showCommentView.isHidden = false
-            //            }
-            //            else {
-            //                showCommentView.isHidden = true
-            //            }
+        var timeLabelText = ""
+        let givenTimeString = comment.createdAt
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+
+        // 주어진 시간 문자열을 Date 객체로 변환
+        if let givenDate = formatter.date(from: givenTimeString) {
+            // 현재 날짜와 주어진 날짜의 차이 계산
+            let now = Date()
+            let calendar = Calendar.current
+            
+            // 날짜 차이 계산
+            let components = calendar.dateComponents([.day, .hour], from: givenDate, to: now)
+            
+            if let daysAgo = components.day, daysAgo >= 1 {
+                print("\(daysAgo)일 전")
+                timeLabelText = "\(daysAgo)일 전"
+            } else if let hoursAgo = components.hour {
+                print("\(hoursAgo)시간 전")
+                timeLabelText = "\(hoursAgo)시간 전"
+            } else {
+                print("방금 전")
+                timeLabelText = "방금 전"
+            }
+        } else {
+            print("날짜 형식이 잘못되었습니다.")
         }
+        
+        self.timeLabel.text = timeLabelText
+        
         //        if comment.isLike == false {
         //            // 좋아요 안눌려있음
         //            likeButton.tintColor = UIColor(named: "gray")

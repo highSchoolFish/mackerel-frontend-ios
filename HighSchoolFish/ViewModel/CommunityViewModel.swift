@@ -15,7 +15,8 @@ class CommunityViewModel {
 
     var categoryNameString: String = ""
     var communityNameString: String = ""
-    
+    var writingBoardComplete: ((Bool) -> Void)?
+
     func setCategoryNameString(_ categoryNameString: String) {
         self.categoryNameString = categoryNameString
     }

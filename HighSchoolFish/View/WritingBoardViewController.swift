@@ -510,6 +510,13 @@ class WritingBoardViewController: UIViewController, UIImagePickerControllerDeleg
         WritingBoardViewModel.shared.setTitleString(self.titleTextField.text!)
         WritingBoardViewModel.shared.setContentString(self.contentTextView.text)
         WritingBoardViewModel.shared.checkFilled()
+        
+        WritingBoardViewModel.shared.writingBoardComplete = { result in
+            if result {
+                CommunityViewModel.shared.writingBoardComplete?(true)
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
     }
     
     func textViewSetupView() {
