@@ -79,9 +79,7 @@ class CustomAlertViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    
-    var delegate: CustomAlertDelegate?
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
@@ -123,15 +121,17 @@ class CustomAlertViewController: UIViewController {
 
     @objc func confirmButtonTapped() {
         print("confirmButtonTapped")
-        CustomAlertViewModel.shared.confirmButtonTapped()
-        // 경우에 따라 처리 다르게 해야함
+        let status = CustomAlertViewModel.shared.alertStatus
+        CustomAlertViewModel.shared.confirmButtonTapped(checkStatus: status)
         
-//        CustomAlertViewModel.shared.onConfirmComplete = { result in
-//            if result {
-//                // 확인버튼 누르면
-//                
-//            }
-//        }
+        // 버튼 누르면 상태 전달
+        
+        CustomAlertViewModel.shared.onConfirmComplete = { result in
+            if result {
+                // 버튼 눌리고 case 통과 완료하면
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
     }
 
     @objc func cancelButtonTapped() {

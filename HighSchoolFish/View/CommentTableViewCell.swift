@@ -16,8 +16,10 @@ class CommentTableViewCell: UITableViewCell {
     @IBOutlet weak var likeCountLabel: UILabel!
     @IBOutlet weak var commentWriteButton: UIButton!
     @IBOutlet weak var deleteButtonView: UIView!
+    @IBOutlet weak var deleteButton: UIButton!
     
     private var buttonAction: (() -> Void)?
+    private var deleteAction: (() -> Void)?
     private var section: Int = 0
     private var swipeAction: (() -> Void)?
     @IBOutlet weak var commentSwipeChangingConstraint: NSLayoutConstraint!
@@ -39,14 +41,21 @@ class CommentTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func configure(section: Int, buttonAction: @escaping () -> Void) {
+    func commentWriteConfigure(section: Int, buttonAction: @escaping () -> Void) {
         self.section = section
         self.buttonAction = buttonAction
         commentWriteButton.addTarget(self, action: #selector(commentWriteButtonTapped), for: .touchUpInside)
-        // 나머지 UI 구성
+    }
+    
+    func commentDeleteConfigure(indexPath: IndexPath, deleteAction: @escaping () -> Void) {
+        self.section = indexPath.section
+        self.deleteAction = deleteAction
+        
+        deleteButton.addTarget(self, action: #selector(commentDeleteButtonTapped), for: .touchUpInside)
     }
     
     func swipeConfigure(indexPath: IndexPath, swipeAction: @escaping () -> Void) {
+        
         self.section = indexPath.section
         self.swipeAction = swipeAction
         let swipeGestrue = UISwipeGestureRecognizer(target: self, action: #selector(deleteChildCommentGesture))
@@ -106,6 +115,10 @@ class CommentTableViewCell: UITableViewCell {
         buttonAction?()
     }
     
+    @objc private func commentDeleteButtonTapped() {
+        print("comment Delete Button Tapped")
+        deleteAction?()
+    }
     
     func generateCell(comment: CommentContent) {
         print("generateCell comment")

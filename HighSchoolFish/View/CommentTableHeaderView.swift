@@ -19,10 +19,11 @@ class CommentTableHeaderView: UITableViewHeaderFooterView {
     @IBOutlet weak var showMoreView: UIView!
     @IBOutlet weak var showMoreViewButton: UIButton!
     @IBOutlet weak var deleteButtonView: UIView!
-    
-    private var buttonAction: (() -> Void)?
+    @IBOutlet weak var deleteButton: UIButton!
     private var section: Int = 0
-    
+
+    private var buttonAction: (() -> Void)?
+    private var deleteAction: (() -> Void)?
     private var moreButtonAction: (() -> Void)?
     private var likeButtonAction: (() -> Void)?
     private var swipeAction: (() -> Void)?
@@ -34,6 +35,7 @@ class CommentTableHeaderView: UITableViewHeaderFooterView {
     override func awakeFromNib() {
         self.backgroundColor = .white
         self.deleteButtonView.isHidden = true
+        
     }
     
     func commentWirteConfigure(section: Int, buttonAction: @escaping () -> Void) {
@@ -52,6 +54,13 @@ class CommentTableHeaderView: UITableViewHeaderFooterView {
         self.section = section
         self.likeButtonAction = likeButtonAction
         likeButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
+    }
+    
+    func commentDeleteConfigure(section: Int, deleteAction: @escaping () -> Void) {
+        self.section = section
+        self.deleteAction = deleteAction
+        
+        deleteButton.addTarget(self, action: #selector(commentDeleteButtonTapped), for: .touchUpInside)
     }
     
     func swipeConfigure(section: Int, swipeAction: @escaping () -> Void) {
@@ -75,7 +84,7 @@ class CommentTableHeaderView: UITableViewHeaderFooterView {
     @objc private func commentWriteButtonTapped() {
         // 클로저 내에 정의된 동작을 호출하면서 섹션 값을 전달합니다.
         print("ㅇ예?")
-        buttonAction?()
+        
     }
     
     @objc private func initCommentGestrue() {
@@ -122,14 +131,16 @@ class CommentTableHeaderView: UITableViewHeaderFooterView {
         swipeAction?()
     }
     
+    @objc private func commentDeleteButtonTapped() {
+        print("comment Delete Button Tapped")
+        deleteAction?()
+    }
+    
     @objc private func likeButtonTapped()  {
         print("likeButtonTapped")
         likeButtonAction?()
     }
     
-    //    func headerviewConstraint() {
-    //
-    //    }
     func generateCell(comment: CommentContent) {
         print("generateCell comment")
         

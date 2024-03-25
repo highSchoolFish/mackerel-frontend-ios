@@ -528,9 +528,6 @@ class HomeTabViewController: UIViewController {
         let gesture = UIPanGestureRecognizer(target: self, action: #selector(type(of: self).wasDragged(gestureRecognizer:)))
         cardView.addGestureRecognizer(gesture)
         
-        MemberInfoViewModel.shared.decodeJWT()
-        MemberInfoViewModel.shared.getUserInfo()
-        
         setCardUI()
         
     }

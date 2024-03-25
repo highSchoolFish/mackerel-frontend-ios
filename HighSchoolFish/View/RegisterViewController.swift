@@ -194,6 +194,7 @@ class RegisterViewController: UIViewController, IndexDelegate {
                 var alertTitle = CustomAlertViewModel.shared.titleString
                 var alertMessage = CustomAlertViewModel.shared.contentString
                 var alertType = CustomAlertViewModel.shared.alertType
+                
                 let customAlertVC = CustomAlertViewController()
                 customAlertVC.show(alertTitle: alertTitle, alertMessage: alertMessage, alertType: alertType, on: self)
                 

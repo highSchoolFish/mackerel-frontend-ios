@@ -17,6 +17,11 @@ class MemberInfoViewModel {
     var userGradeString: String = ""
     var userNameString: String = ""
     var userNicknameString: String = ""
+    var userIdString: String = ""
+    
+    private func setUserId(_ userIdString: String) {
+        self.userIdString = userIdString
+    }
     
     private func setUserProfile(_ userProfile: String){
         self.userProfileString = userProfile
@@ -40,12 +45,16 @@ class MemberInfoViewModel {
     
     func decodeJWT() {
         var refreshToken = KeyChain.shared.read("api/v1/auth/token", account: "refreshToken")
+        print("refreshToken in VM \(refreshToken)")
         
         if let accessToken = KeyChain.shared.read("api/v1/auth/token", account: "accessToken") {
+            
+            print("accessToken  in VM \(accessToken)")
             let jwt = try? decode(jwt: accessToken)
             print("jwt : ", jwt)
-            print("jwt[nickname] : ", jwt?["nickname"])
-
+            print("jwt[sub] : ", jwt?["sub"].rawValue as! String)
+            self.setUserId(jwt?["sub"].rawValue as! String)
+            
         }
     }
     
@@ -56,22 +65,40 @@ class MemberInfoViewModel {
     
     func getUserInfo() {
         // token 만 확인하면 됨
-        
-        let provider = MoyaProvider<LoginService>()
+        print("get User Info LoginService.memberInfo")
+        let provider = MoyaProvider<LoginService>(session: Session(interceptor: AuthManager()))
         provider.request(LoginService.memberInfo) { result in
             switch result {
+                
             case .success(let response):
                 print("통신성공")
-                print(response.data)
-                print(response.statusCode)
-                
-                let memberInfoResponse = try? JSONDecoder().decode(MemberInfoResponse.self, from: response.data)
-                
-                self.setUserProfile(memberInfoResponse?.data.profile ?? "")
-                self.setUserSchoolName(memberInfoResponse?.data.schoolName ?? "")
-                self.setUserGrade(memberInfoResponse?.data.grade ?? "")
-                self.setUserName(memberInfoResponse?.data.name ?? "")
-                self.setUserNickname(memberInfoResponse?.data.nickname ?? "")
+                let responseData = response.data
+                do {
+                    let memberInfoResponse = try JSONDecoder().decode(MemberInfoResponse.self, from: responseData)
+                    // 이제 여기서 memberInfoResponse를 사용하여 필요한 데이터에 접근 가능
+                    print("data ", memberInfoResponse.data)
+                    print(memberInfoResponse)
+                    print("Name: \(memberInfoResponse.data.name)")
+                    
+//                    self.setUserProfile(memberInfoResponse?.data.profile)
+                    self.setUserSchoolName(memberInfoResponse.data.schoolName)
+                    self.setUserGrade(memberInfoResponse.data.grade)
+                    self.setUserName(memberInfoResponse.data.name)
+                    self.setUserNickname(memberInfoResponse.data.nickname)
+                    
+                    
+                    //                        if let profile = memberInfoResponse.data.profile {
+                    //                            print("Profile: \(profile)")
+                    //                        } else {
+                    //                            print("Profile: nil")
+                    //                        }
+                    // 기타 필요한 데이터 출력
+                } catch {
+                    print("Parsing Error: \(error)")
+                }
+                //                print("name in VM ",memberInfoResponse?.data.data.name ?? "")
+                //                print(memberInfoResponse?.data.memberId ?? "")
+                //
                 
             case .failure(let error):
                 print("통신실패")

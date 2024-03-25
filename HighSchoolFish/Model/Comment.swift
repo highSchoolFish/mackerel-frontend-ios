@@ -18,17 +18,18 @@ struct Comment: Codable {
 struct CommentData: Codable {
     let content: [CommentContent]
     let pageNumber, pageSize, totalPages, totalElements: Int
-//    let numberOfcommment: Int
+    //    let numberOfcommment: Int
 }
 
 // MARK: - CommentContent
 struct CommentContent: Codable {
     let id: String
     let isWriter: Bool
-    let profile: URL? = URL(string: "")
-    let name: String
+    var profile: URL? = URL(string: "")
+    let name: String?
     let isLike: Bool
     let numberOfLikes: Int
     let createdAt, context: String
     let childComments: [CommentContent]?
 }
+

@@ -113,8 +113,8 @@ class AlertStatusViewModel {
         let alertData = AlertData.init(alertTitle: "title", alertMessage: "message")
         switch checkStatus {
         case .deleteComment:
-            alertData.alertTitle = ""
-            alertData.alertMessage = ""
+            alertData.alertTitle = "삭제"
+            alertData.alertMessage = "해당 댓글을 삭제하시겠습니까? \n삭제 시 되돌릴 수 없습니다."
             alertData.alertType = .defaultAlert
 
         case .deleteBoard:

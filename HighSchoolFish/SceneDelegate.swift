@@ -30,6 +30,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 guard let windowScene = (scene as? UIWindowScene) else { return }
                 let window = UIWindow(windowScene: windowScene)
                 window.rootViewController = LoginViewController()
+                var refreshToken = KeyChain.shared.read("api/v1/auth/token", account: "refreshToken")
+                print("refreshToken \(refreshToken)")
+
+                var accessToken = KeyChain.shared.read("api/v1/auth/token", account: "accessToken")
+                print("accessToken \(accessToken)")
+
                 self.window = window
                 window.makeKeyAndVisible()
             }

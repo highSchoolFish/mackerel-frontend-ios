@@ -33,14 +33,16 @@ struct Boards: Codable {
         self.numberOfLikes = boardData["numberOfLikes"].intValue
         self.numberOfComments = boardData["numberOfComments"].intValue
         self.isExistPhoto = boardData["isExistPhoto"].boolValue
+        self.createdAt = boardData["createdAt"].stringValue
     }
     
     init(detailBoardDictionary: Dictionary<String, Any>) {
         let detailBoardData = JSON(detailBoardDictionary)
         print(detailBoardData)
-        self.boardId = detailBoardData["boardId"].stringValue
+        self.boardId = detailBoardData["id"].stringValue
         self.title = detailBoardData["title"].stringValue
         self.context = detailBoardData["context"].stringValue
+        self.createdAt = detailBoardData["createdAt"].stringValue
         self.numberOfLikes = detailBoardData["numberOfLikes"].intValue
         self.numberOfComments = detailBoardData["numberOfComments"].intValue
         self.isExistPhoto = detailBoardData["isExistPhoto"].boolValue

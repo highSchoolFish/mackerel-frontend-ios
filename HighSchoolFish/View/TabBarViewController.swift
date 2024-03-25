@@ -42,6 +42,12 @@ class TabBarViewController: UITabBarController {
         self.setViewControllers(viewControllers, animated: true)
         configure()
         
+        
+        
+        MemberInfoViewModel.shared.decodeJWT()
+        MemberInfoViewModel.shared.getUserInfo()
+        
+        
         // 로그아웃 해서 다시 로그인 VC로 돌아가기 위한 버튼 추가
         
     }

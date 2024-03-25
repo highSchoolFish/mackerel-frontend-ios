@@ -366,7 +366,7 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
         configure()
         setAutoLayout()
         
-        bottomViewContraint = bottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0.0)
+        bottomViewContraint = bottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10)
         bottomViewContraint?.isActive = true
         
         DetailBoardViewModel.shared.onBoardComplete = { result in
@@ -392,6 +392,7 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
         DetailBoardViewModel.shared.onCommentsResult = { result in
             print("comment result ", result)
             print("comment result.data.content ", result.data.content)
+            
             
             self.setComment(comment: result)
         }
@@ -432,7 +433,8 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
         
         print("hiddenSections \(hiddenSections)")
         print("hiddenSections.count \(hiddenSections.count)")
-        commentTableView.reloadData()
+        self.commentTableView.reloadData()
+        
     }
     
     func calculateTotalHeight() -> CGFloat {
@@ -702,7 +704,7 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
             bottomView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             bottomView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             bottomView.heightAnchor.constraint(equalToConstant: 60),
-            bottomView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
+//            bottomView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
             
             uploadCommentView.centerYAnchor.constraint(equalTo: bottomView.centerYAnchor, constant: 0),
             uploadCommentView.leadingAnchor.constraint(equalTo: bottomView.leadingAnchor, constant: 0),
@@ -792,8 +794,9 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
         print("Like button tapped")
     }
     
-    @objc func headerLikeButtonTapped() {
+    @objc func headerLikeButtonTapped(_ sender: UIButton) {
         print("headerLikeButtonTapped")
+        
     }
     
     @objc func commentAnonymousButtonTapped(_ sender: UIButton) {
@@ -816,13 +819,7 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
             commentAnonymousButton.setImage(UIImage(named: "uncheckedButton"), for: .normal)
         }
     }
-    //
-    //    @objc func deleteCommentGesture() {
-    //        DetailBoardViewModel.shared.deleteCommentGesture()
-    //        // gesture 일어난 header, cell 몇번째인지 알아야하는데
-    //
-    //    }
-    //
+    
     @objc func commentUploadButtonTapped(_ sender: UIButton) {
         print("commentUploadButtonTapped VC")
         if commentAnonymousButton.isSelected {
@@ -850,7 +847,6 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
                 
                 self.view.endEditing(true)
                 self.commentTextField.text = ""
-                self.commentTableView.reloadData()
                 
             }
             else {
@@ -937,7 +933,7 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
         var totalHeight: CGFloat = 0
         
         // 모든 자식 View의 컨트롤의 크기를 재귀적으로 호출하며 최종 영역의 크기를 설정
-        var viewsHeight = [self.profileHStackView.frame.height, self.titleLabel.frame.height, self.contextTextView.frame.height, self.photosView.frame.height, self.viewsCountView.frame.height, self.commentTableView.frame.height]
+        let viewsHeight = [self.profileHStackView.frame.height, self.titleLabel.frame.height, self.contextTextView.frame.height, self.photosView.frame.height, self.viewsCountView.frame.height, self.commentTableView.frame.height]
         for viewHeight in viewsHeight {
             totalHeight += viewHeight
         }
@@ -951,6 +947,7 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
 extension DetailBoardViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         print("numberOfSections")
+        print("comments.count \(comments.count)")
         return comments.count
     }
     
@@ -988,7 +985,10 @@ extension DetailBoardViewController: UITableViewDelegate, UITableViewDataSource 
         headerView.showMoreView.isUserInteractionEnabled = true
         
         headerView.generateCell(comment: comment)
-        headerView.likeButton.addTarget(self, action: #selector(headerLikeButtonTapped), for: .touchUpInside)
+        
+        headerView.commentDeleteConfigure(section: section) {
+            self.headerDeleteButtonTapped(section: section)
+        }
         headerView.commentWirteConfigure(section: section) {
             self.commentWriteButtonTapped(section: section)
         }
@@ -998,9 +998,15 @@ extension DetailBoardViewController: UITableViewDelegate, UITableViewDataSource 
         headerView.likeButtonConfigure(section: section) {
             self.likeButtonTapped(section: section)
         }
-
-        headerView.swipeConfigure(section: section) {
-            self.headerSwipeForDelete(section: section)
+        
+        if comment.isWriter {
+            print("same id")
+            headerView.swipeConfigure(section: section) {
+                self.headerSwipeForDelete(section: section)
+            }
+        }
+        else {
+            print("not same")
         }
         
         headerView.contentView.backgroundColor = .white
@@ -1032,16 +1038,28 @@ extension DetailBoardViewController: UITableViewDelegate, UITableViewDataSource 
         
         if let childComment = self.comments[indexPath.section].childComments?[indexPath.item] {
             
+            print("name \(childComment.name)")
             print("childComment context ", childComment.context)
             //            commentCell.likeButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
-            commentCell.configure(section: indexPath.section) {
+            commentCell.commentWriteConfigure(section: indexPath.section) {
                 // 클로저 내에서 버튼이 선택되었을 때의 동작을 정의합니다.
                 self.commentWriteButtonTapped(section: indexPath.section)
             }
             
-            commentCell.swipeConfigure(indexPath: indexPath) {
-                self.cellSwipeForDelete(indexPath: indexPath)
+            if childComment.isWriter {
+                print("cell same id")
+                commentCell.swipeConfigure(indexPath: indexPath) {
+                    self.cellSwipeForDelete(indexPath: indexPath)
+                }
             }
+            else {
+                print("not same id")
+            }
+            
+            commentCell.commentDeleteConfigure(indexPath: indexPath) {
+                self.cellDeleteButtonTapped(indexPath: indexPath)
+            }
+            
             commentCell.generateCell(comment: childComment)
         }
         
@@ -1057,7 +1075,7 @@ extension DetailBoardViewController: UITableViewDelegate, UITableViewDataSource 
             return UITableView.automaticDimension // 기본 높이
         }
     }
-
+    
     func commentWriteButtonTapped(section: Int) {
         // 여기에서 선택된 섹션 값을 사용하여 작업을 수행합니다.
         print("Button tapped in section VC \(section)")
@@ -1075,6 +1093,7 @@ extension DetailBoardViewController: UITableViewDelegate, UITableViewDataSource 
         print("hiddenSections \(hiddenSections)")
         let indexSet = IndexSet(arrayLiteral: section)
         
+        
         self.commentTableView.reloadSections(indexSet, with: .fade)
         
         print("tableview height : \(calculateTotalHeight())")
@@ -1085,26 +1104,117 @@ extension DetailBoardViewController: UITableViewDelegate, UITableViewDataSource 
     
     func headerSwipeForDelete(section: Int) {
         print("swipe header")
-        var headerCommentId = comments[section].id
-        print("headerCommentId \(headerCommentId)")
-        if let childComments = comments[section].childComments{
-            for childComment in childComments {
-                print("id \(childComment.id)")
-                print(childComments.count)
-                //delete all child in VM
+        var headerComment = comments[section]
+        DetailBoardViewModel.shared.setCommentIdString(headerComment.id)
+    }
+    
+    func headerDeleteButtonTapped(section: Int) {
+        print("delete header btn tapped")
+            let comment = self.comments[section]
+            print("comment.text \(comment.context)")
+            // 대댓글 있는 경우 다 지워야함
+            var idStringArr: [String] = []
+        DispatchQueue.main.async {
+            DetailBoardViewModel.shared.deleteButtonTapped(comment: comment)
 
-            }
         }
-        else {
-            //delete header in VM
+            DetailBoardViewModel.shared.onCommentDeleteButtonComplete = { result in
+                print("result \(result)")
+                if result {
+                    if comment.childComments!.count >= 1 {
+                        // 대댓글이 있으면
+                        for item in comment.childComments! {
+                            idStringArr.append(item.id)
+                        }
+                    }
+                    // 대댓글 없으면
+                    idStringArr.append(comment.id)
+                    
+                    print("idStringArr \(idStringArr)")
+                    
+                    DetailBoardViewModel.shared.setIdStringArr(idStringArr)
+                    
+                    
+                    
+                    // 삭제 눌림
+                    let alert = AlertStatusViewModel.shared.AlertForCheck(checkStatus: .deleteComment)
+                    CustomAlertViewModel.shared.setAlertStatus(alertStatus: .deleteComment)
+                    
+                    let customAlertVC = CustomAlertViewController()
+                    customAlertVC.show(alertTitle: alert.alertTitle, alertMessage: alert.alertMessage, alertType: alert.alertType, on: self)
+                    
+                }
+
+                DetailBoardViewModel.shared.onCommentDeleteComplete = { result in
+                    if result {
+                        // 댓 삭제 완료
+                        
+                        print("댓 삭제 완료 result \(result)")
+                        DispatchQueue.main.async {
+                            DetailBoardViewModel.shared.getComment()
+                            self.settingComment()
+                        }
+                    }
+                }
+            }
+        
+        
+    }
+    
+    func cellDeleteButtonTapped(indexPath: IndexPath) {
+        print("delete cell btn tapped")
+        DispatchQueue.main.async {
+            
+            if let cellComment = self.comments[indexPath.section].childComments?[indexPath.row] {
+                print("cellCommentId \(cellComment.id)")
+                print("cellComment.name \(cellComment.name)")
+                DetailBoardViewModel.shared.deleteButtonTapped(comment: cellComment)
+                
+                DetailBoardViewModel.shared.onCommentDeleteButtonComplete = { result in
+                    if result {
+                        // 삭제 눌림
+                        var idStringArr: [String] = []
+                        
+                        // 대댓글 없으면
+                        idStringArr.append(cellComment.id)
+                        
+                        print("idStringArr \(idStringArr)")
+                        
+                        DetailBoardViewModel.shared.setIdStringArr(idStringArr)
+                        
+                        
+                        let alert = AlertStatusViewModel.shared.AlertForCheck(checkStatus: .deleteComment)
+                        CustomAlertViewModel.shared.setAlertStatus(alertStatus: .deleteComment)
+                        
+                        let customAlertVC = CustomAlertViewController()
+                        customAlertVC.show(alertTitle: alert.alertTitle, alertMessage: alert.alertMessage, alertType: alert.alertType, on: self)
+                    }
+                }
+                
+                
+                DetailBoardViewModel.shared.onCommentDeleteComplete = { result in
+                    if result {
+                        // 댓 삭제 완료
+                        
+                        print("댓 삭제 완료 result \(result)")
+                        DispatchQueue.main.async {
+                            DetailBoardViewModel.shared.getComment()
+                            self.settingComment()
+                        }
+                    }
+                }
+            }
         }
     }
     
+    
     func cellSwipeForDelete(indexPath: IndexPath) {
         print("swipe cell")
-        if let cellCommentId = comments[indexPath.section].childComments?[indexPath.row].id {
-            print("cellCommentId \(cellCommentId)")
-
+        if let cellComment = comments[indexPath.section].childComments?[indexPath.row] {
+            print("cellCommentId \(cellComment.id)")
+            print("cellComment.name \(cellComment.name)")
+            DetailBoardViewModel.shared.setCommentIdString(cellComment.id)
+            
         }
     }
     
@@ -1113,8 +1223,9 @@ extension DetailBoardViewController: UITableViewDelegate, UITableViewDataSource 
         
         DetailBoardViewModel.shared.setHeaderSection(section)
     }
+    
+    
 }
-
 extension UIImageView {
     func load(url: URL) {
         DispatchQueue.global().async { [weak self] in
@@ -1127,4 +1238,5 @@ extension UIImageView {
             }
         }
     }
+    
 }

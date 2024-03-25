@@ -7,17 +7,17 @@
 
 import Foundation
 
-protocol CustomAlertDelegate {
-    func action()
-}
+//protocol CustomAlertDelegate {
+//    func action()
+//}
 
 class CustomAlertViewModel {
-    var delegate: CustomAlertDelegate?
     static var shared = CustomAlertViewModel()
     
     var titleString: String = ""
     var contentString: String = ""
     var alertType: AlertType = .defaultAlert
+    var alertStatus: CheckStatus = .none
     
     var onCancelComplete: ((Bool) -> Void)?
     var onConfirmComplete: ((Bool) -> Void)?
@@ -28,9 +28,23 @@ class CustomAlertViewModel {
         self.alertType = alert.alertType
     }
     
-    func confirmButtonTapped() {
+    func setAlertStatus(alertStatus: CheckStatus) {
+        self.alertStatus = alertStatus
+    }
+    
+    func confirmButtonTapped(checkStatus: CheckStatus) {
         print("confirmButtonTapped VM")
-        self.onConfirmComplete?(true)
+        switch checkStatus {
+        case .none: break
+            
+        case .deleteBoard:
+            DetailBoardViewModel.shared.deleteBoard()
+        case .deleteComment:
+            DetailBoardViewModel.shared.deleteComment()
+        }
+        DispatchQueue.main.async {
+            self.onConfirmComplete?(true)
+        }
         // 상황에 따른 통신
     }
     

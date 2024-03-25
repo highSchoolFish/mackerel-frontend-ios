@@ -135,6 +135,7 @@
                 <outlet property="commentSwipeChangingConstraint" destination="exz-ah-dj8" id="g5x-lz-CSB"/>
                 <outlet property="commentWriteButton" destination="Tnw-8h-INL" id="yr3-ug-vE7"/>
                 <outlet property="contextLabel" destination="xjA-pe-Spl" id="lUG-DH-Fr1"/>
+                <outlet property="deleteButton" destination="JS2-Ct-dVG" id="ZMc-wu-824"/>
                 <outlet property="deleteButtonView" destination="wQT-jW-wkY" id="GyN-eA-qkV"/>
                 <outlet property="likeButton" destination="sWg-Vw-sep" id="noc-Ca-GRW"/>
                 <outlet property="likeCountLabel" destination="ozF-O9-Aly" id="twr-1H-PUJ"/>

@@ -29,20 +29,33 @@ class DetailBoardViewModel {
     var checkCommentTextField: ((Bool) -> Void)?
     var writeCommentComplete: ((Bool) -> Void)?
     var showMoreCellComplete: ((Bool) -> Void)?
-    
+    var onCommentDeleteButtonComplete: ((Bool) -> Void)?
+    var onCommentDeleteComplete: ((Bool) -> Void)?
     private var boardIdString: String = ""
+    private var commentIdString: String = ""
+    var idStringArr: [String] = []
     
     // table cell 선택시 setBoardId func 호출
     func setBoardId(_ boardIdString: String){
         self.boardIdString = boardIdString
         if boardIdString != "" {
-            getDetailBoard()
-            getComment()
+            DispatchQueue.main.async {
+                self.getDetailBoard()
+                self.getComment()
+            }
         }
+    }
+    
+    func setIdStringArr(_ idStringArr: [String]) {
+        self.idStringArr = idStringArr
     }
     
     func setCommentString(_ commentString: String) {
         self.commentString = commentString
+    }
+    
+    func setCommentIdString(_ commentIdString: String) {
+        self.commentIdString = commentIdString
     }
     
     func setAnonymous(_ isAnonymous: Bool) {
@@ -83,8 +96,9 @@ class DetailBoardViewModel {
             switch result {
             case .success(let value as [String:Any]) :
                 if let data = value["data"] as? Dictionary<String,AnyObject> {
-                    print(data)
+                    print("data \(data)")
                     var board = Boards(detailBoardDictionary: data)
+                    print("board \(board)")
                     self.getBoardComplete?(true)
                     self.onBoardComplete?(board)
                     BottomSheetViewModel.shared.setBoardIdString(self.boardIdString)
@@ -103,6 +117,7 @@ class DetailBoardViewModel {
     
     func getComment() {
         
+        print("self.boardIdString \(self.boardIdString)")
         let provider = MoyaProvider<CommentService>(session: Session(interceptor: AuthManager()))
         
         provider.request(CommentService.readComment(boardId: self.boardIdString, page: 0, size: 10)) { result in
@@ -110,37 +125,32 @@ class DetailBoardViewModel {
             case let .success(response):
                 print("통신성공")
                 let data = response
+                
+                print("response of comment \(data.data)")
                 do{
-                    
                     let commentResponse = try JSONDecoder().decode(Comment.self, from: data.data)
                     let pageNumber = commentResponse.data.pageNumber
                     let totalElements = commentResponse.data.totalElements
                     let json = JSON(data.data)
                     print(json)
+                    print("commentResponse \(commentResponse)")
                     self.onCommentsResult?(commentResponse)
-//                    self.onCommentsCount?(commentResponse.data.totalElements)
                     self.comments = commentResponse.data.content
                 }
-                
-                catch(let err) {
-                    print(err.localizedDescription)
+                catch {
+                    print(error)
                 }
+                
             case .failure(let error):
                 print(error.localizedDescription)
             }
+            
         }
     }
     
     func moreCommentButtonTapped(){
         self.onMoreCommentResult?(true)
         print("more comment button tapped in VM")
-    }
-    
-    func deleteCommet() {
-        print("deleteComment")
-        
-        
-        
     }
     
     func commentUploadButtonTapped() {
@@ -224,6 +234,44 @@ class DetailBoardViewModel {
         }
     }
     
+    func deleteButtonTapped(comment: CommentContent) {
+        let alert = AlertStatusViewModel.shared.AlertForCheck(checkStatus: .deleteComment)
+        CustomAlertViewModel.shared.setCustomAlertData(alert: alert)
+        DispatchQueue.main.async { // 예시로 비동기 작업 후 딜레이를 준 것
+            self.onCommentDeleteButtonComplete?(true)
+        }
+    }
+    
+    func deleteComment() {
+        DispatchQueue.main.async {
+            let provider = MoyaProvider<CommentService>(session: Session(interceptor: AuthManager()))
+            for id in self.idStringArr {
+                provider.request(CommentService.deleteComment(id: id)) { result in
+                    switch result {
+                    case let .success(response):
+                        print("통신성공")
+                        let data = response
+                        print("response \(data)")
+                        do {
+                            // 통신 성공하면 댓글 refresh 해야함
+                            self.onCommentDeleteComplete?(true)
+                            
+                        }
+                        catch(let err) {
+                            print(err.localizedDescription)
+                            print("catched")
+                        }
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                        print("failure")
+                    }
+                }
+            }
+        }
+    }
+    
+    func deleteBoard() {
+        
+    }
     
 }
-

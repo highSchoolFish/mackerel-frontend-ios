@@ -17,6 +17,6 @@ struct MemberInfoResponse: Codable {
 
 // MARK: - DataClass
 struct MemberInfo: Codable {
-    let profile, schoolName, grade, name: String
-    let nickname: String
+    let profile: String?
+    let schoolName, grade, name, nickname: String
 }
