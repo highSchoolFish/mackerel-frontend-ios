@@ -35,8 +35,6 @@ class CommentTableHeaderView: UITableViewHeaderFooterView {
     override func awakeFromNib() {
         self.backgroundColor = .white
         self.deleteButtonView.isHidden = true
-        
-        
     }
     
     func commentWirteConfigure(section: Int, buttonAction: @escaping () -> Void) {
@@ -171,10 +169,11 @@ class CommentTableHeaderView: UITableViewHeaderFooterView {
             // 현재 날짜와 주어진 날짜의 차이 계산
             let now = Date()
             let calendar = Calendar.current
-            
+            print("now \(now)")
+            print("calendar \(calendar)")
             // 날짜 차이 계산
             let components = calendar.dateComponents([.day, .hour], from: givenDate, to: now)
-            
+            print("components \(components)")
             if let daysAgo = components.day, daysAgo >= 1 {
                 print("\(daysAgo)일 전")
                 timeLabelText = "\(daysAgo)일 전"

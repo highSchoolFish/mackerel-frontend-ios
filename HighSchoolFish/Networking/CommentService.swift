@@ -13,6 +13,7 @@ enum CommentService {
     case uploadComment(boardId: String, parentCommentId: String, context: String, isAnonymous: Bool)
     case uploadCommentRe(boardId: String, context: String, isAnonymous: Bool)
     case likeComment(id: String)
+    case disLikeComment(id: String)
     case deleteComment(id: String)
 }
 
@@ -30,7 +31,9 @@ extension CommentService: TargetType {
         case .uploadCommentRe:
             return "/api/v1/schools/boards/comments"
         case .likeComment:
-            return "/api/v1/schools/boards/likes"
+            return "/api/v1/schools/boards/comments/likes"
+        case .disLikeComment(let id):
+            return "/api/v1/schools/boards/comments/\(id)/likes"
         case .deleteComment(let id):
             return "/api/v1/schools/boards/comments/\(id)"
         }
@@ -44,8 +47,10 @@ extension CommentService: TargetType {
             return .post
         case .uploadCommentRe(_):
             return .post
-        case .likeComment(_):
+        case .likeComment:
             return .post
+        case .disLikeComment(_):
+            return .delete
         case .deleteComment(_):
             return .delete
         }
@@ -53,7 +58,7 @@ extension CommentService: TargetType {
     
     var sampleData: Data {
         switch self {
-        case .readComment, .uploadComment, .uploadCommentRe, .likeComment, .deleteComment:
+        case .readComment, .uploadComment, .uploadCommentRe, .likeComment, .deleteComment, .disLikeComment:
             return "@@".data(using: .utf8)!
         }
     }
@@ -86,8 +91,12 @@ extension CommentService: TargetType {
             
         case .likeComment(id: let id):
             return .requestParameters(parameters: ["id": id], encoding: JSONEncoding.default)
+
+        case .disLikeComment:
+            return .requestPlain
+
         case .deleteComment(id: let id):
-            let params: [String: Any] = [
+            var params: [String: Any] = [
                 "id": id
             ]
             return .requestParameters(parameters: params, encoding: URLEncoding.queryString)
@@ -96,7 +105,7 @@ extension CommentService: TargetType {
     
     var headers: [String : String]? {
         switch self {
-        case .readComment, .uploadComment, .uploadCommentRe, .likeComment, .deleteComment:
+        case .readComment, .uploadComment, .uploadCommentRe, .likeComment, .deleteComment, .disLikeComment:
             return ["Content-Type": "application/json"]
         }
     }

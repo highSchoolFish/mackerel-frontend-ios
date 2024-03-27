@@ -26,9 +26,9 @@ class BottomSheetViewModel {
     }
     
     func reportButtonTapped() {
-        let provider = MoyaProvider<BoardMenuService>(session: Session(interceptor: AuthManager()))
+        let provider = MoyaProvider<BoardService>(session: Session(interceptor: AuthManager()))
         
-        provider.request(BoardMenuService.report(id: boardIdString)) { result in
+        provider.request(BoardService.reportBoard(id: boardIdString)) { result in
             switch result {
             case let .success(response):
                 print("통신성공")

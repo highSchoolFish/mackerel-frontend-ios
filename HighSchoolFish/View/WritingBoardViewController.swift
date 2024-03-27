@@ -513,8 +513,11 @@ class WritingBoardViewController: UIViewController, UIImagePickerControllerDeleg
         
         WritingBoardViewModel.shared.writingBoardComplete = { result in
             if result {
-                CommunityViewModel.shared.writingBoardComplete?(true)
-                self.dismiss(animated: true, completion: nil)
+                
+                DispatchQueue.main.async {
+                    CommunityViewModel.shared.writingBoardComplete?(true)
+                    self.dismiss(animated: true, completion: nil)
+                }
             }
         }
     }

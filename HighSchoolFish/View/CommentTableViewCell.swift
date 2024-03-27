@@ -20,6 +20,7 @@ class CommentTableViewCell: UITableViewCell {
     
     private var buttonAction: (() -> Void)?
     private var deleteAction: (() -> Void)?
+    private var likeButtonAction: (() -> Void)?
     private var section: Int = 0
     private var swipeAction: (() -> Void)?
     @IBOutlet weak var commentSwipeChangingConstraint: NSLayoutConstraint!
@@ -52,6 +53,12 @@ class CommentTableViewCell: UITableViewCell {
         self.deleteAction = deleteAction
         
         deleteButton.addTarget(self, action: #selector(commentDeleteButtonTapped), for: .touchUpInside)
+    }
+    
+    func likeButtonConfigure(section: Int, likeButtonAction: @escaping () -> Void) {
+        self.section = section
+        self.likeButtonAction = likeButtonAction
+        likeButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
     }
     
     func swipeConfigure(indexPath: IndexPath, swipeAction: @escaping () -> Void) {
@@ -118,6 +125,11 @@ class CommentTableViewCell: UITableViewCell {
     @objc private func commentDeleteButtonTapped() {
         print("comment Delete Button Tapped")
         deleteAction?()
+    }
+    
+    @objc private func likeButtonTapped() {
+        print("like Button Tapped")
+        likeButtonAction?()
     }
     
     func generateCell(comment: CommentContent) {

@@ -16,7 +16,7 @@ class DetailBoardViewModel {
     
     private var commentString: String = ""
     private var isAnonymous: Bool = false
-    private var headerSection: Int = 99999
+    var headerSection: Int = 99999
     var comments: [CommentContent] = []
     var isWriter: Bool = false
     var imagesArray: [String] = []
@@ -34,15 +34,17 @@ class DetailBoardViewModel {
     private var boardIdString: String = ""
     private var commentIdString: String = ""
     var idStringArr: [String] = []
+    var onCompleteLike: ((Bool) -> Void)?
+    var onCompleteDisLike: ((Bool) -> Void)?
+
     
     // table cell 선택시 setBoardId func 호출
     func setBoardId(_ boardIdString: String){
         self.boardIdString = boardIdString
         if boardIdString != "" {
-            DispatchQueue.main.async {
                 self.getDetailBoard()
                 self.getComment()
-            }
+            
         }
     }
     
@@ -99,8 +101,10 @@ class DetailBoardViewModel {
                     print("data \(data)")
                     var board = Boards(detailBoardDictionary: data)
                     print("board \(board)")
-                    self.getBoardComplete?(true)
-                    self.onBoardComplete?(board)
+                    DispatchQueue.main.async {
+                        self.getBoardComplete?(true)
+                        self.onBoardComplete?(board)
+                    }
                     BottomSheetViewModel.shared.setBoardIdString(self.boardIdString)
                     // dic 성공하면 completion -> board
                 }
@@ -132,9 +136,9 @@ class DetailBoardViewModel {
                     let pageNumber = commentResponse.data.pageNumber
                     let totalElements = commentResponse.data.totalElements
                     let json = JSON(data.data)
-                    print(json)
-                    print("commentResponse \(commentResponse)")
-                    self.onCommentsResult?(commentResponse)
+                    DispatchQueue.main.async {
+                        self.onCommentsResult?(commentResponse)
+                    }
                     self.comments = commentResponse.data.content
                 }
                 catch {
@@ -173,6 +177,7 @@ class DetailBoardViewModel {
             else {
                 print("댓글쓰기 통신")
                 print("parentCommentId \(parentCommentId)")
+                print("boardIdString \(self.boardIdString)")
                 let provider = MoyaProvider<CommentService>(session: Session(interceptor: AuthManager()))
                 
                 provider.request(CommentService.uploadComment(boardId: self.boardIdString, parentCommentId: parentCommentId, context: self.commentString, isAnonymous: self.isAnonymous)) { result in
@@ -182,8 +187,10 @@ class DetailBoardViewModel {
                         let data = response
                         print("response \(data)")
                         do {
-                            self.writeCommentComplete?(true)
-                            self.headerSection = 99999
+                            DispatchQueue.main.async {
+                                self.writeCommentComplete?(true)
+                                self.headerSection = 99999
+                            }
                         }
                         catch(let err) {
                             print(err.localizedDescription)
@@ -234,6 +241,75 @@ class DetailBoardViewModel {
         }
     }
     
+    func recommandButtonTapped() {
+        //VM recommandButtonTapped
+        
+        
+    }
+    
+    func likeButtonTapped(commentId: String){
+        print("comment ID \(commentId)")
+        print("likeButtonTapped")
+        
+        let provider = MoyaProvider<CommentService>(session: Session(interceptor: AuthManager()))
+        
+        provider.request(CommentService.likeComment(id: commentId)) { result in
+            
+            switch result {
+            case let .success(response):
+                print("통신성공")
+                let data = response
+                print("like response \(data)")
+                
+                do {
+                    DispatchQueue.main.async {
+                        self.onCompleteLike?(true)
+                    }
+                }
+                catch(let err) {
+                    print(err.localizedDescription)
+                    print("like catch")
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                print("failure")
+            }
+        }
+
+    }
+    
+    func disLikeButtonTapped(commentId: String) {
+        print("comment ID \(commentId)")
+        print("disLikeButtonTapped")
+        
+        let provider = MoyaProvider<CommentService>(session: Session(interceptor: AuthManager()))
+
+        provider.request(CommentService.disLikeComment(id: commentId)) { result in
+            
+            switch result {
+            case let .success(response):
+                print("통신성공")
+                let data = response
+                print("disLike response \(data)")
+                do {
+                    DispatchQueue.main.async {
+                        // 좋아요 취소
+                        self.onCompleteDisLike?(true)
+
+                    }
+                }
+                catch(let err){
+                    print(err.localizedDescription)
+                    print("disLike catch")
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                print("failure")
+            }
+            
+        }
+    }
+    
     func deleteButtonTapped(comment: CommentContent) {
         let alert = AlertStatusViewModel.shared.AlertForCheck(checkStatus: .deleteComment)
         CustomAlertViewModel.shared.setCustomAlertData(alert: alert)
@@ -254,8 +330,9 @@ class DetailBoardViewModel {
                         print("response \(data)")
                         do {
                             // 통신 성공하면 댓글 refresh 해야함
-                            self.onCommentDeleteComplete?(true)
-                            
+                            DispatchQueue.main.async {
+                                self.onCommentDeleteComplete?(true)
+                            }
                         }
                         catch(let err) {
                             print(err.localizedDescription)
