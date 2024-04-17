@@ -1,15 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Union (15).svg",
+      "filename" : "editIcon.svg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "editIcon 1.svg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "editIcon 2.svg",
       "idiom" : "universal",
       "scale" : "3x"
     }
