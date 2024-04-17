@@ -21,7 +21,7 @@ class CustomAlertViewModel {
     
     var onCancelComplete: ((Bool) -> Void)?
     var onConfirmComplete: ((Bool) -> Void)?
-    
+
     func setCustomAlertData(alert: AlertData) {
         self.titleString = alert.alertTitle
         self.contentString = alert.alertMessage
@@ -35,11 +35,16 @@ class CustomAlertViewModel {
     func confirmButtonTapped(checkStatus: CheckStatus) {
         print("confirmButtonTapped VM")
         switch checkStatus {
-        case .none: break
-            
+        case .none:
+            print("checkStatus: none")
         case .deleteBoard:
-            DetailBoardViewModel.shared.deleteBoard()
+            print("checkStatus : deleteBoard")
+            BottomSheetViewModel.shared.deleteBoard()
+        case .reportBoard:
+            print("checkStatus : reportBoard")
+            BottomSheetViewModel.shared.reportBoard()
         case .deleteComment:
+            print("checkStatus : deleteComment")
             DetailBoardViewModel.shared.deleteComment()
         }
         DispatchQueue.main.async {

@@ -25,7 +25,7 @@ extension BoardService: TargetType {
         case .likeBoard:
             return "/api/v1/schools/boards/likes"
         case .disLikeBoard(let id):
-            return "/api/v1/schools/boards/comments/\(id)/likes"
+            return "/api/v1/schools/boards/\(id)/likes"
         case .deleteBoard(let id):
             return "/api/v1/schools/boards/\(id)"
         case .reportBoard(id: let id):
@@ -60,7 +60,7 @@ extension BoardService: TargetType {
         case .disLikeBoard:
             return .requestPlain
         case .deleteBoard(id: let id):
-            return .requestParameters(parameters: ["id": id], encoding: JSONEncoding.default)
+            return .requestParameters(parameters: ["id": id], encoding: URLEncoding.queryString)
         case .reportBoard(id: let id):
             return .requestParameters(parameters: ["id": id], encoding: URLEncoding.queryString)
         }

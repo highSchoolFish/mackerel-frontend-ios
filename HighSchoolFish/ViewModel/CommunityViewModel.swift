@@ -52,7 +52,9 @@ class CommunityViewModel {
                     }
                 }
                 print("print boards : \(boardsResult.count)")
-                self.onBoardsResult?(boardsResult)
+                DispatchQueue.main.async {
+                    self.onBoardsResult?(boardsResult)
+                }
 
             case .failure(let error):
                 print(error.localizedDescription)

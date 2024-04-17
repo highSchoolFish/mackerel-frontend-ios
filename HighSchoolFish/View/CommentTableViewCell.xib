@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -53,7 +53,7 @@
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xjA-pe-Spl">
-                        <rect key="frame" x="79.999999999999972" y="41" width="363.33333333333326" height="70"/>
+                        <rect key="frame" x="79.999999999999972" y="41" width="363.33333333333326" height="76"/>
                         <string key="text">동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리 나라만세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세 달콤한 색감이 물들어 조금씩 정신을 차렸을 땐 알아볼 수도 없지가득찬 마음이동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리 나라만세 무궁화 삼천리 화려</string>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <nil key="textColor"/>
@@ -79,7 +79,7 @@
                         </subviews>
                     </stackView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tnw-8h-INL">
-                        <rect key="frame" x="80" y="121" width="50" height="20"/>
+                        <rect key="frame" x="80" y="127" width="50" height="20"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="JbK-e4-WHG"/>
                             <constraint firstAttribute="width" constant="50" id="tM4-9S-kE8"/>
@@ -121,9 +121,9 @@
                     <constraint firstAttribute="bottom" secondItem="wQT-jW-wkY" secondAttribute="bottom" id="d8k-S4-6eC"/>
                     <constraint firstItem="Tnw-8h-INL" firstAttribute="leading" secondItem="xjA-pe-Spl" secondAttribute="leading" id="dh4-Et-WkW"/>
                     <constraint firstItem="GmG-xx-QkO" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="40" id="exz-ah-dj8"/>
-                    <constraint firstAttribute="bottom" secondItem="Tnw-8h-INL" secondAttribute="bottom" constant="16" id="kJw-fQ-Adf"/>
                     <constraint firstItem="xjA-pe-Spl" firstAttribute="top" secondItem="daq-xQ-ooI" secondAttribute="bottom" constant="10" id="lnQ-A2-Q1d"/>
                     <constraint firstItem="daq-xQ-ooI" firstAttribute="top" secondItem="GmG-xx-QkO" secondAttribute="top" id="ndR-Iw-7ji"/>
+                    <constraint firstAttribute="bottom" secondItem="Tnw-8h-INL" secondAttribute="bottom" constant="10" id="oQP-4t-wif"/>
                     <constraint firstItem="szA-Xs-gT1" firstAttribute="top" secondItem="xjA-pe-Spl" secondAttribute="top" id="wv2-bX-lLO"/>
                     <constraint firstItem="Tnw-8h-INL" firstAttribute="top" secondItem="xjA-pe-Spl" secondAttribute="bottom" constant="10" id="xco-Je-QhK"/>
                     <constraint firstItem="daq-xQ-ooI" firstAttribute="leading" secondItem="GmG-xx-QkO" secondAttribute="trailing" constant="10" id="xjU-NO-jm1"/>

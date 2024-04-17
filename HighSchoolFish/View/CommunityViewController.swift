@@ -147,17 +147,62 @@ class CommunityViewController: UIViewController {
         configure()
         setautoLayout()
         
+        print("test 2")
+        self.tableView.reloadData()
+
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print("viewWillAppear")
         boards.removeAll()
-        
+
         CommunityViewModel.shared.getCategory()
         CommunityViewModel.shared.onBoardsResult = { resultArray in
             print("in CommunityVC arr count ", resultArray.count)
             self.boards = resultArray
             self.tableView.reloadData()
-
+            print("test 1")
         }
-        self.tableView.reloadData()
+        
+        NoticeViewModel.shared.getRecentNotice()
+        NoticeViewModel.shared.getNoticeResult = { result in
+            print("noticeViewModel complete")
+            self.noticeTitleLabel.text = result.data.title
+            self.noticeSubTitleLabel.text = result.data.context
+            
+            var timeLabelText = ""
+            let givenTimeString = result.data.createdAt
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS" // 분수초를 포함한 날짜 형식 지정
+            formatter.locale = Locale(identifier: "en_US_POSIX") // 24시간제 지정
+            formatter.timeZone = TimeZone.current //
 
+            if let date = formatter.date(from: givenTimeString) {
+                // 현재 날짜와 주어진 날짜의 차이 계산
+                print("date \(date)")
+                let now = Date()
+                let calendar = Calendar.current
+
+                // 날짜 차이 계산
+                let components = calendar.dateComponents([.day, .hour, .minute], from: date, to: now)
+                
+                if let daysAgo = components.day, daysAgo > 0 {
+                    timeLabelText = "\(daysAgo)일 전"
+                } else if let hoursAgo = components.hour, hoursAgo > 0 {
+                    timeLabelText = "\(hoursAgo)시간 전"
+                } else if let minutesAgo = components.minute, minutesAgo > 0 {
+                    timeLabelText = "\(minutesAgo)분 전"
+                } else {
+                    timeLabelText = "방금 전"
+                }
+            } else {
+                print("날짜 형식이 잘못되었습니다.")
+            }
+
+            self.noticeDateLabel.text = timeLabelText
+        }
     }
     
     private func configure() {
@@ -213,8 +258,6 @@ class CommunityViewController: UIViewController {
             
             goUpButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             goUpButton.centerYAnchor.constraint(equalTo: writingButton.centerYAnchor, constant: 0)
-            
-            
         ])
     }
     
@@ -227,7 +270,12 @@ class CommunityViewController: UIViewController {
         CommunityViewModel.shared.writingBoardComplete = { result in
             if result {
                 // reload
-                self.tableView.reloadData()
+                CommunityViewModel.shared.getCategory()
+                CommunityViewModel.shared.onBoardsResult = { resultArray in
+                    print("in CommunityVC arr count ", resultArray.count)
+                    self.boards = resultArray
+                    self.tableView.reloadData()
+                }
             }
         }
     }

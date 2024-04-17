@@ -69,7 +69,7 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
         view.addSubview(photosView)
         view.addSubview(imageLineView)
         view.addSubview(commentCountView)
-        view.addSubview(recommandCountView)
+        view.addSubview(recommandButton)
         view.addSubview(viewsCountView)
         view.addSubview(countLineView)
         view.addSubview(commentTableView)
@@ -179,30 +179,15 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
         return view
     }()
     
-    private lazy var recommandCountView: UIStackView = {
-        let stView = UIStackView()
-        stView.addArrangedSubview(recommandButton)
-        stView.addArrangedSubview(recommandLabel)
-        stView.spacing = 5
-        stView.translatesAutoresizingMaskIntoConstraints = false
-        return stView
-    }()
-    
     private lazy var recommandButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "defaultLikeIcon"), for: .normal)
         button.addTarget(self, action: #selector(recommandButtonTapped), for: .touchUpInside)
-        button.setTitle("", for: .normal)
+        button.setTitle("추천 3", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 13)
+        button.setTitleColor(UIColor(named: "darkGray"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
-    }()
-    
-    private lazy var recommandLabel: UILabel = {
-        let label = UILabel()
-        label.text = "추천 3"
-        label.font = UIFont.systemFont(ofSize: 13)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
     }()
     
     private lazy var commentCountView: UIStackView = {
@@ -221,11 +206,12 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
-        
+    
     private lazy var commentLabel: UILabel = {
         var label = UILabel()
         label.text = "댓글 4"
         label.font = UIFont.systemFont(ofSize: 13)
+        label.textColor = UIColor(named: "darkGray")
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -251,6 +237,7 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
         var label = UILabel()
         label.text = "조회 120"
         label.font = UIFont.systemFont(ofSize: 13)
+        label.textColor = UIColor(named: "darkGray")
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -476,11 +463,53 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
         if board.writerNickname == "" {
             self.nicknameLabel.text = "익명"
         }
-        self.timeLabel.text = createdAt(createTime: board.createdAt)
+        if board.isLike == true {
+            self.recommandButton.isSelected = true
+            self.recommandButton.setImage(UIImage(named: "likeIcon"), for: .normal)
+            self.recommandButton.setTitleColor(UIColor(named: "red"), for: .normal)
+        }
+        else {
+            self.recommandButton.isSelected = false
+            self.recommandButton.setImage(UIImage(named: "defaultLikeIcon"), for: .normal)
+            self.recommandButton.setTitleColor(UIColor(named: "darkGray"), for: .normal)
+        }
+        
+        var timeLabelText = ""
+        let givenTimeString = createdAt(createTime: board.createdAt)
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS" // 분수초를 포함한 날짜 형식 지정
+        formatter.locale = Locale(identifier: "en_US_POSIX") // 24시간제 지정
+        formatter.timeZone = TimeZone.current //
+        
+        if let date = formatter.date(from: givenTimeString) {
+            // 현재 날짜와 주어진 날짜의 차이 계산
+            print("date \(date)")
+            let now = Date()
+            let calendar = Calendar.current
+            
+            // 날짜 차이 계산
+            let components = calendar.dateComponents([.day, .hour, .minute], from: date, to: now)
+            
+            if let daysAgo = components.day, daysAgo > 0 {
+                timeLabelText = "\(daysAgo)일 전"
+            } else if let hoursAgo = components.hour, hoursAgo > 0 {
+                timeLabelText = "\(hoursAgo)시간 전"
+            } else if let minutesAgo = components.minute, minutesAgo > 0 {
+                timeLabelText = "\(minutesAgo)분 전"
+            } else {
+                timeLabelText = "방금 전"
+            }
+        } else {
+            print("날짜 형식이 잘못되었습니다.")
+        }
+        
+        self.timeLabel.text = timeLabelText
+        
+        
         self.titleLabel.text = board.title
         self.contextTextView.text = board.context
         self.commentLabel.text = "댓글 \(board.numberOfComments)"
-        self.recommandLabel.text = "추천 \(board.numberOfLikes)"
+        self.recommandButton.setTitle(" 추천 \(board.numberOfLikes)", for: .normal)
         self.viewsLabel.text = "조회 \(board.views)"
         
         if board.isWriter {
@@ -678,13 +707,12 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
             commentCountView.topAnchor.constraint(equalTo: imageLineView.bottomAnchor, constant: 10),
             commentCountView.heightAnchor.constraint(equalToConstant: 20),
             
-            recommandCountView.centerYAnchor.constraint(equalTo: commentCountView.centerYAnchor, constant: 0),
-            recommandCountView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            recommandCountView.heightAnchor.constraint(equalToConstant: 20),
+            recommandButton.centerYAnchor.constraint(equalTo: commentCountView.centerYAnchor, constant: 0),
+            recommandButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            recommandButton.heightAnchor.constraint(equalToConstant: 20),
             
             viewsCountView.centerYAnchor.constraint(equalTo: commentCountView.centerYAnchor, constant: 0),
             viewsCountView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            recommandCountView.heightAnchor.constraint(equalToConstant: 20),
             
             countLineView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
             countLineView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0),
@@ -808,8 +836,38 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
     
     @objc func recommandButtonTapped() {
         //recommandButtonTapped
-        DetailBoardViewModel.shared.recommandButtonTapped()
-        
+        print("recommandButtonTapped")
+        if self.recommandButton.isSelected == true {
+            // 좋아요 x
+            DetailBoardViewModel.shared.boardDisLikeButtonTapped()
+            DetailBoardViewModel.shared.onCompleteBoardDisLike = { result in
+                if result {
+                    // 성공적으로 처리됨: UI 업데이트
+                    self.recommandButton.isSelected = false
+                    self.recommandButton.setImage(UIImage(named: "defaultLikeIcon"), for: .normal)
+                    self.recommandButton.setTitleColor(UIColor(named: "darkGray"), for: .normal)
+                    self.commentRefresh()
+                    print("F")
+                }
+                
+            }
+        }
+        else if self.recommandButton.isSelected == false {
+            // 좋아요 ㅇ
+            DetailBoardViewModel.shared.boardLikeButtonTapped()
+            DetailBoardViewModel.shared.onCompleteBoardLike = { result in
+                if result {
+                    // 성공적으로 처리됨: UI 업데이트
+                    self.recommandButton.isSelected = true
+                    self.recommandButton.setImage(UIImage(named: "likeIcon"), for: .normal)
+                    self.recommandButton.setTitleColor(UIColor(named: "red"), for: .normal)
+                    self.commentRefresh()
+
+                    print("T")
+                }
+                
+            }
+        }
     }
     
     @objc func commentUploadButtonTapped(_ sender: UIButton) {
@@ -833,25 +891,28 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
         DetailBoardViewModel.shared.writeCommentComplete = { result in
             if result {
                 // 댓글쓰기 완료 후 새로고침
-                print("comment 새로고침")
-                self.commentTableView.reloadData()
-                DetailBoardViewModel.shared.getComment()
-                //                DetailBoardViewModel.shared.getDetailBoard()
-                //
-                //                DetailBoardViewModel.shared.onBoardComplete = { result in
-                //                    self.setBoard(board: result)
-                //                }
-                
-                self.settingComment()
-                
+                self.commentRefresh()
                 self.view.endEditing(true)
-                self.commentTextField.text = ""
-                
             }
             else {
                 print("comment 새로고침 x")
             }
         }
+    }
+    
+    func commentRefresh() {
+        print("comment 새로고침")
+        DetailBoardViewModel.shared.getComment()
+        DetailBoardViewModel.shared.getDetailBoardForRefresh()
+        
+        self.settingComment()
+        
+        self.commentTextField.text = ""
+        self.commentLabel.text = "댓글 \(DetailBoardViewModel.shared.commentCounts)"
+        //        self.recommandLabel.rtext = "추천 \(DetailBoardViewModel.shared.numberOfLikes)"
+        self.recommandButton.setTitle(" 추천 \(DetailBoardViewModel.shared.numberOfLikes)", for: .normal)
+        
+        view.setNeedsLayout()
     }
     
     func setKeyboardObserver() {
@@ -969,6 +1030,15 @@ extension DetailBoardViewController: UITableViewDelegate, UITableViewDataSource 
         
         let comment = comments[section]
         print("comment.text \(comment.context)")
+        print("comment selected1 \(headerView.likeButton.isSelected)")
+        if comment.isLike == true {
+            // 내가 누른게 true
+            print("check isLike")
+            headerView.likeButton.isSelected = true
+            
+        }
+        print("comment selected2 \(headerView.likeButton.isSelected)")
+        
         if comment.childComments!.count >= 1 {
             headerView.showMoreView.isHidden = false
             headerView.showMoreView.heightAnchor.constraint(equalToConstant: 15).isActive = true
@@ -998,6 +1068,7 @@ extension DetailBoardViewController: UITableViewDelegate, UITableViewDataSource 
             self.showMoreViewButtonTapped(section: section)
         }
         headerView.likeButtonConfigure(section: section) {
+            print("headerView isSelected \(headerView.likeButton.isSelected)")
             self.likeButtonTapped(commentId: comment.id, sender: headerView.likeButton, section: section)
         }
         
@@ -1118,8 +1189,6 @@ extension DetailBoardViewController: UITableViewDelegate, UITableViewDataSource 
         print("delete header btn tapped")
         let comment = self.comments[section]
         print("comment.text \(comment.context)")
-        // 대댓글 있는 경우 다 지워야함
-        var idStringArr: [String] = []
         DispatchQueue.main.async {
             DetailBoardViewModel.shared.deleteButtonTapped(comment: comment)
             
@@ -1127,18 +1196,8 @@ extension DetailBoardViewController: UITableViewDelegate, UITableViewDataSource 
         DetailBoardViewModel.shared.onCommentDeleteButtonComplete = { result in
             print("result \(result)")
             if result {
-                if comment.childComments!.count >= 1 {
-                    // 대댓글이 있으면
-                    for item in comment.childComments! {
-                        idStringArr.append(item.id)
-                    }
-                }
-                // 대댓글 없으면
-                idStringArr.append(comment.id)
                 
-                print("idStringArr \(idStringArr)")
-                
-                DetailBoardViewModel.shared.setIdStringArr(idStringArr)
+                DetailBoardViewModel.shared.setDeleteIdString(comment.id)
                 
                 
                 
@@ -1157,8 +1216,7 @@ extension DetailBoardViewController: UITableViewDelegate, UITableViewDataSource 
                     
                     print("댓 삭제 완료 result \(result)")
                     DispatchQueue.main.async {
-                        DetailBoardViewModel.shared.getComment()
-                        self.settingComment()
+                        self.commentRefresh()
                     }
                 }
             }
@@ -1179,14 +1237,7 @@ extension DetailBoardViewController: UITableViewDelegate, UITableViewDataSource 
                 DetailBoardViewModel.shared.onCommentDeleteButtonComplete = { result in
                     if result {
                         // 삭제 눌림
-                        var idStringArr: [String] = []
-                        
-                        // 대댓글 없으면
-                        idStringArr.append(cellComment.id)
-                        
-                        print("idStringArr \(idStringArr)")
-                        
-                        DetailBoardViewModel.shared.setIdStringArr(idStringArr)
+                        DetailBoardViewModel.shared.setDeleteIdString(cellComment.id)
                         
                         
                         let alert = AlertStatusViewModel.shared.AlertForCheck(checkStatus: .deleteComment)
@@ -1204,8 +1255,7 @@ extension DetailBoardViewController: UITableViewDelegate, UITableViewDataSource 
                         
                         print("댓 삭제 완료 result \(result)")
                         DispatchQueue.main.async {
-                            DetailBoardViewModel.shared.getComment()
-                            self.settingComment()
+                            self.commentRefresh()
                         }
                     }
                 }
@@ -1220,7 +1270,6 @@ extension DetailBoardViewController: UITableViewDelegate, UITableViewDataSource 
             print("cellCommentId \(cellComment.id)")
             print("cellComment.name \(cellComment.name)")
             DetailBoardViewModel.shared.setCommentIdString(cellComment.id)
-            
         }
     }
     
@@ -1228,7 +1277,7 @@ extension DetailBoardViewController: UITableViewDelegate, UITableViewDataSource 
         // 좋아요 이미 눌려있다 아니다
         print("sender.isSelected \(sender.isSelected)")
         print("commentId \(commentId)")
-        if sender.isSelected {
+        if sender.isSelected == true {
             
             // 좋아요 x
             DetailBoardViewModel.shared.disLikeButtonTapped(commentId: commentId)
@@ -1239,12 +1288,13 @@ extension DetailBoardViewController: UITableViewDelegate, UITableViewDataSource 
                         sender.isSelected = false
                         sender.tintColor = UIColor(named: "gray")
                         print("F")
+                        self.commentRefresh()
                     }
                 }
             }
             
         }
-        else{
+        if sender.isSelected == false {
             
             // 좋아요 ㅇ
             DetailBoardViewModel.shared.likeButtonTapped(commentId: commentId)
@@ -1255,13 +1305,13 @@ extension DetailBoardViewController: UITableViewDelegate, UITableViewDataSource 
                         sender.isSelected = true
                         sender.tintColor = UIColor(named: "red")
                         print("T")
-                        
+                        self.commentRefresh()
                     }
                 }
             }
         }
     }
-  
+    
 }
 
 extension UIImageView {
@@ -1278,3 +1328,30 @@ extension UIImageView {
     }
     
 }
+
+//
+//
+//struct PreView: PreviewProvider {
+//    static var previews: some View {
+//        DetailBoardViewController().toPreview()
+//    }
+//}
+//
+//#if DEBUG
+//extension UIViewController {
+//    private struct Preview: UIViewControllerRepresentable {
+//            let viewController: UIViewController
+//
+//            func makeUIViewController(context: Context) -> UIViewController {
+//                return viewController
+//            }
+//
+//            func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
+//            }
+//        }
+//
+//        func toPreview() -> some View {
+//                Preview(viewController: self)
+//        }
+//}
+//#endif

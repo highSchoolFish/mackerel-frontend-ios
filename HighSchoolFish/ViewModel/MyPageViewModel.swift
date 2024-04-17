@@ -6,3 +6,17 @@
 //
 
 import Foundation
+
+class MyPageViewModel {
+    static let shared = MyPageViewModel()
+    
+    func alertSwitch(isOn: Bool) {
+        if isOn {
+            
+        }
+        else {
+            
+        }
+    }
+    
+}

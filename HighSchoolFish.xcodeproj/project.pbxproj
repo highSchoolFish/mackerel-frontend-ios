@@ -106,6 +106,19 @@
 		07A5A7152AEA3AB000245041 /* BoardImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A5A7132AEA3AB000245041 /* BoardImageCollectionViewCell.swift */; };
 		07A5A7162AEA3AB000245041 /* BoardImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07A5A7142AEA3AB000245041 /* BoardImageCollectionViewCell.xib */; };
 		07A5A7182AEA529A00245041 /* CategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A5A7172AEA529A00245041 /* CategoryViewModel.swift */; };
+		07B41BE02BC54939000302E3 /* MyPageEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B41BDF2BC54939000302E3 /* MyPageEditViewModel.swift */; };
+		07B41BE22BC54982000302E3 /* MyPageEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B41BE12BC54982000302E3 /* MyPageEditViewController.swift */; };
+		07B41BE42BC554E6000302E3 /* LikeBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B41BE32BC554E6000302E3 /* LikeBoardViewController.swift */; };
+		07B41BE62BCFAA37000302E3 /* MyBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B41BE52BCFAA37000302E3 /* MyBoardViewController.swift */; };
+		07B41BE82BCFAB2C000302E3 /* EditSchoolViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B41BE72BCFAB2C000302E3 /* EditSchoolViewController.swift */; };
+		07B41BEA2BCFB795000302E3 /* SchoolRequestDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B41BE92BCFB795000302E3 /* SchoolRequestDetailsViewController.swift */; };
+		07B41BED2BCFBE2F000302E3 /* SchoolChangeRequestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B41BEB2BCFBE2F000302E3 /* SchoolChangeRequestTableViewCell.swift */; };
+		07B41BEE2BCFBE2F000302E3 /* SchoolChangeRequestTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07B41BEC2BCFBE2F000302E3 /* SchoolChangeRequestTableViewCell.xib */; };
+		07B41BF02BCFC684000302E3 /* NoticeListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B41BEF2BCFC684000302E3 /* NoticeListViewController.swift */; };
+		07B41BF32BCFC792000302E3 /* NoticeListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B41BF12BCFC792000302E3 /* NoticeListTableViewCell.swift */; };
+		07B41BF42BCFC792000302E3 /* NoticeListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07B41BF22BCFC792000302E3 /* NoticeListTableViewCell.xib */; };
+		07B41BF62BCFC829000302E3 /* NoticeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B41BF52BCFC829000302E3 /* NoticeDetailViewController.swift */; };
+		07B41BF82BCFD24C000302E3 /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B41BF72BCFD24C000302E3 /* MyPageViewModel.swift */; };
 		07B5ECE72B15FE7F000B9157 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B5ECE52B15FE7F000B9157 /* CommentTableViewCell.swift */; };
 		07B5ECE82B15FE7F000B9157 /* CommentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07B5ECE62B15FE7F000B9157 /* CommentTableViewCell.xib */; };
 		07B5ECEA2B16012D000B9157 /* CommentTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07B5ECE92B16012D000B9157 /* CommentTableHeaderView.xib */; };
@@ -135,6 +148,8 @@
 		07E87D6D2B6B8D2900D5A2D9 /* MemberInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E87D6C2B6B8D2900D5A2D9 /* MemberInfoViewModel.swift */; };
 		07ED74DB2A7B878700568C12 /* PreviewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07ED74DA2A7B878700568C12 /* PreviewExtension.swift */; };
 		07F205E82BB41E6B00B40AEE /* BoardService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F205E72BB41E6B00B40AEE /* BoardService.swift */; };
+		07F8E7632BBE8CA20099D6AB /* NoticeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F8E7622BBE8CA20099D6AB /* NoticeService.swift */; };
+		07F8E76A2BBEA7170099D6AB /* NoticeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F8E7692BBEA7170099D6AB /* NoticeList.swift */; };
 		D0F4513D4F61A66CFF485838 /* Pods_HighSchoolFish.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A3C611A54ACCD33140CD42A /* Pods_HighSchoolFish.framework */; };
 /* End PBXBuildFile section */
 
@@ -209,6 +224,19 @@
 		07A5A7132AEA3AB000245041 /* BoardImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		07A5A7142AEA3AB000245041 /* BoardImageCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BoardImageCollectionViewCell.xib; sourceTree = "<group>"; };
 		07A5A7172AEA529A00245041 /* CategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewModel.swift; sourceTree = "<group>"; };
+		07B41BDF2BC54939000302E3 /* MyPageEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditViewModel.swift; sourceTree = "<group>"; };
+		07B41BE12BC54982000302E3 /* MyPageEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditViewController.swift; sourceTree = "<group>"; };
+		07B41BE32BC554E6000302E3 /* LikeBoardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeBoardViewController.swift; sourceTree = "<group>"; };
+		07B41BE52BCFAA37000302E3 /* MyBoardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBoardViewController.swift; sourceTree = "<group>"; };
+		07B41BE72BCFAB2C000302E3 /* EditSchoolViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSchoolViewController.swift; sourceTree = "<group>"; };
+		07B41BE92BCFB795000302E3 /* SchoolRequestDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolRequestDetailsViewController.swift; sourceTree = "<group>"; };
+		07B41BEB2BCFBE2F000302E3 /* SchoolChangeRequestTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolChangeRequestTableViewCell.swift; sourceTree = "<group>"; };
+		07B41BEC2BCFBE2F000302E3 /* SchoolChangeRequestTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SchoolChangeRequestTableViewCell.xib; sourceTree = "<group>"; };
+		07B41BEF2BCFC684000302E3 /* NoticeListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeListViewController.swift; sourceTree = "<group>"; };
+		07B41BF12BCFC792000302E3 /* NoticeListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeListTableViewCell.swift; sourceTree = "<group>"; };
+		07B41BF22BCFC792000302E3 /* NoticeListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoticeListTableViewCell.xib; sourceTree = "<group>"; };
+		07B41BF52BCFC829000302E3 /* NoticeDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeDetailViewController.swift; sourceTree = "<group>"; };
+		07B41BF72BCFD24C000302E3 /* MyPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewModel.swift; sourceTree = "<group>"; };
 		07B5ECE52B15FE7F000B9157 /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
 		07B5ECE62B15FE7F000B9157 /* CommentTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentTableViewCell.xib; sourceTree = "<group>"; };
 		07B5ECE92B16012D000B9157 /* CommentTableHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentTableHeaderView.xib; sourceTree = "<group>"; };
@@ -237,6 +265,8 @@
 		07E87D6C2B6B8D2900D5A2D9 /* MemberInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberInfoViewModel.swift; sourceTree = "<group>"; };
 		07ED74DA2A7B878700568C12 /* PreviewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewExtension.swift; sourceTree = "<group>"; };
 		07F205E72BB41E6B00B40AEE /* BoardService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardService.swift; sourceTree = "<group>"; };
+		07F8E7622BBE8CA20099D6AB /* NoticeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeService.swift; sourceTree = "<group>"; };
+		07F8E7692BBEA7170099D6AB /* NoticeList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeList.swift; sourceTree = "<group>"; };
 		3C5E49F49C3305B7AE1D5224 /* Pods-HighSchoolFish.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HighSchoolFish.debug.xcconfig"; path = "Target Support Files/Pods-HighSchoolFish/Pods-HighSchoolFish.debug.xcconfig"; sourceTree = "<group>"; };
 		9724AFCC7E013FC76EF48DE9 /* Pods-HighSchoolFish.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HighSchoolFish.release.xcconfig"; path = "Target Support Files/Pods-HighSchoolFish/Pods-HighSchoolFish.release.xcconfig"; sourceTree = "<group>"; };
 		9A3C611A54ACCD33140CD42A /* Pods_HighSchoolFish.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HighSchoolFish.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -338,6 +368,7 @@
 				071F8F2C2AFF95EF0011DBBC /* CommentService.swift */,
 				0717A5462B4FEFA9000E91DA /* FCMService.swift */,
 				07F205E72BB41E6B00B40AEE /* BoardService.swift */,
+				07F8E7622BBE8CA20099D6AB /* NoticeService.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -367,6 +398,7 @@
 				07E87D6A2B6B8BAA00D5A2D9 /* MemberInfoResponse.swift */,
 				0789D0152B73674900040CEB /* CustomAlertData.swift */,
 				07D897602B739409004C84F3 /* ErrorResponse.swift */,
+				07F8E7692BBEA7170099D6AB /* NoticeList.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -385,8 +417,10 @@
 				077F834A2B4EA00D0089571B /* NoticeViewModel.swift */,
 				07E87D6C2B6B8D2900D5A2D9 /* MemberInfoViewModel.swift */,
 				0789D0132B7365F200040CEB /* CustomAlertViewModel.swift */,
-				07D8975C2B738BA5004C84F3 /* BottomSheetViewModel.swift */,
 				07D8975E2B73939C004C84F3 /* AlertStatusViewModel.swift */,
+				07D8975C2B738BA5004C84F3 /* BottomSheetViewModel.swift */,
+				07B41BDF2BC54939000302E3 /* MyPageEditViewModel.swift */,
+				07B41BF72BCFD24C000302E3 /* MyPageViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -400,7 +434,6 @@
 				0787AE0C2A3EF0AA00DEFE2A /* TabBarViewController.swift */,
 				0787AE122A40368A00DEFE2A /* MessageTabViewController.swift */,
 				0787AE142A40370D00DEFE2A /* HomeTabViewController.swift */,
-				0787AE162A40371800DEFE2A /* MyPageTabViewController.swift */,
 				0787AE182A456E3F00DEFE2A /* FindIDViewController.swift */,
 				0787AE1A2A456E4800DEFE2A /* FindPWViewController.swift */,
 				0787AE1C2A456E5100DEFE2A /* FindIDResultViewController.swift */,
@@ -437,6 +470,18 @@
 				074254CA2B53824900C8CE55 /* BoardBottomSheetViewController.swift */,
 				079578972B7350BE00A6470B /* CustomAlertViewController.swift */,
 				07D897622B805929004C84F3 /* BoardImageViewController.swift */,
+				0787AE162A40371800DEFE2A /* MyPageTabViewController.swift */,
+				07B41BE12BC54982000302E3 /* MyPageEditViewController.swift */,
+				07B41BE32BC554E6000302E3 /* LikeBoardViewController.swift */,
+				07B41BE52BCFAA37000302E3 /* MyBoardViewController.swift */,
+				07B41BE72BCFAB2C000302E3 /* EditSchoolViewController.swift */,
+				07B41BE92BCFB795000302E3 /* SchoolRequestDetailsViewController.swift */,
+				07B41BEB2BCFBE2F000302E3 /* SchoolChangeRequestTableViewCell.swift */,
+				07B41BEC2BCFBE2F000302E3 /* SchoolChangeRequestTableViewCell.xib */,
+				07B41BEF2BCFC684000302E3 /* NoticeListViewController.swift */,
+				07B41BF12BCFC792000302E3 /* NoticeListTableViewCell.swift */,
+				07B41BF22BCFC792000302E3 /* NoticeListTableViewCell.xib */,
+				07B41BF52BCFC829000302E3 /* NoticeDetailViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -559,10 +604,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07B41BEE2BCFBE2F000302E3 /* SchoolChangeRequestTableViewCell.xib in Resources */,
 				0789D0122B73620200040CEB /* GoogleService-Info.plist in Resources */,
 				07D7E0FA2ADFDA2D0080F31F /* CategoryView.xib in Resources */,
 				07A5A7162AEA3AB000245041 /* BoardImageCollectionViewCell.xib in Resources */,
 				07C8CEB72A8CB56600FBB750 /* SchoolViewCell.xib in Resources */,
+				07B41BF42BCFC792000302E3 /* NoticeListTableViewCell.xib in Resources */,
 				071DD3A42ADFA94B005151C9 /* PopularTableView.xib in Resources */,
 				07B5ECEA2B16012D000B9157 /* CommentTableHeaderView.xib in Resources */,
 				0787ADF52A3C429B00DEFE2A /* SplashViewController.storyboard in Resources */,
@@ -630,6 +677,7 @@
 				0787AE2B2A456EAF00DEFE2A /* NotificationViewController.swift in Sources */,
 				07D7E0F82ADFAEE50080F31F /* PopularTableView.swift in Sources */,
 				075FA4AB2AA70199002471C7 /* ChangePwRequest.swift in Sources */,
+				07B41BF02BCFC684000302E3 /* NoticeListViewController.swift in Sources */,
 				0787ADED2A3C429B00DEFE2A /* LoginViewController.swift in Sources */,
 				0787ADE92A3C429B00DEFE2A /* AppDelegate.swift in Sources */,
 				0787AE072A3EE93800DEFE2A /* LoginResponse.swift in Sources */,
@@ -639,14 +687,17 @@
 				075FA47F2A8F3AEA002471C7 /* RegisterRequest.swift in Sources */,
 				07B5ECEC2B16F57C000B9157 /* CommentTableHeaderView.swift in Sources */,
 				073CC3092AF22D3A00EDD5AA /* Boards.swift in Sources */,
+				07B41BF32BCFC792000302E3 /* NoticeListTableViewCell.swift in Sources */,
 				07C8CEBB2A8CBDE800FBB750 /* CertificationService.swift in Sources */,
 				07C8CEBF2A8CBE2900FBB750 /* ConfirmCertificationNumberRequest.swift in Sources */,
 				0787AE0D2A3EF0AA00DEFE2A /* TabBarViewController.swift in Sources */,
 				079578982B7350BE00A6470B /* CustomAlertViewController.swift in Sources */,
 				07C8CEC52A8E136D00FBB750 /* FindIdResponse.swift in Sources */,
+				07F8E76A2BBEA7170099D6AB /* NoticeList.swift in Sources */,
 				07D7E0FC2ADFDA450080F31F /* CategoryView.swift in Sources */,
 				0787AE172A40371800DEFE2A /* MyPageTabViewController.swift in Sources */,
 				07C8CEC12A8CBE5A00FBB750 /* ConfirmCertificationNumberResponse.swift in Sources */,
+				07B41BE22BC54982000302E3 /* MyPageEditViewController.swift in Sources */,
 				07B5ECE72B15FE7F000B9157 /* CommentTableViewCell.swift in Sources */,
 				0787AE052A3EE44100DEFE2A /* LoginViewModel.swift in Sources */,
 				07C8CEBD2A8CBE1000FBB750 /* SendCertificationNumberRequest.swift in Sources */,
@@ -657,20 +708,24 @@
 				07D8975D2B738BA5004C84F3 /* BottomSheetViewModel.swift in Sources */,
 				0787AE192A456E3F00DEFE2A /* FindIDViewController.swift in Sources */,
 				071F8F292AFF78760011DBBC /* Comment.swift in Sources */,
+				07B41BE42BC554E6000302E3 /* LikeBoardViewController.swift in Sources */,
 				0787AE252A456E8A00DEFE2A /* RegisterAuthenticationViewController.swift in Sources */,
 				07A13C822A669CF700522B0B /* Observable.swift in Sources */,
 				0787AE152A40370D00DEFE2A /* HomeTabViewController.swift in Sources */,
 				074254CB2B53824900C8CE55 /* BoardBottomSheetViewController.swift in Sources */,
 				0789D0162B73674900040CEB /* CustomAlertData.swift in Sources */,
 				073CC3012AF0E9D800EDD5AA /* WritingBoardViewModel.swift in Sources */,
+				07B41BEA2BCFB795000302E3 /* SchoolRequestDetailsViewController.swift in Sources */,
 				077F834D2B4FC6E40089571B /* Notice.swift in Sources */,
 				07D897612B739409004C84F3 /* ErrorResponse.swift in Sources */,
 				0717A5472B4FEFA9000E91DA /* FCMService.swift in Sources */,
 				077F83492B4BE8C10089571B /* NoticeTableViewCell.swift in Sources */,
 				07D1E9412AFCA8C3000268AB /* DetailBoardViewModel.swift in Sources */,
+				07B41BE62BCFAA37000302E3 /* MyBoardViewController.swift in Sources */,
 				0787AE1F2A456E6100DEFE2A /* ChangePWViewController.swift in Sources */,
 				07ED74DB2A7B878700568C12 /* PreviewExtension.swift in Sources */,
 				0789D0142B7365F200040CEB /* CustomAlertViewModel.swift in Sources */,
+				07B41BE02BC54939000302E3 /* MyPageEditViewModel.swift in Sources */,
 				07C8CEC32A8DF5EE00FBB750 /* FindViewModel.swift in Sources */,
 				0787AE312A456EC900DEFE2A /* WritingBoardViewController.swift in Sources */,
 				07A5A7152AEA3AB000245041 /* BoardImageCollectionViewCell.swift in Sources */,
@@ -684,6 +739,7 @@
 				0787AE012A3C47AA00DEFE2A /* AgreementViewController.swift in Sources */,
 				0787AE1B2A456E4800DEFE2A /* FindPWViewController.swift in Sources */,
 				073CC3032AF0F94700EDD5AA /* WritingBoardRequest.swift in Sources */,
+				07B41BED2BCFBE2F000302E3 /* SchoolChangeRequestTableViewCell.swift in Sources */,
 				07F205E82BB41E6B00B40AEE /* BoardService.swift in Sources */,
 				07C8CEB52A8CA45A00FBB750 /* School.swift in Sources */,
 				0787AE212A456E7400DEFE2A /* RegisterUserInfoViewController.swift in Sources */,
@@ -696,6 +752,8 @@
 				0787AE092A3EE96700DEFE2A /* LoginService.swift in Sources */,
 				077F834B2B4EA00D0089571B /* NoticeViewModel.swift in Sources */,
 				0787AE132A40368A00DEFE2A /* MessageTabViewController.swift in Sources */,
+				07B41BE82BCFAB2C000302E3 /* EditSchoolViewController.swift in Sources */,
+				07F8E7632BBE8CA20099D6AB /* NoticeService.swift in Sources */,
 				07D8975F2B73939C004C84F3 /* AlertStatusViewModel.swift in Sources */,
 				073CC3052AF1062A00EDD5AA /* WritingBoardService.swift in Sources */,
 				0787AE332A456ED500DEFE2A /* DetailBoardViewController.swift in Sources */,
@@ -706,6 +764,8 @@
 				07A5A7182AEA529A00245041 /* CategoryViewModel.swift in Sources */,
 				0717A54B2B4FEFFD000E91DA /* FCMRequest.swift in Sources */,
 				0787AE0B2A3EEAD200DEFE2A /* LoginRequest.swift in Sources */,
+				07B41BF62BCFC829000302E3 /* NoticeDetailViewController.swift in Sources */,
+				07B41BF82BCFD24C000302E3 /* MyPageViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

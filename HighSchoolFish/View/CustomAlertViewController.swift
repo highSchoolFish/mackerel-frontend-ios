@@ -123,9 +123,7 @@ class CustomAlertViewController: UIViewController {
         print("confirmButtonTapped")
         let status = CustomAlertViewModel.shared.alertStatus
         CustomAlertViewModel.shared.confirmButtonTapped(checkStatus: status)
-        
         // 버튼 누르면 상태 전달
-        
         CustomAlertViewModel.shared.onConfirmComplete = { result in
             if result {
                 // 버튼 눌리고 case 통과 완료하면
@@ -159,7 +157,7 @@ class CustomAlertViewController: UIViewController {
             self.confirmButton.isHidden = false
         }
         
-        // 상황에 따라서 닫기 버튼 없애야함..
+        // 상황에 따라서 닫기 버튼 없애야함.
         
         // 애니메이션과 함께 모달 형태로 CustomAlertViewController 표시
         self.modalPresentationStyle = .overFullScreen

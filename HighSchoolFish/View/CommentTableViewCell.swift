@@ -147,32 +147,33 @@ class CommentTableViewCell: UITableViewCell {
         
         var timeLabelText = ""
         let givenTimeString = comment.createdAt
-        let formatter = ISO8601DateFormatter()
-        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS" // 분수초를 포함한 날짜 형식 지정
+        formatter.locale = Locale(identifier: "en_US_POSIX") // 24시간제 지정
+        formatter.timeZone = TimeZone.current //
 
-        // 주어진 시간 문자열을 Date 객체로 변환
-        if let givenDate = formatter.date(from: givenTimeString) {
+        if let date = formatter.date(from: givenTimeString) {
             // 현재 날짜와 주어진 날짜의 차이 계산
+            print("date \(date)")
             let now = Date()
             let calendar = Calendar.current
-            
+
             // 날짜 차이 계산
-            let components = calendar.dateComponents([.day, .hour], from: givenDate, to: now)
+            let components = calendar.dateComponents([.day, .hour, .minute], from: date, to: now)
             
-            if let daysAgo = components.day, daysAgo >= 1 {
-                print("\(daysAgo)일 전")
+            if let daysAgo = components.day, daysAgo > 0 {
                 timeLabelText = "\(daysAgo)일 전"
-            } else if let hoursAgo = components.hour {
-                print("\(hoursAgo)시간 전")
+            } else if let hoursAgo = components.hour, hoursAgo > 0 {
                 timeLabelText = "\(hoursAgo)시간 전"
+            } else if let minutesAgo = components.minute, minutesAgo > 0 {
+                timeLabelText = "\(minutesAgo)분 전"
             } else {
-                print("방금 전")
                 timeLabelText = "방금 전"
             }
         } else {
             print("날짜 형식이 잘못되었습니다.")
         }
-        
+
         self.timeLabel.text = timeLabelText
         
         //        if comment.isLike == false {

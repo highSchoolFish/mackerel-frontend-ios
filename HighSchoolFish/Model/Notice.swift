@@ -14,5 +14,5 @@ struct Notice: Codable {
 }
 
 struct NoticeData: Codable {
-    
+    let id, createdAt, title, context: String
 }

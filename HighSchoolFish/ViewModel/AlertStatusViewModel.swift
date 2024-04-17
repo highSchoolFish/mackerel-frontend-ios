@@ -31,6 +31,7 @@ enum HttpStatusCode: Int {
 enum CheckStatus{
     case none
     case deleteBoard
+    case reportBoard
     case deleteComment
 }
 
@@ -122,6 +123,11 @@ class AlertStatusViewModel {
             alertData.alertMessage = "해당 글을 삭제하시겠습니까? \n삭제 시 되돌릴 수 없습니다."
             alertData.alertType = .defaultAlert
 
+        case .reportBoard:
+            alertData.alertTitle = "신고"
+            alertData.alertMessage = "해당 글을 신고하시겠습니까?"
+            alertData.alertType = .defaultAlert
+
         default:
             return AlertData(alertTitle: "Alert for checking (Title)", alertMessage: "Alert for checking (Content)")
         }
@@ -130,6 +136,7 @@ class AlertStatusViewModel {
     }
     
     func alertResult() {
+        
     }
 }
 

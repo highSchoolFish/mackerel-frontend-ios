@@ -9,7 +9,7 @@ import UIKit
 import SwiftUI
 
 class BoardBottomSheetViewController: UIViewController {
-
+    
     private lazy var bottomView: UIView = {
         var view = UIView()
         view.addSubview(bottomStackView)
@@ -94,6 +94,12 @@ class BoardBottomSheetViewController: UIViewController {
         // 내 글이면 수정하기, 공유하기, 삭제하기 보이게
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        print("ViewController의 view가 사라지기 전")
+        
+    }
+    
     private func setAutoLayout() {
         NSLayoutConstraint.activate([
             bottomView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
@@ -110,81 +116,65 @@ class BoardBottomSheetViewController: UIViewController {
     
     @objc private func editButtonTapped(){
         print("editButtonTapped")
-//        게시판 수정 화면으로 넘어감
+        //        게시판 수정 화면으로 넘어감
     }
     
     @objc private func shareButtonTapped(){
         print("shareButtonTapped")
         BottomSheetViewModel.shared.shareButtonTapped()
-//        url 이 공유됨
-//        url 클릭 시
-//        : 앱이 있는 경우 해당 게시글로 이동
-//        : 앱이 없는 경우 앱스토어/구글스토어로 이동
-//        (우린 이 경우 무시)
+        //        url 이 공유됨
+        //        url 클릭 시
+        //        : 앱이 있는 경우 해당 게시글로 이동
+        //        : 앱이 없는 경우 앱스토어/구글스토어로 이동
+        //        (우린 이 경우 무시)
         
     }
     
     @objc private func deleteButtonTapped(){
         print("deleteButtonTapped")
-        BottomSheetViewModel.shared.deleteButtonTapped()
-//        '삭제하겠습니까' 얼럿뜸
-        BottomSheetViewModel.shared.onDeleteButtonComplete = { result in
+        
+        //        이유 작성 없이 바로 신고 접수되는 걸로..
+        BottomSheetViewModel.shared.reportButtonTapped()
+        // '신고하겠습니까' 얼럿뜸
+        BottomSheetViewModel.shared.onReportButtonComplete = { result in
             if result {
-                // 삭제 버튼 눌림
-                var alertTitle = CustomAlertViewModel.shared.titleString
-                var alertMessage = CustomAlertViewModel.shared.contentString
-                var alertType = CustomAlertViewModel.shared.alertType
+                // 신고 버튼 눌림
+                let alert = AlertStatusViewModel.shared.AlertForCheck(checkStatus: .reportBoard)
+                CustomAlertViewModel.shared.setAlertStatus(alertStatus: .reportBoard)
                 
                 let customAlertVC = CustomAlertViewController()
-                customAlertVC.show(alertTitle: alertTitle, alertMessage: alertMessage, alertType: alertType, on: self)
+                customAlertVC.show(alertTitle: alert.alertTitle, alertMessage: alert.alertMessage, alertType: alert.alertType, on: self)
             }
         }
         
+        BottomSheetViewModel.shared.deleteButtonTapped()
+        // '삭제하겠습니까' 얼럿뜸
+        BottomSheetViewModel.shared.onDeleteButtonComplete = { result in
+            if result {
+                // 삭제 버튼 눌림
+                let alert = AlertStatusViewModel.shared.AlertForCheck(checkStatus: .deleteBoard)
+                CustomAlertViewModel.shared.setAlertStatus(alertStatus: .deleteBoard)
+                
+                let customAlertVC = CustomAlertViewController()
+                customAlertVC.show(alertTitle: alert.alertTitle, alertMessage: alert.alertMessage, alertType: alert.alertType, on: self)
+            }
+        }
     }
     
     @objc private func reportButtonTapped(){
         print("reportButtonTapped")
-//        이유 작성 없이 바로 신고 접수되는 걸로..
+        //        이유 작성 없이 바로 신고 접수되는 걸로..
         BottomSheetViewModel.shared.reportButtonTapped()
+        // '신고하겠습니까' 얼럿뜸
+        BottomSheetViewModel.shared.onReportButtonComplete = { result in
+            if result {
+                // 신고 버튼 눌림
+                let alert = AlertStatusViewModel.shared.AlertForCheck(checkStatus: .reportBoard)
+                CustomAlertViewModel.shared.setAlertStatus(alertStatus: .reportBoard)
+                
+                let customAlertVC = CustomAlertViewController()
+                customAlertVC.show(alertTitle: alert.alertTitle, alertMessage: alert.alertMessage, alertType: alert.alertType, on: self)
+            }
+        }
     }
 }
-
-//
-//struct PreView: PreviewProvider {
-//    static var previews: some View {
-//        BoardBottomSheetViewController().toPreview()
-//    }
-//}
-//
-//#if DEBUG
-//extension UIViewController {
-//    private struct Preview: UIViewControllerRepresentable {
-//        let viewController: UIViewController
-//        
-//        func makeUIViewController(context: Context) -> UIViewController {
-//            return viewController
-//        }
-//        
-//        func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
-//        }
-//    }
-//    
-//    func toPreview() -> some View {
-//        Group {
-//            Preview(viewController: self)
-//                .previewDevice(PreviewDevice(rawValue: "iPhone 13 Pro Max"))
-//                .previewDisplayName("iPhone 13 Pro Max")
-//            
-//            Preview(viewController: self)
-//                .previewDevice(PreviewDevice(rawValue: "iPhone 8"))
-//                .previewDisplayName("iPhone 8")
-//            
-//            Preview(viewController: self)
-//                .previewDevice(PreviewDevice(rawValue: "iPhone XS"))
-//                .previewDisplayName("xs 미리보기")
-//        }
-//        
-//    }
-//}
-//#endif
-//

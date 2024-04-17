@@ -515,7 +515,7 @@ class HomeTabViewController: UIViewController {
     private func configure() {
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
-        //        fillSafeArea(position: .top, color: UIColor(named: "main")!, gradient: false)
+        fillSafeArea(position: .top, color: UIColor.clear, gradient: false)
         
         view.backgroundColor = UIColor(named: "backgroundColor")
         

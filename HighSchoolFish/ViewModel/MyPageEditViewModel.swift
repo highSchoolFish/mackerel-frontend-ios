@@ -6,3 +6,10 @@
 //
 
 import Foundation
+
+class MyPageEditViewModel {
+    static let shared = MyPageEditViewModel()
+    
+    
+    
+}
