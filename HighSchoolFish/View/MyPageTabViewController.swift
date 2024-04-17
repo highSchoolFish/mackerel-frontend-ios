@@ -328,6 +328,9 @@ class MyPageTabViewController: UIViewController {
         self.present(nextVC, animated: true)
     }
     
+    
+    
+    
     @objc func onClickSwitch(sender: UISwitch) {
         if sender.isOn {
             MyPageViewModel.shared.alertSwitch(isOn: true)
