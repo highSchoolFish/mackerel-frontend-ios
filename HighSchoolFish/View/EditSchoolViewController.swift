@@ -7,6 +7,8 @@
 
 import Foundation
 import UIKit
+import SafeAreaBrush
+import SwiftUI
 
 class EditSchoolViewController: UIViewController, UITextFieldDelegate, UINavigationControllerDelegate {
     private lazy var navigationBar: UINavigationBar = {
@@ -73,6 +75,7 @@ class EditSchoolViewController: UIViewController, UITextFieldDelegate, UINavigat
         var tv = UITableView()
         tv.delegate = self
         tv.dataSource = self
+        tv.isHidden = true
         tv.register(UINib(nibName: "SchoolViewCell", bundle: nil), forCellReuseIdentifier: "SchoolViewCell")
         tv.translatesAutoresizingMaskIntoConstraints = false
         return tv
@@ -178,6 +181,8 @@ class EditSchoolViewController: UIViewController, UITextFieldDelegate, UINavigat
     private lazy var schoolRequestDetailButton: UIButton = {
         var button = UIButton(type: .custom)
         button.setTitle("신청 내역", for: .normal)
+        button.setTitleColor(UIColor(named: "gray"), for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         button.setTitleColor(UIColor.darkGray, for: .normal)
         button.setUnderline()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -189,7 +194,7 @@ class EditSchoolViewController: UIViewController, UITextFieldDelegate, UINavigat
         button.layer.cornerRadius = 20
         button.backgroundColor = UIColor(named: "lightGray")
         button.setTitleColor(.white, for: .normal)
-        button.setTitle("신청하기", for: .normal)
+        button.setTitle("수정하기", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -205,7 +210,33 @@ class EditSchoolViewController: UIViewController, UITextFieldDelegate, UINavigat
         setAutoLayout()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        schoolTableView.isHidden = true
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        print("schoolVC did disappear")
+        schoolTableView.isHidden = true
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == schoolNameTextField {
+            schoolTableView.isHidden = true
+        }
+        return true
+    }
+    
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        if textField == schoolNameTextField {
+            schoolTableView.isHidden = true
+        }
+        return true
+    }
+    
     private func configure() {
+        view.backgroundColor = .white
+        fillSafeArea(position: .top, color: UIColor(named: "main")!, gradient: false)
         view.addSubview(navigationBar)
         view.addSubview(schoolLabel)
         view.addSubview(schoolNameTextField)
@@ -216,6 +247,8 @@ class EditSchoolViewController: UIViewController, UITextFieldDelegate, UINavigat
         view.addSubview(gradeLabel)
         view.addSubview(gradeStackView)
         view.addSubview(schoolTableView)
+        view.addSubview(schoolRequestDetailButton)
+        view.addSubview(editButton)
         
         imagePickerController.delegate = self
         imagePickerController.sourceType = .camera
@@ -223,6 +256,10 @@ class EditSchoolViewController: UIViewController, UITextFieldDelegate, UINavigat
     
     private func setAutoLayout() {
         NSLayoutConstraint.activate([
+            navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
+            navigationBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            navigationBar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            
             schoolLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
             schoolLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
             schoolLabel.topAnchor.constraint(equalTo: navigationBar.bottomAnchor, constant: 50),
@@ -259,7 +296,17 @@ class EditSchoolViewController: UIViewController, UITextFieldDelegate, UINavigat
             gradeStackView.topAnchor.constraint(equalTo: gradeLabel.bottomAnchor, constant: 8),
             gradeStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
             gradeStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
-            gradeStackView.heightAnchor.constraint(equalToConstant: 40)
+            gradeStackView.heightAnchor.constraint(equalToConstant: 40),
+            
+            schoolRequestDetailButton.topAnchor.constraint(equalTo: gradeStackView.bottomAnchor, constant: 30),
+            schoolRequestDetailButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            
+            editButton.heightAnchor.constraint(equalToConstant: 40),
+            editButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+            editButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+            editButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50)
+
+            
         ])
     }
     
@@ -449,3 +496,33 @@ extension EditSchoolViewController: UITableViewDelegate, UITableViewDataSource {
         RegisterViewModel.shared.setSchoolId(schools[indexPath.item].schoolId)
     }
 }
+
+
+struct PreView: PreviewProvider {
+    static var previews: some View {
+        EditSchoolViewController().toPreview()
+    }
+}
+
+#if DEBUG
+extension UIViewController {
+    private struct Preview: UIViewControllerRepresentable {
+            let viewController: UIViewController
+
+            func makeUIViewController(context: Context) -> UIViewController {
+                return viewController
+            }
+
+            func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
+            }
+        }
+
+        func toPreview() -> some View {
+                Preview(viewController: self)
+        }
+}
+#endif
+
+
+
+

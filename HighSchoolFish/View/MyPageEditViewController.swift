@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import SwiftUI
+import SafeAreaBrush
 
 class MyPageEditViewController: UIViewController {
     private lazy var navigationBar: UINavigationBar = {
@@ -112,6 +113,8 @@ class MyPageEditViewController: UIViewController {
 
     
     private func configure() {
+        view.backgroundColor = .white
+        fillSafeArea(position: .top, color: UIColor(named: "main")!, gradient: false)
         view.addSubview(navigationBar)
         view.addSubview(profileImageView)
         view.addSubview(nameEditLabel)
@@ -123,8 +126,12 @@ class MyPageEditViewController: UIViewController {
     
     private func setAutoLayout() {
         NSLayoutConstraint.activate([
+            navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
+            navigationBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            navigationBar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            
             profileImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0),
-            profileImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
+            profileImageView.topAnchor.constraint(equalTo: navigationBar.bottomAnchor, constant: 100),
             profileImageView.heightAnchor.constraint(equalToConstant: 80),
             profileImageView.widthAnchor.constraint(equalToConstant: 80),
             
@@ -150,10 +157,14 @@ class MyPageEditViewController: UIViewController {
             editButton.heightAnchor.constraint(equalToConstant: 40),
             editButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
             editButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
-            editButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30)
+            editButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50)
             
         ])
         
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
     
     @objc private func backButtonTapped() {

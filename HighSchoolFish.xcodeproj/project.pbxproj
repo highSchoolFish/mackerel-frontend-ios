@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0717A5472B4FEFA9000E91DA /* FCMService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0717A5462B4FEFA9000E91DA /* FCMService.swift */; };
-		0717A5492B4FEFE1000E91DA /* NotificationSettingRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0717A5482B4FEFE1000E91DA /* NotificationSettingRequest.swift */; };
 		0717A54B2B4FEFFD000E91DA /* FCMRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0717A54A2B4FEFFD000E91DA /* FCMRequest.swift */; };
 		071DD3A42ADFA94B005151C9 /* PopularTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 071DD3A32ADFA94B005151C9 /* PopularTableView.xib */; };
 		071F8F292AFF78760011DBBC /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071F8F282AFF78760011DBBC /* Comment.swift */; };
@@ -23,6 +22,9 @@
 		073CC3092AF22D3A00EDD5AA /* Boards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073CC3082AF22D3A00EDD5AA /* Boards.swift */; };
 		073CC30D2AF38F2D00EDD5AA /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073CC30C2AF38F2D00EDD5AA /* AuthManager.swift */; };
 		074254CB2B53824900C8CE55 /* BoardBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074254CA2B53824900C8CE55 /* BoardBottomSheetViewController.swift */; };
+		074D97D92BCFE48000615BFB /* CommunityTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 074D97D82BCFE48000615BFB /* CommunityTableViewCell.xib */; };
+		074D97DB2BCFE48A00615BFB /* CommunityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074D97DA2BCFE48A00615BFB /* CommunityTableViewCell.swift */; };
+		074D97DD2BD63BF300615BFB /* NotificationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074D97DC2BD63BF300615BFB /* NotificationRequest.swift */; };
 		0754607C2A7BB633004539F1 /* RegisterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0754607B2A7BB633004539F1 /* RegisterService.swift */; };
 		075FA47F2A8F3AEA002471C7 /* RegisterRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075FA47E2A8F3AEA002471C7 /* RegisterRequest.swift */; };
 		075FA4A52AA06FAB002471C7 /* FindPwRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075FA4A42AA06FAB002471C7 /* FindPwRequest.swift */; };
@@ -123,8 +125,6 @@
 		07B5ECE82B15FE7F000B9157 /* CommentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07B5ECE62B15FE7F000B9157 /* CommentTableViewCell.xib */; };
 		07B5ECEA2B16012D000B9157 /* CommentTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07B5ECE92B16012D000B9157 /* CommentTableHeaderView.xib */; };
 		07B5ECEC2B16F57C000B9157 /* CommentTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B5ECEB2B16F57C000B9157 /* CommentTableHeaderView.swift */; };
-		07B5ECEE2B1714DB000B9157 /* CommunityTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07B5ECED2B1714DB000B9157 /* CommunityTableViewCell.xib */; };
-		07B5ECF02B1714E0000B9157 /* CommunityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B5ECEF2B1714E0000B9157 /* CommunityTableViewCell.swift */; };
 		07C8CEB52A8CA45A00FBB750 /* School.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C8CEB42A8CA45A00FBB750 /* School.swift */; };
 		07C8CEB72A8CB56600FBB750 /* SchoolViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07C8CEB62A8CB56600FBB750 /* SchoolViewCell.xib */; };
 		07C8CEB92A8CB63000FBB750 /* SchoolViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C8CEB82A8CB63000FBB750 /* SchoolViewCell.swift */; };
@@ -155,7 +155,6 @@
 
 /* Begin PBXFileReference section */
 		0717A5462B4FEFA9000E91DA /* FCMService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FCMService.swift; sourceTree = "<group>"; };
-		0717A5482B4FEFE1000E91DA /* NotificationSettingRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingRequest.swift; sourceTree = "<group>"; };
 		0717A54A2B4FEFFD000E91DA /* FCMRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FCMRequest.swift; sourceTree = "<group>"; };
 		071DD3A32ADFA94B005151C9 /* PopularTableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PopularTableView.xib; sourceTree = "<group>"; };
 		071F8F282AFF78760011DBBC /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
@@ -170,6 +169,9 @@
 		073CC3082AF22D3A00EDD5AA /* Boards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Boards.swift; sourceTree = "<group>"; };
 		073CC30C2AF38F2D00EDD5AA /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		074254CA2B53824900C8CE55 /* BoardBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardBottomSheetViewController.swift; sourceTree = "<group>"; };
+		074D97D82BCFE48000615BFB /* CommunityTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommunityTableViewCell.xib; sourceTree = "<group>"; };
+		074D97DA2BCFE48A00615BFB /* CommunityTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommunityTableViewCell.swift; sourceTree = "<group>"; };
+		074D97DC2BD63BF300615BFB /* NotificationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationRequest.swift; sourceTree = "<group>"; };
 		0754607B2A7BB633004539F1 /* RegisterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterService.swift; sourceTree = "<group>"; };
 		075FA47E2A8F3AEA002471C7 /* RegisterRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterRequest.swift; sourceTree = "<group>"; };
 		075FA4A42AA06FAB002471C7 /* FindPwRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindPwRequest.swift; sourceTree = "<group>"; };
@@ -241,8 +243,6 @@
 		07B5ECE62B15FE7F000B9157 /* CommentTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentTableViewCell.xib; sourceTree = "<group>"; };
 		07B5ECE92B16012D000B9157 /* CommentTableHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentTableHeaderView.xib; sourceTree = "<group>"; };
 		07B5ECEB2B16F57C000B9157 /* CommentTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableHeaderView.swift; sourceTree = "<group>"; };
-		07B5ECED2B1714DB000B9157 /* CommunityTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CommunityTableViewCell.xib; path = "../../../../mackerel-frontend-ios/HighSchoolFish/HighSchoolFish/Views/CommunityTableViewCell.xib"; sourceTree = "<group>"; };
-		07B5ECEF2B1714E0000B9157 /* CommunityTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommunityTableViewCell.swift; path = "../../../../mackerel-frontend-ios/HighSchoolFish/HighSchoolFish/Views/CommunityTableViewCell.swift"; sourceTree = "<group>"; };
 		07C8CEB42A8CA45A00FBB750 /* School.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = School.swift; sourceTree = "<group>"; };
 		07C8CEB62A8CB56600FBB750 /* SchoolViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SchoolViewCell.xib; sourceTree = "<group>"; };
 		07C8CEB82A8CB63000FBB750 /* SchoolViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolViewCell.swift; sourceTree = "<group>"; };
@@ -393,12 +393,12 @@
 				073CC3082AF22D3A00EDD5AA /* Boards.swift */,
 				071F8F282AFF78760011DBBC /* Comment.swift */,
 				077F834C2B4FC6E40089571B /* Notice.swift */,
-				0717A5482B4FEFE1000E91DA /* NotificationSettingRequest.swift */,
 				0717A54A2B4FEFFD000E91DA /* FCMRequest.swift */,
 				07E87D6A2B6B8BAA00D5A2D9 /* MemberInfoResponse.swift */,
 				0789D0152B73674900040CEB /* CustomAlertData.swift */,
 				07D897602B739409004C84F3 /* ErrorResponse.swift */,
 				07F8E7692BBEA7170099D6AB /* NoticeList.swift */,
+				074D97DC2BD63BF300615BFB /* NotificationRequest.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -444,6 +444,8 @@
 				0787AE262A456E9600DEFE2A /* RegisterViewController.swift */,
 				0787AE2A2A456EAF00DEFE2A /* NotificationViewController.swift */,
 				0787AE2C2A456EB700DEFE2A /* CommunityViewController.swift */,
+				074D97D82BCFE48000615BFB /* CommunityTableViewCell.xib */,
+				074D97DA2BCFE48A00615BFB /* CommunityTableViewCell.swift */,
 				0787AE2E2A456EC100DEFE2A /* WebViewController.swift */,
 				0787AE302A456EC900DEFE2A /* WritingBoardViewController.swift */,
 				0787AE322A456ED500DEFE2A /* DetailBoardViewController.swift */,
@@ -458,8 +460,6 @@
 				07D7E0F92ADFDA2D0080F31F /* CategoryView.xib */,
 				07A5A7132AEA3AB000245041 /* BoardImageCollectionViewCell.swift */,
 				07A5A7142AEA3AB000245041 /* BoardImageCollectionViewCell.xib */,
-				07B5ECED2B1714DB000B9157 /* CommunityTableViewCell.xib */,
-				07B5ECEF2B1714E0000B9157 /* CommunityTableViewCell.swift */,
 				07B5ECE52B15FE7F000B9157 /* CommentTableViewCell.swift */,
 				07B5ECE62B15FE7F000B9157 /* CommentTableViewCell.xib */,
 				07B5ECE92B16012D000B9157 /* CommentTableHeaderView.xib */,
@@ -613,11 +613,11 @@
 				071DD3A42ADFA94B005151C9 /* PopularTableView.xib in Resources */,
 				07B5ECEA2B16012D000B9157 /* CommentTableHeaderView.xib in Resources */,
 				0787ADF52A3C429B00DEFE2A /* SplashViewController.storyboard in Resources */,
+				074D97D92BCFE48000615BFB /* CommunityTableViewCell.xib in Resources */,
 				07B5ECE82B15FE7F000B9157 /* CommentTableViewCell.xib in Resources */,
 				0787ADF22A3C429B00DEFE2A /* Assets.xcassets in Resources */,
 				077F83472B4BE8440089571B /* NoticeTableViewCell.xib in Resources */,
 				0787ADF02A3C429B00DEFE2A /* Main.storyboard in Resources */,
-				07B5ECEE2B1714DB000B9157 /* CommunityTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -733,11 +733,12 @@
 				0787AE232A456E7E00DEFE2A /* RegisterSchoolViewController.swift in Sources */,
 				071F8F2D2AFF95EF0011DBBC /* CommentService.swift in Sources */,
 				073CC3072AF228F500EDD5AA /* CommunityViewModel.swift in Sources */,
+				074D97DB2BCFE48A00615BFB /* CommunityTableViewCell.swift in Sources */,
 				077F83452B4BDD060089571B /* NoticeViewController.swift in Sources */,
 				0787AE352A4573B100DEFE2A /* AgreementViewModel.swift in Sources */,
-				0717A5492B4FEFE1000E91DA /* NotificationSettingRequest.swift in Sources */,
 				0787AE012A3C47AA00DEFE2A /* AgreementViewController.swift in Sources */,
 				0787AE1B2A456E4800DEFE2A /* FindPWViewController.swift in Sources */,
+				074D97DD2BD63BF300615BFB /* NotificationRequest.swift in Sources */,
 				073CC3032AF0F94700EDD5AA /* WritingBoardRequest.swift in Sources */,
 				07B41BED2BCFBE2F000302E3 /* SchoolChangeRequestTableViewCell.swift in Sources */,
 				07F205E82BB41E6B00B40AEE /* BoardService.swift in Sources */,
@@ -747,7 +748,6 @@
 				07E87D6B2B6B8BAA00D5A2D9 /* MemberInfoResponse.swift in Sources */,
 				07C8CEB92A8CB63000FBB750 /* SchoolViewCell.swift in Sources */,
 				072FFAE02AB9722100A07FA7 /* NationwideCommunityViewController.swift in Sources */,
-				07B5ECF02B1714E0000B9157 /* CommunityTableViewCell.swift in Sources */,
 				075FA4A52AA06FAB002471C7 /* FindPwRequest.swift in Sources */,
 				0787AE092A3EE96700DEFE2A /* LoginService.swift in Sources */,
 				077F834B2B4EA00D0089571B /* NoticeViewModel.swift in Sources */,

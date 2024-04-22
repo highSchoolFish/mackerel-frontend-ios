@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import SafeAreaBrush
 
 class SchoolRequestDetailsViewController: UIViewController {
     private lazy var navigationBar: UINavigationBar = {
@@ -58,12 +59,18 @@ class SchoolRequestDetailsViewController: UIViewController {
     }
     
     private func configure() {
+        view.backgroundColor = .white
+        fillSafeArea(position: .top, color: UIColor(named: "main")!, gradient: false)
         view.addSubview(navigationBar)
         view.addSubview(requestTableView)
     }
     
     private func setupAutoLayout() {
         NSLayoutConstraint.activate([
+            navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
+            navigationBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            navigationBar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            
             requestTableView.topAnchor.constraint(equalTo: navigationBar.bottomAnchor, constant: 0),
             requestTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
             requestTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0)

@@ -19,8 +19,10 @@ class NoticeTableViewCell: UITableViewCell {
         // Initialization code
     }
     
-    func generateCell() {
+    func generateCell(notice: NoticeData) {
         print("generateCell")
+        
+
         
     }
     

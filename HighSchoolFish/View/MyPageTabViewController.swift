@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import SwiftUI
+import SafeAreaBrush
 
 class MyPageTabViewController: UIViewController {
     
@@ -112,8 +113,9 @@ class MyPageTabViewController: UIViewController {
     private lazy var likeBoardView: UIView = {
         let view = UIView()
         view.addSubview(likeBoardLabel)
-        let gesture = UIGestureRecognizer(target: self, action: #selector(likeBoardViewTapped))
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(likeBoardViewTapped))
         view.addGestureRecognizer(gesture)
+        view.isUserInteractionEnabled = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -129,6 +131,9 @@ class MyPageTabViewController: UIViewController {
     private lazy var myBoardView: UIView = {
         let view = UIView()
         view.addSubview(myBoardLabel)
+        view.isUserInteractionEnabled = true
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(myBoardViewTapped))
+        view.addGestureRecognizer(gesture)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -167,6 +172,9 @@ class MyPageTabViewController: UIViewController {
     private lazy var changeSchoolView: UIView = {
         let view = UIView()
         view.addSubview(changeSchoolLabel)
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(changeSchoolViewTapped))
+        view.addGestureRecognizer(gesture)
+        view.isUserInteractionEnabled = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -182,6 +190,9 @@ class MyPageTabViewController: UIViewController {
     private lazy var noticeView: UIView = {
         let view = UIView()
         view.addSubview(noticeLabel)
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(noticeListViewTapped))
+        view.addGestureRecognizer(gesture)
+        view.isUserInteractionEnabled = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -190,14 +201,21 @@ class MyPageTabViewController: UIViewController {
         super.viewDidLoad()
         configure()
         setAutoLayout()
+        
+        setMyInfo()
     }
     
     private func setAutoLayout() {
         NSLayoutConstraint.activate([
+            
+            navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
+            navigationBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            navigationBar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            
             topView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
             topView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
             topView.heightAnchor.constraint(equalToConstant: 150),
-            topView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
+            topView.topAnchor.constraint(equalTo: navigationBar.bottomAnchor, constant: 0),
             
             schoolNameLabel.topAnchor.constraint(equalTo: topView.topAnchor, constant: 50),
             schoolNameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -280,6 +298,9 @@ class MyPageTabViewController: UIViewController {
     }
     
     private func configure() {
+        view.backgroundColor = .white
+        fillSafeArea(position: .top, color: UIColor(named: "main")!, gradient: false)
+        
         view.addSubview(navigationBar)
         view.addSubview(topView)
         view.addSubview(schoolNameLabel)
@@ -305,6 +326,7 @@ class MyPageTabViewController: UIViewController {
     }
     
     @objc func likeBoardViewTapped() {
+        print("like Board View Tapped")
         let nextVC = LikeBoardViewController()
         nextVC.modalPresentationStyle = .fullScreen
         self.present(nextVC, animated: true)
@@ -328,9 +350,6 @@ class MyPageTabViewController: UIViewController {
         self.present(nextVC, animated: true)
     }
     
-    
-    
-    
     @objc func onClickSwitch(sender: UISwitch) {
         if sender.isOn {
             MyPageViewModel.shared.alertSwitch(isOn: true)
@@ -339,34 +358,32 @@ class MyPageTabViewController: UIViewController {
             MyPageViewModel.shared.alertSwitch(isOn: false)
         }
     }
-}
-
-
-struct PreView: PreviewProvider {
-    static var previews: some View {
-        MyPageTabViewController().toPreview()
+    
+    private func setMyInfo() {
+        let nickname = MemberInfoViewModel.shared.userNicknameString
+        let schoolName = MemberInfoViewModel.shared.userSchoolNameString
+        let userGrade = MemberInfoViewModel.shared.userGradeString
+        let userProfile = MemberInfoViewModel.shared.userProfileString
+        
+        self.nicknameLabel.text = "\(nickname)"
+        
+        if userProfile == "" {
+            self.profileImageView.image = UIImage(named: "profileIcon")
+        }
+        else {
+            // userProfile 기본 아닌 경우
+        }
+        
+        if userGrade == "HIGH_FIRST" {
+            self.gradeLabel.text = "1학년"
+        }else if userGrade == "HIGH_SECOND" {
+            self.gradeLabel.text = "2학년"
+        }else if userGrade == "HIGH_THIRD" {
+            self.gradeLabel.text = "3학년"
+        }
+        
+        self.schoolNameLabel.text = schoolName
     }
+    
+    
 }
-
-#if DEBUG
-extension UIViewController {
-    private struct Preview: UIViewControllerRepresentable {
-            let viewController: UIViewController
-
-            func makeUIViewController(context: Context) -> UIViewController {
-                return viewController
-            }
-
-            func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
-            }
-        }
-
-        func toPreview() -> some View {
-                Preview(viewController: self)
-        }
-}
-#endif
-
-
-
-

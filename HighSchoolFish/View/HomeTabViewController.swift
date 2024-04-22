@@ -696,11 +696,11 @@ class HomeTabViewController: UIViewController {
     }
     
     private func setCardUI() {
-        var userName = MemberInfoViewModel.shared.userNameString
-        var userProfile = MemberInfoViewModel.shared.userProfileString
-        var userGrade = MemberInfoViewModel.shared.userGradeString
-        var userNickname = MemberInfoViewModel.shared.userNicknameString
-        var userSchoolName = MemberInfoViewModel.shared.userSchoolNameString
+        let userName = MemberInfoViewModel.shared.userNameString
+        let userProfile = MemberInfoViewModel.shared.userProfileString
+        let userGrade = MemberInfoViewModel.shared.userGradeString
+        let userNickname = MemberInfoViewModel.shared.userNicknameString
+        let userSchoolName = MemberInfoViewModel.shared.userSchoolNameString
         
         self.cardNameLabel.text = userName
         

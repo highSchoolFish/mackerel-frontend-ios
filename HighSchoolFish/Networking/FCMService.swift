@@ -10,12 +10,10 @@ import Moya
 
 enum FCMService {
     case sendFCM(params: FCMRequest)
-    case notificationSetting(params: NotificationSettingRequest)
+    case notificationSetting(params: NotificationRequest)
 }
 
 extension FCMService: TargetType {
-    
-    
     var baseURL: URL {
         // Test Server
         return URL(string: "http://43.203.76.213:8080")!
@@ -28,15 +26,13 @@ extension FCMService: TargetType {
         case .notificationSetting:
             return "/api/v1/notification/setting"
         }
-        
     }
-    //각 메소드가 get 인지 post인지 설정가능
+
     var method: Moya.Method {
         switch self {
         case .sendFCM:
             return .post
-            
-        case .notificationSetting:
+        case .notificationSetting(_):
             return .post
         }
     }
@@ -55,16 +51,9 @@ extension FCMService: TargetType {
         case .notificationSetting(let params):
             return .requestJSONEncodable(params)
         }
-        
-    }
-    var validationType: Moya.ValidationType {
-        return .successAndRedirectCodes
     }
     
     var headers: [String: String]? {
         return ["Content-type": "application/json"]
-        
     }
-    
 }
-

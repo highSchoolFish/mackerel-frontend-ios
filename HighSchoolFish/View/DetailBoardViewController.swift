@@ -416,7 +416,6 @@ class DetailBoardViewController: UIViewController, UITextFieldDelegate {
         //        self.commentLabel.text = "댓글 \(comment.data.numberOfcommment)"
         
         self.commentTableView.reloadData()
-        
     }
     
     func calculateTotalHeight() -> CGFloat {

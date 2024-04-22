@@ -33,12 +33,12 @@ class CommentTableViewCell: UITableViewCell {
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        if selected {
-            // 셀이 선택되었을 때의 동작
-        } else {
-            // 셀이 선택 해제되었을 때의 동작
-            self.contentView.backgroundColor = UIColor.white
-        }
+//        if selected {
+//            // 셀이 선택되었을 때의 동작
+//        } else {
+//            // 셀이 선택 해제되었을 때의 동작
+//            self.contentView.backgroundColor = UIColor.white
+//        }
         // Configure the view for the selected state
     }
     

@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import SwiftUI
+import SafeAreaBrush
 
 class LikeBoardViewController: UIViewController {
     private lazy var navigationBar: UINavigationBar = {
@@ -63,7 +64,7 @@ class LikeBoardViewController: UIViewController {
         
         segment.insertSegment(withTitle: "학교 게시판", at: 0, animated: true)
         segment.insertSegment(withTitle: "학군 게시판", at: 1, animated: true)
-        segment.insertSegment(withTitle: "전국 게시판", at: 1, animated: true)
+        segment.insertSegment(withTitle: "전국 게시판", at: 2, animated: true)
         
         segment.selectedSegmentIndex = 0
         
@@ -79,7 +80,7 @@ class LikeBoardViewController: UIViewController {
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .regular)
         ], for: .selected)
         
-//        segment.addTarget(self, action: #selector(changeSegmentedControlLinePosition), for: .valueChanged)
+        segment.addTarget(self, action: #selector(changeSegmentedControl), for: .valueChanged)
         
         segment.translatesAutoresizingMaskIntoConstraints = false
         return segment
@@ -115,6 +116,8 @@ class LikeBoardViewController: UIViewController {
     }
     
     private func configure() {
+        view.backgroundColor = .white
+        fillSafeArea(position: .top, color: UIColor(named: "main")!, gradient: false)
         view.addSubview(navigationBar)
         view.addSubview(containerView)
         containerView.addSubview(segmentControl)
@@ -126,6 +129,10 @@ class LikeBoardViewController: UIViewController {
     
     private func setAutoLayout() {
         NSLayoutConstraint.activate([
+            navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
+            navigationBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            navigationBar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            
             containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             containerView.topAnchor.constraint(equalTo: navigationBar.bottomAnchor),
@@ -147,9 +154,19 @@ class LikeBoardViewController: UIViewController {
         ])
     }
     
+    @objc private func changeSegmentedControl(sender: UISegmentedControl) {
+        if sender.selectedSegmentIndex == 0 {
+            // 학교 게시판
+        }
+        else if sender.selectedSegmentIndex == 1 {
+            // 학군 게시판
+        }
+        else if sender.selectedSegmentIndex == 2 {
+            // 전국 게시판
+        }
+    }
+    
     @objc private func backButtonTapped() {
         dismiss(animated: true, completion: nil)
     }
-    
-    
 }

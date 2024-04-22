@@ -149,9 +149,7 @@ class CommunityViewController: UIViewController {
         
         print("test 2")
         self.tableView.reloadData()
-
     }
-    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -206,7 +204,6 @@ class CommunityViewController: UIViewController {
     }
     
     private func configure() {
-        
         view.backgroundColor = .white
         fillSafeArea(position: .top, color: UIColor(named: "main")!, gradient: false)
         
