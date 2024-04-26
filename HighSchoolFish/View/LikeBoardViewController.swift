@@ -108,6 +108,7 @@ class LikeBoardViewController: UIViewController {
         return tableView
     }()
     
+    var boards: [BoardContent] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -124,6 +125,9 @@ class LikeBoardViewController: UIViewController {
         view.addSubview(lineView)
         view.addSubview(nothingLabel)
         
+        
+        tableView.dataSource = self
+        tableView.delegate = self
         
     }
     
@@ -157,16 +161,73 @@ class LikeBoardViewController: UIViewController {
     @objc private func changeSegmentedControl(sender: UISegmentedControl) {
         if sender.selectedSegmentIndex == 0 {
             // 학교 게시판
+            LikeBoardViewModel.shared.getLikeBoard(boardType: "SCHOOL")
+            LikeBoardViewModel.shared.onBoardsResult = { result in
+                self.boards = result.data.content
+                self.tableView.reloadData()
+            }
+            
         }
         else if sender.selectedSegmentIndex == 1 {
             // 학군 게시판
+            LikeBoardViewModel.shared.getLikeBoard(boardType: "SCHOOL_DISTRICT")
+            LikeBoardViewModel.shared.onBoardsResult = { result in
+                self.boards = result.data.content
+                self.tableView.reloadData()
+            }
         }
         else if sender.selectedSegmentIndex == 2 {
             // 전국 게시판
+            LikeBoardViewModel.shared.getLikeBoard(boardType: "NATIONAL")
+            LikeBoardViewModel.shared.onBoardsResult = { result in
+                self.boards = result.data.content
+                self.tableView.reloadData()
+            }
         }
     }
     
     @objc private func backButtonTapped() {
         dismiss(animated: true, completion: nil)
+    }
+}
+
+extension LikeBoardViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("comments.count \(boards.count)")
+        return boards.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "BoardListTableViewCell", for: indexPath)as? BoardListTableViewCell else{
+            print("cell error")
+            return .init()
+        }
+        cell.selectionStyle = .none
+        cell.generateCell(board: boards[indexPath.item])
+        
+        print("print cell index \(cell.index)")
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("선택 : \(indexPath)")
+        print("boardId : \(boards[indexPath.item].boardId)")
+        // 선택 후 setBoardId 호출
+//        DetailBoardViewModel.shared.setBoardId(boards[indexPath.item].boardId)
+//        
+//        DetailBoardViewModel.shared.getBoardComplete = { result in
+//            if result == true {
+//                print("result true")
+//                // board 호출 성공
+//                // vc 전환
+//                let vc = DetailBoardViewController()
+//                vc.modalPresentationStyle = .fullScreen
+//                self.present(vc, animated: true)
+//            }
+//            else {
+//                
+//            }
+//        }
     }
 }

@@ -185,6 +185,7 @@ class EditSchoolViewController: UIViewController, UITextFieldDelegate, UINavigat
         button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         button.setTitleColor(UIColor.darkGray, for: .normal)
         button.setUnderline()
+        button.addTarget(self, action: #selector(requestDetailButtonTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -195,6 +196,8 @@ class EditSchoolViewController: UIViewController, UITextFieldDelegate, UINavigat
         button.backgroundColor = UIColor(named: "lightGray")
         button.setTitleColor(.white, for: .normal)
         button.setTitle("수정하기", for: .normal)
+        button.isEnabled = false
+        button.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -203,7 +206,7 @@ class EditSchoolViewController: UIViewController, UITextFieldDelegate, UINavigat
     var imagePickerController = UIImagePickerController()
     var userImage: UIImage = UIImage.add
     var imageData : NSData? = nil
-
+    var buttonChecked: Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
@@ -218,20 +221,6 @@ class EditSchoolViewController: UIViewController, UITextFieldDelegate, UINavigat
     override func viewDidDisappear(_ animated: Bool) {
         print("schoolVC did disappear")
         schoolTableView.isHidden = true
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField == schoolNameTextField {
-            schoolTableView.isHidden = true
-        }
-        return true
-    }
-    
-    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-        if textField == schoolNameTextField {
-            schoolTableView.isHidden = true
-        }
-        return true
     }
     
     private func configure() {
@@ -305,9 +294,15 @@ class EditSchoolViewController: UIViewController, UITextFieldDelegate, UINavigat
             editButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
             editButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
             editButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50)
-
+            
             
         ])
+    }
+    
+    @objc func requestDetailButtonTapped() {
+        let nextVC = SchoolRequestDetailsViewController()
+        nextVC.modalPresentationStyle = .fullScreen
+        self.present(nextVC, animated: true)
     }
     
     @objc func imageViewTapped(_ sender: UITapGestureRecognizer) {
@@ -317,7 +312,7 @@ class EditSchoolViewController: UIViewController, UITextFieldDelegate, UINavigat
     
     @objc func firstButtonTapped(_ sender: UIButton) {
         print("first button tapped")
-        RegisterViewModel.shared.setIsGradePicked(true)
+        buttonChecked = true
         firstGradeButton.isSelected = true
         if firstGradeButton.isSelected == true {
             print("first \(firstGradeButton.isSelected)")
@@ -327,7 +322,7 @@ class EditSchoolViewController: UIViewController, UITextFieldDelegate, UINavigat
             firstGradeButton.backgroundColor = UIColor(named: "main")
             secondGradeButton.backgroundColor = UIColor(named: "lightGray")
             thirdGradeButton.backgroundColor = UIColor(named: "lightGray")
-            RegisterViewModel.shared.setGrade("HIGH_FIRST")
+            SchoolChangeViewModel.shared.setGrade("HIGH_FIRST")
             firstGradeButton.isSelected = false
         }
         else {
@@ -340,7 +335,7 @@ class EditSchoolViewController: UIViewController, UITextFieldDelegate, UINavigat
     
     @objc func secondButtonTapped(_ sender: UIButton) {
         print("second button tapped")
-        RegisterViewModel.shared.setIsGradePicked(true)
+        buttonChecked = true
         secondGradeButton.isSelected = true
         if secondGradeButton.isSelected == true {
             print("first \(firstGradeButton.isSelected)")
@@ -349,7 +344,7 @@ class EditSchoolViewController: UIViewController, UITextFieldDelegate, UINavigat
             firstGradeButton.backgroundColor = UIColor(named: "lightGray")
             secondGradeButton.backgroundColor = UIColor(named: "main")
             thirdGradeButton.backgroundColor = UIColor(named: "lightGray")
-            RegisterViewModel.shared.setGrade("HIGH_SECOND")
+            SchoolChangeViewModel.shared.setGrade("HIGH_SECOND")
             secondGradeButton.isSelected = false
         }
         else {
@@ -362,7 +357,7 @@ class EditSchoolViewController: UIViewController, UITextFieldDelegate, UINavigat
     
     @objc func thirdButtonTapped(_ sender: UIButton) {
         print("third button tapped")
-        RegisterViewModel.shared.setIsGradePicked(true)
+        buttonChecked = true
         thirdGradeButton.isSelected = true
         if thirdGradeButton.isSelected == true {
             print("first \(firstGradeButton.isSelected)")
@@ -371,7 +366,7 @@ class EditSchoolViewController: UIViewController, UITextFieldDelegate, UINavigat
             firstGradeButton.backgroundColor = UIColor(named: "lightGray")
             secondGradeButton.backgroundColor = UIColor(named: "lightGray")
             thirdGradeButton.backgroundColor = UIColor(named: "main")
-            RegisterViewModel.shared.setGrade("HIGH_THIRD")
+            SchoolChangeViewModel.shared.setGrade("HIGH_THIRD")
             thirdGradeButton.isSelected = false
         }
         else {
@@ -380,6 +375,36 @@ class EditSchoolViewController: UIViewController, UITextFieldDelegate, UINavigat
             print("third \(thirdGradeButton.isSelected)")
             thirdGradeButton.isSelected = true
         }
+    }
+    
+    @objc func editButtonTapped() {
+        if schoolNameTextField.text != "" && imageData !=  nil && buttonChecked == true {
+            self.editButton.isEnabled = true
+            self.editButton.backgroundColor = UIColor(named: "main")
+            SchoolChangeViewModel.shared.schoolChangeButtonTapped()
+            SchoolChangeViewModel.shared.onChangeSchoolComplete = { result in
+                // 화면 back
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
+        else {
+            self.editButton.isEnabled = false
+            self.editButton.backgroundColor = UIColor(named: "lightGray")
+        }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == schoolNameTextField {
+            schoolTableView.isHidden = true
+        }
+        return true
+    }
+    
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        if textField == schoolNameTextField {
+            schoolTableView.isHidden = true
+        }
+        return true
     }
     
     @objc func textFieldEditingChanged(_ textField: UITextField) {
@@ -391,10 +416,9 @@ class EditSchoolViewController: UIViewController, UITextFieldDelegate, UINavigat
         else {
             schoolTableView.isHidden = false
             print("schoolTF editing changed")
-            RegisterViewModel.shared.setSchoolName(textField.text ?? "")
-            RegisterViewModel.shared.setIsSchoolNameFilled(false)
+            SchoolChangeViewModel.shared.setSchoolName(textField.text ?? "")
         }
-        RegisterViewModel.shared.onSchoolResult = { schoolsArr in
+        SchoolChangeViewModel.shared.onSchoolResult = { schoolsArr in
             print(schoolsArr.count)
             self.schools = schoolsArr
             if self.schools.count == 0 {
@@ -402,39 +426,36 @@ class EditSchoolViewController: UIViewController, UITextFieldDelegate, UINavigat
             }
             print("in VC 1 ", self.schools.count)
             self.schoolTableView.reloadData()
-
         }
-
+        
         print("in VC 2 ", schools.count)
         self.schoolTableView.reloadData()
-
+        
     }
     
     func resizeImage(image: UIImage, newWidth: CGFloat) -> UIImage {
         let scale = newWidth / image.size.width // 새 이미지 확대/축소 비율
         let newHeight = image.size.height * scale
-
+        
         print(newHeight)
         print(newWidth)
         UIGraphicsBeginImageContext(CGSizeMake(newWidth, newHeight))
         image.draw(in: CGRectMake(0, 0, newWidth, newHeight))
         guard let newImage = UIGraphicsGetImageFromCurrentImageContext() else { return image }
         UIGraphicsEndImageContext()
-
+        
         print("화면 배율: \(UIScreen.main.scale)")// 배수
         print("origin: \(image), resize: \(newImage)")
-//        cameraImageView.image = newImage
         return newImage
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
-
+    
     @objc private func backButtonTapped() {
         dismiss(animated: true, completion: nil)
     }
-    
 }
 
 extension EditSchoolViewController: UIImagePickerControllerDelegate {
@@ -447,16 +468,13 @@ extension EditSchoolViewController: UIImagePickerControllerDelegate {
         // 선택된 이미지(소스)가 없을수도 있으니 옵셔널 바인딩해주고, 이미지가 선택된게 없다면 오류를 발생시킵니다.
         guard let userPickedImage = info[.originalImage] as? UIImage else {
             fatalError("선택된 이미지를 불러오지 못했습니다 : userPickedImage의 값이 nil입니다. ")
-            
-            
         }
-            userImage = resizeImage(image: userPickedImage, newWidth: cameraImageView.frame.width)
+        userImage = resizeImage(image: userPickedImage, newWidth: cameraImageView.frame.width)
         self.cameraImageView.image = userImage
-        RegisterViewModel.shared.setIsImagePicked(true)
         
         //화질 떨어트리기
-            imageData = userImage.jpegData(compressionQuality: 0.7) as NSData?
-        RegisterViewModel.shared.imageData = imageData
+        imageData = userImage.jpegData(compressionQuality: 0.7) as NSData?
+        SchoolChangeViewModel.shared.imageData = imageData
     }
 }
 
@@ -476,9 +494,9 @@ extension EditSchoolViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
         cell.generateCell(school: schools[indexPath.item])
-
+        
         print("print cell index \(cell.index)")
-                
+        
         return cell
         
     }
@@ -487,42 +505,11 @@ extension EditSchoolViewController: UITableViewDelegate, UITableViewDataSource {
         print("선택 : \(indexPath)")
         print("선택1 : \(schools[indexPath.item].schoolName)")
         print("선택1 : \(schools[indexPath.item].address)")
-
+        
         schoolTableView.deselectRow(at: indexPath, animated: true)
         schoolNameTextField.text = schools[indexPath.item].schoolName
         schoolTableView.isHidden = true
-        RegisterViewModel.shared.setSchoolName(schools[indexPath.item].schoolName)
-        RegisterViewModel.shared.setIsSchoolNameFilled(true)
-        RegisterViewModel.shared.setSchoolId(schools[indexPath.item].schoolId)
+        SchoolChangeViewModel.shared.setSchoolName(schools[indexPath.item].schoolName)
+        SchoolChangeViewModel.shared.setSchoolId(schools[indexPath.item].schoolId)
     }
 }
-
-
-struct PreView: PreviewProvider {
-    static var previews: some View {
-        EditSchoolViewController().toPreview()
-    }
-}
-
-#if DEBUG
-extension UIViewController {
-    private struct Preview: UIViewControllerRepresentable {
-            let viewController: UIViewController
-
-            func makeUIViewController(context: Context) -> UIViewController {
-                return viewController
-            }
-
-            func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
-            }
-        }
-
-        func toPreview() -> some View {
-                Preview(viewController: self)
-        }
-}
-#endif
-
-
-
-

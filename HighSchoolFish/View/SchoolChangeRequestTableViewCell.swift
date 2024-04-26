@@ -8,10 +8,19 @@
 import UIKit
 
 class SchoolChangeRequestTableViewCell: UITableViewCell {
-
+    @IBOutlet weak var schoolNameLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var stateButton: UIButton!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+    }
+    
+    func generateCell() {
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

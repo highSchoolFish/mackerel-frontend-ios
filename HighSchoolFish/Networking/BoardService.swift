@@ -13,6 +13,7 @@ enum BoardService {
     case disLikeBoard(id: String)
     case deleteBoard(id: String)
     case reportBoard(id: String)
+    case popularBoard(page: Int, size: Int, sort: String, sinceDateTime: String)
 }
 
 extension BoardService: TargetType {
@@ -30,6 +31,8 @@ extension BoardService: TargetType {
             return "/api/v1/schools/boards/\(id)"
         case .reportBoard(id: let id):
             return "/api/v1/schools/boards/\(id)/reports"
+        case .popularBoard:
+            return "/api/v1/schools/boards/popular-posts"
         }
     }
     
@@ -43,12 +46,14 @@ extension BoardService: TargetType {
             return .delete
         case .reportBoard(_):
             return .post
+        case .popularBoard:
+            return .get
         }
     }
     
     var sampleData: Data {
         switch self {
-        case .likeBoard, .disLikeBoard, .deleteBoard, .reportBoard:
+        case .likeBoard, .disLikeBoard, .deleteBoard, .reportBoard, .popularBoard:
             return "@@".data(using: .utf8)!
         }
     }
@@ -63,12 +68,20 @@ extension BoardService: TargetType {
             return .requestParameters(parameters: ["id": id], encoding: URLEncoding.queryString)
         case .reportBoard(id: let id):
             return .requestParameters(parameters: ["id": id], encoding: URLEncoding.queryString)
+        case .popularBoard(page: let page, size: let size, sort: let sort, sinceDateTime: let sinceDateTime):
+            let parameters: [String: Any] = [
+                "page": page,
+                "size": size,
+                "sort": sort,
+                "sinceDateTime": sinceDateTime
+            ]
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
         }
     }
     
     var headers: [String : String]? {
         switch self {
-        case .likeBoard, .disLikeBoard, .deleteBoard, .reportBoard:
+        case .likeBoard, .disLikeBoard, .deleteBoard, .reportBoard, .popularBoard:
             return ["Content-Type": "application/json"]
         }
     }

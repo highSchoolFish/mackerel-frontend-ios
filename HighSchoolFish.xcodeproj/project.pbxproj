@@ -25,6 +25,12 @@
 		074D97D92BCFE48000615BFB /* CommunityTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 074D97D82BCFE48000615BFB /* CommunityTableViewCell.xib */; };
 		074D97DB2BCFE48A00615BFB /* CommunityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074D97DA2BCFE48A00615BFB /* CommunityTableViewCell.swift */; };
 		074D97DD2BD63BF300615BFB /* NotificationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074D97DC2BD63BF300615BFB /* NotificationRequest.swift */; };
+		074D97DF2BD78AFE00615BFB /* MyPageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074D97DE2BD78AFE00615BFB /* MyPageService.swift */; };
+		074D97E12BDA1C5D00615BFB /* LikeBoardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074D97E02BDA1C5D00615BFB /* LikeBoardViewModel.swift */; };
+		074D97E32BDA36AA00615BFB /* BoardList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074D97E22BDA36AA00615BFB /* BoardList.swift */; };
+		074D97E62BDA43FE00615BFB /* BoardListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074D97E42BDA43FE00615BFB /* BoardListTableViewCell.swift */; };
+		074D97E72BDA43FE00615BFB /* BoardListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 074D97E52BDA43FE00615BFB /* BoardListTableViewCell.xib */; };
+		074D97E92BDB97DF00615BFB /* SchoolChangeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074D97E82BDB97DF00615BFB /* SchoolChangeViewModel.swift */; };
 		0754607C2A7BB633004539F1 /* RegisterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0754607B2A7BB633004539F1 /* RegisterService.swift */; };
 		075FA47F2A8F3AEA002471C7 /* RegisterRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075FA47E2A8F3AEA002471C7 /* RegisterRequest.swift */; };
 		075FA4A52AA06FAB002471C7 /* FindPwRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075FA4A42AA06FAB002471C7 /* FindPwRequest.swift */; };
@@ -172,6 +178,12 @@
 		074D97D82BCFE48000615BFB /* CommunityTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommunityTableViewCell.xib; sourceTree = "<group>"; };
 		074D97DA2BCFE48A00615BFB /* CommunityTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommunityTableViewCell.swift; sourceTree = "<group>"; };
 		074D97DC2BD63BF300615BFB /* NotificationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationRequest.swift; sourceTree = "<group>"; };
+		074D97DE2BD78AFE00615BFB /* MyPageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageService.swift; sourceTree = "<group>"; };
+		074D97E02BDA1C5D00615BFB /* LikeBoardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeBoardViewModel.swift; sourceTree = "<group>"; };
+		074D97E22BDA36AA00615BFB /* BoardList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardList.swift; sourceTree = "<group>"; };
+		074D97E42BDA43FE00615BFB /* BoardListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardListTableViewCell.swift; sourceTree = "<group>"; };
+		074D97E52BDA43FE00615BFB /* BoardListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BoardListTableViewCell.xib; sourceTree = "<group>"; };
+		074D97E82BDB97DF00615BFB /* SchoolChangeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolChangeViewModel.swift; sourceTree = "<group>"; };
 		0754607B2A7BB633004539F1 /* RegisterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterService.swift; sourceTree = "<group>"; };
 		075FA47E2A8F3AEA002471C7 /* RegisterRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterRequest.swift; sourceTree = "<group>"; };
 		075FA4A42AA06FAB002471C7 /* FindPwRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindPwRequest.swift; sourceTree = "<group>"; };
@@ -369,6 +381,7 @@
 				0717A5462B4FEFA9000E91DA /* FCMService.swift */,
 				07F205E72BB41E6B00B40AEE /* BoardService.swift */,
 				07F8E7622BBE8CA20099D6AB /* NoticeService.swift */,
+				074D97DE2BD78AFE00615BFB /* MyPageService.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -399,6 +412,7 @@
 				07D897602B739409004C84F3 /* ErrorResponse.swift */,
 				07F8E7692BBEA7170099D6AB /* NoticeList.swift */,
 				074D97DC2BD63BF300615BFB /* NotificationRequest.swift */,
+				074D97E22BDA36AA00615BFB /* BoardList.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -421,6 +435,8 @@
 				07D8975C2B738BA5004C84F3 /* BottomSheetViewModel.swift */,
 				07B41BDF2BC54939000302E3 /* MyPageEditViewModel.swift */,
 				07B41BF72BCFD24C000302E3 /* MyPageViewModel.swift */,
+				074D97E02BDA1C5D00615BFB /* LikeBoardViewModel.swift */,
+				074D97E82BDB97DF00615BFB /* SchoolChangeViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -482,6 +498,8 @@
 				07B41BF12BCFC792000302E3 /* NoticeListTableViewCell.swift */,
 				07B41BF22BCFC792000302E3 /* NoticeListTableViewCell.xib */,
 				07B41BF52BCFC829000302E3 /* NoticeDetailViewController.swift */,
+				074D97E42BDA43FE00615BFB /* BoardListTableViewCell.swift */,
+				074D97E52BDA43FE00615BFB /* BoardListTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -606,6 +624,7 @@
 			files = (
 				07B41BEE2BCFBE2F000302E3 /* SchoolChangeRequestTableViewCell.xib in Resources */,
 				0789D0122B73620200040CEB /* GoogleService-Info.plist in Resources */,
+				074D97E72BDA43FE00615BFB /* BoardListTableViewCell.xib in Resources */,
 				07D7E0FA2ADFDA2D0080F31F /* CategoryView.xib in Resources */,
 				07A5A7162AEA3AB000245041 /* BoardImageCollectionViewCell.xib in Resources */,
 				07C8CEB72A8CB56600FBB750 /* SchoolViewCell.xib in Resources */,
@@ -674,6 +693,7 @@
 				073CC30D2AF38F2D00EDD5AA /* AuthManager.swift in Sources */,
 				0787AE372A556F2D00DEFE2A /* RegisterViewModel.swift in Sources */,
 				0787AE272A456E9600DEFE2A /* RegisterViewController.swift in Sources */,
+				074D97E12BDA1C5D00615BFB /* LikeBoardViewModel.swift in Sources */,
 				0787AE2B2A456EAF00DEFE2A /* NotificationViewController.swift in Sources */,
 				07D7E0F82ADFAEE50080F31F /* PopularTableView.swift in Sources */,
 				075FA4AB2AA70199002471C7 /* ChangePwRequest.swift in Sources */,
@@ -729,6 +749,7 @@
 				07C8CEC32A8DF5EE00FBB750 /* FindViewModel.swift in Sources */,
 				0787AE312A456EC900DEFE2A /* WritingBoardViewController.swift in Sources */,
 				07A5A7152AEA3AB000245041 /* BoardImageCollectionViewCell.swift in Sources */,
+				074D97E92BDB97DF00615BFB /* SchoolChangeViewModel.swift in Sources */,
 				0787AE1D2A456E5100DEFE2A /* FindIDResultViewController.swift in Sources */,
 				0787AE232A456E7E00DEFE2A /* RegisterSchoolViewController.swift in Sources */,
 				071F8F2D2AFF95EF0011DBBC /* CommentService.swift in Sources */,
@@ -747,12 +768,15 @@
 				075FA4A92AA0764B002471C7 /* FindPwResponse.swift in Sources */,
 				07E87D6B2B6B8BAA00D5A2D9 /* MemberInfoResponse.swift in Sources */,
 				07C8CEB92A8CB63000FBB750 /* SchoolViewCell.swift in Sources */,
+				074D97E62BDA43FE00615BFB /* BoardListTableViewCell.swift in Sources */,
 				072FFAE02AB9722100A07FA7 /* NationwideCommunityViewController.swift in Sources */,
 				075FA4A52AA06FAB002471C7 /* FindPwRequest.swift in Sources */,
 				0787AE092A3EE96700DEFE2A /* LoginService.swift in Sources */,
 				077F834B2B4EA00D0089571B /* NoticeViewModel.swift in Sources */,
 				0787AE132A40368A00DEFE2A /* MessageTabViewController.swift in Sources */,
+				074D97E32BDA36AA00615BFB /* BoardList.swift in Sources */,
 				07B41BE82BCFAB2C000302E3 /* EditSchoolViewController.swift in Sources */,
+				074D97DF2BD78AFE00615BFB /* MyPageService.swift in Sources */,
 				07F8E7632BBE8CA20099D6AB /* NoticeService.swift in Sources */,
 				07D8975F2B73939C004C84F3 /* AlertStatusViewModel.swift in Sources */,
 				073CC3052AF1062A00EDD5AA /* WritingBoardService.swift in Sources */,
