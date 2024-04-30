@@ -29,7 +29,7 @@ class SchoolDistrictCommunityViewController: UIViewController {
     private lazy var naviTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "자신 학군 넣기"
-        label.font = UIFont.boldSystemFont(ofSize: 25.0)
+        label.font = UIFont.boldSystemFont(ofSize: 18)
         label.textColor = .white
         label.textAlignment = .center
         label.sizeToFit()

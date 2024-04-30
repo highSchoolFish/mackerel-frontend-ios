@@ -10,7 +10,7 @@ import UIKit
 import SwiftUI
 import SafeAreaBrush
 
-class MyPageEditViewController: UIViewController {
+class MyPageEditViewController: UIViewController, UITextFieldDelegate {
     private lazy var navigationBar: UINavigationBar = {
         let naviBar = UINavigationBar()
         naviBar.translatesAutoresizingMaskIntoConstraints = false
@@ -36,7 +36,7 @@ class MyPageEditViewController: UIViewController {
     private lazy var naviTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "프로필 수정"
-        label.font = UIFont.boldSystemFont(ofSize: 15)
+        label.font = UIFont.boldSystemFont(ofSize: 18)
         label.textColor = .white
         label.textAlignment = .center
         label.sizeToFit()
@@ -69,6 +69,8 @@ class MyPageEditViewController: UIViewController {
         textField.borderStyle = .roundedRect
         textField.layer.borderWidth = 1
         textField.frame.size.height = 40
+        textField.addTarget(self, action: #selector(textFieldEditingChanged), for: .editingChanged)
+        textField.addTarget(self, action: #selector(textFieldDidEndEditing), for: .editingDidEnd)
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
@@ -91,8 +93,18 @@ class MyPageEditViewController: UIViewController {
         textField.borderStyle = .roundedRect
         textField.layer.borderWidth = 1
         textField.frame.size.height = 40
+        textField.addTarget(self, action: #selector(textFieldEditingChanged), for: .editingChanged)
+        textField.addTarget(self, action: #selector(textFieldDidEndEditing), for: .editingDidEnd)
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
+    }()
+    
+    private lazy var checkNicknameLabel: UILabel = {
+        let label = UILabel()
+        label.text = ""
+        label.font = UIFont.systemFont(ofSize: 11)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
     
     private lazy var editButton: UIButton = {
@@ -101,6 +113,7 @@ class MyPageEditViewController: UIViewController {
         button.backgroundColor = UIColor(named: "lightGray")
         button.setTitleColor(.white, for: .normal)
         button.setTitle("수정하기", for: .normal)
+        button.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -109,8 +122,9 @@ class MyPageEditViewController: UIViewController {
         super.viewDidLoad()
         configure()
         setAutoLayout()
+        setInfo()
     }
-
+    
     
     private func configure() {
         view.backgroundColor = .white
@@ -122,6 +136,7 @@ class MyPageEditViewController: UIViewController {
         view.addSubview(nicknameEditLabel)
         view.addSubview(nicknameTextField)
         view.addSubview(editButton)
+        view.addSubview(checkNicknameLabel)
     }
     
     private func setAutoLayout() {
@@ -153,13 +168,73 @@ class MyPageEditViewController: UIViewController {
             nicknameTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             nicknameTextField.heightAnchor.constraint(equalToConstant: 40),
             
+            checkNicknameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            checkNicknameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            checkNicknameLabel.topAnchor.constraint(equalTo: nicknameTextField.bottomAnchor, constant: 2),
             
             editButton.heightAnchor.constraint(equalToConstant: 40),
             editButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
             editButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
             editButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50)
-            
         ])
+    }
+    
+    @objc func textFieldDidEndEditing(_ textField: UITextField) {
+        
+    }
+    
+    @objc func textFieldEditingChanged(_ textField: UITextField) {
+        if textField == self.nicknameTextField {
+            MyPageEditViewModel.shared.setNickname(nickname: textField.text ?? "")
+            MyPageEditViewModel.shared.onNicknameCheckResult = { checkNicknameString, nickColor in
+                self.checkNicknameLabel.text = checkNicknameString
+                self.checkNicknameLabel.textColor = nickColor
+                if nickColor == UIColor(named: "blue") {
+                    MyPageEditViewModel.shared.isSameBeforeNickname()
+                    MyPageEditViewModel.shared.nicknameCheckComplete = { result in
+                        // true 버튼 활성화
+                        self.editButton.isEnabled = true
+                        self.editButton.backgroundColor = UIColor(named: "main")
+                    }
+                }
+                else {
+                    self.editButton.isEnabled = false
+                    self.editButton.backgroundColor = UIColor(named: "gray")
+                }
+            }
+        }
+        
+        if textField == self.nameTextField {
+            if textField.text?.count != 0 {
+                MyPageEditViewModel.shared.setName(name: textField.text ?? "")
+                MyPageEditViewModel.shared.isSameBeforeName()
+                MyPageEditViewModel.shared.nameCheckComplete = { result in
+                    if result {
+                        self.editButton.isEnabled = true
+                        self.editButton.backgroundColor = UIColor(named: "main")
+                    }
+                    else {
+                        self.editButton.isEnabled = false
+                        self.editButton.backgroundColor = UIColor(named: "gray")
+                    }
+                }
+            }
+        }
+    }
+    
+    func setInfo() {
+        MemberInfoViewModel.shared.userNameString
+        nameTextField.text = "\(MemberInfoViewModel.shared.userNameString)"
+        nicknameTextField.text = "\(MemberInfoViewModel.shared.userNicknameString)"
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    @objc func editButtonTapped() {
+        MyPageEditViewModel.shared.editButtonTapped()
         
     }
     

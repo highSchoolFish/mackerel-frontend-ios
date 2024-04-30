@@ -41,7 +41,7 @@ class HomeTabViewController: UIViewController {
         var label = UILabel()
         label.text = "고등어"
         label.textColor = .white
-        label.font = UIFont.boldSystemFont(ofSize: 17)
+        label.font = UIFont.boldSystemFont(ofSize: 18)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()

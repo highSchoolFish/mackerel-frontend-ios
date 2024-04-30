@@ -22,6 +22,7 @@ class MyPageViewModel {
             
         }
         if let fcmToken = try? KeyChain.shared.read("fcmTokenService", account: "fcmToken") {
+            print("fcmToken : /(fcmToken)")
             let provider = MoyaProvider<FCMService>(session: Session(interceptor: AuthManager()))
             provider.request(FCMService.notificationSetting(params: NotificationRequest(isOn: isOn, token: fcmToken))) { result in
                 

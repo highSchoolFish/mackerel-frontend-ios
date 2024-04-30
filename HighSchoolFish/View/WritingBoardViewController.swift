@@ -17,7 +17,7 @@ class WritingBoardViewController: UIViewController, UIImagePickerControllerDeleg
         var label = UILabel()
         label.text = "게시판 글쓰기"
         label.textColor = .black
-        label.font = UIFont.boldSystemFont(ofSize: 17)
+        label.font = UIFont.boldSystemFont(ofSize: 18)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()

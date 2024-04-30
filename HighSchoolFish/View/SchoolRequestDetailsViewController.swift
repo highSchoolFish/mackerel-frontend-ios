@@ -35,7 +35,7 @@ class SchoolRequestDetailsViewController: UIViewController {
     private lazy var naviTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "학교 변경 신청 내역"
-        label.font = UIFont.boldSystemFont(ofSize: 15)
+        label.font = UIFont.boldSystemFont(ofSize: 18)
         label.textColor = .white
         label.textAlignment = .center
         label.sizeToFit()

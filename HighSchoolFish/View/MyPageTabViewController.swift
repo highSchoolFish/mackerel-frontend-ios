@@ -31,7 +31,7 @@ class MyPageTabViewController: UIViewController {
     private lazy var naviTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "마이페이지"
-        label.font = UIFont.boldSystemFont(ofSize: 15)
+        label.font = UIFont.boldSystemFont(ofSize: 18)
         label.textColor = .white
         label.textAlignment = .center
         label.sizeToFit()

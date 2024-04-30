@@ -15,12 +15,17 @@ class SchoolChangeViewModel {
     private var schoolIdString: String = ""
     private var schoolNameString: String = ""
     private var gradeString: String = ""
-    
+    var buttonCheck: Bool = false
     var onSchoolResult: (([School]) -> Void)?
     var onChangeSchoolComplete: ((Bool) -> Void)?
+    var filledComplete: ((Bool) -> Void)?
     
     func setGrade(_ gradeString: String) {
         self.gradeString = gradeString
+    }
+    
+    func setButtonCheck(_ buttonCheck: Bool) {
+        self.buttonCheck = buttonCheck
     }
     
     func setSchoolName(_ schoolName: String) {
@@ -76,13 +81,27 @@ class SchoolChangeViewModel {
         //        var alert = HttpStatusClass().HttpStatusExceptionAlert(from: error.response!)
     }
     
+    func checkFilled() {
+        if schoolNameString != "" && imageData != nil && buttonCheck == true {
+            DispatchQueue.main.async {
+                self.filledComplete?(true)
+            }
+        }
+    }
+    
     func schoolChangeButtonTapped() {
         let provider = MoyaProvider<MyPageService>(session: Session(interceptor: AuthManager()))
         provider.request(MyPageService.changeSchool(grade: self.gradeString, schoolId: self.schoolIdString, photo: self.imageData! as Data)) { result in
             switch result {
             case .success(let response):
                 print("통신성공")
-                self.onChangeSchoolComplete?(true)
+                print("response \(response.response)")
+                if response.response!.statusCode >= 400 {
+                    self.onChangeSchoolComplete?(false)
+                }
+                else {
+                    self.onChangeSchoolComplete?(true)
+                }
             case .failure(let error):
                 print("통신실패")
                 print(error.errorCode)

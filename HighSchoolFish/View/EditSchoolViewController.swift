@@ -36,7 +36,7 @@ class EditSchoolViewController: UIViewController, UITextFieldDelegate, UINavigat
     private lazy var naviTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "학교 변경"
-        label.font = UIFont.boldSystemFont(ofSize: 15)
+        label.font = UIFont.boldSystemFont(ofSize: 18)
         label.textColor = .white
         label.textAlignment = .center
         label.sizeToFit()
@@ -206,7 +206,7 @@ class EditSchoolViewController: UIViewController, UITextFieldDelegate, UINavigat
     var imagePickerController = UIImagePickerController()
     var userImage: UIImage = UIImage.add
     var imageData : NSData? = nil
-    var buttonChecked: Bool = false
+//    var buttonChecked: Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
@@ -312,7 +312,7 @@ class EditSchoolViewController: UIViewController, UITextFieldDelegate, UINavigat
     
     @objc func firstButtonTapped(_ sender: UIButton) {
         print("first button tapped")
-        buttonChecked = true
+        SchoolChangeViewModel.shared.setButtonCheck(true)
         firstGradeButton.isSelected = true
         if firstGradeButton.isSelected == true {
             print("first \(firstGradeButton.isSelected)")
@@ -331,11 +331,12 @@ class EditSchoolViewController: UIViewController, UITextFieldDelegate, UINavigat
             print("third \(thirdGradeButton.isSelected)")
             firstGradeButton.isSelected = true
         }
+        checkFilled()
     }
     
     @objc func secondButtonTapped(_ sender: UIButton) {
         print("second button tapped")
-        buttonChecked = true
+        SchoolChangeViewModel.shared.setButtonCheck(true)
         secondGradeButton.isSelected = true
         if secondGradeButton.isSelected == true {
             print("first \(firstGradeButton.isSelected)")
@@ -353,11 +354,12 @@ class EditSchoolViewController: UIViewController, UITextFieldDelegate, UINavigat
             print("third \(thirdGradeButton.isSelected)")
             secondGradeButton.isSelected = true
         }
+        checkFilled()
     }
     
     @objc func thirdButtonTapped(_ sender: UIButton) {
         print("third button tapped")
-        buttonChecked = true
+        SchoolChangeViewModel.shared.setButtonCheck(true)
         thirdGradeButton.isSelected = true
         if thirdGradeButton.isSelected == true {
             print("first \(firstGradeButton.isSelected)")
@@ -375,21 +377,28 @@ class EditSchoolViewController: UIViewController, UITextFieldDelegate, UINavigat
             print("third \(thirdGradeButton.isSelected)")
             thirdGradeButton.isSelected = true
         }
+        checkFilled()
     }
     
     @objc func editButtonTapped() {
-        if schoolNameTextField.text != "" && imageData !=  nil && buttonChecked == true {
-            self.editButton.isEnabled = true
-            self.editButton.backgroundColor = UIColor(named: "main")
             SchoolChangeViewModel.shared.schoolChangeButtonTapped()
             SchoolChangeViewModel.shared.onChangeSchoolComplete = { result in
                 // 화면 back
                 self.dismiss(animated: true, completion: nil)
             }
-        }
-        else {
-            self.editButton.isEnabled = false
-            self.editButton.backgroundColor = UIColor(named: "lightGray")
+    }
+    
+    func checkFilled() {
+        SchoolChangeViewModel.shared.checkFilled()
+        SchoolChangeViewModel.shared.filledComplete = { result in
+            if result {
+                self.editButton.isEnabled = true
+                self.editButton.backgroundColor = UIColor(named: "main")
+            }
+            else {
+                self.editButton.isEnabled = false
+                self.editButton.backgroundColor = UIColor(named: "gray")
+            }
         }
     }
     
@@ -475,6 +484,7 @@ extension EditSchoolViewController: UIImagePickerControllerDelegate {
         //화질 떨어트리기
         imageData = userImage.jpegData(compressionQuality: 0.7) as NSData?
         SchoolChangeViewModel.shared.imageData = imageData
+        checkFilled()
     }
 }
 
@@ -511,5 +521,6 @@ extension EditSchoolViewController: UITableViewDelegate, UITableViewDataSource {
         schoolTableView.isHidden = true
         SchoolChangeViewModel.shared.setSchoolName(schools[indexPath.item].schoolName)
         SchoolChangeViewModel.shared.setSchoolId(schools[indexPath.item].schoolId)
+        checkFilled()
     }
 }

@@ -36,7 +36,7 @@ class LikeBoardViewController: UIViewController {
     private lazy var naviTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "관심 게시판"
-        label.font = UIFont.boldSystemFont(ofSize: 15)
+        label.font = UIFont.boldSystemFont(ofSize: 18)
         label.textColor = .white
         label.textAlignment = .center
         label.sizeToFit()
@@ -114,6 +114,8 @@ class LikeBoardViewController: UIViewController {
         super.viewDidLoad()
         configure()
         setAutoLayout()
+        
+        setBoardsInit()
     }
     
     private func configure() {
@@ -125,10 +127,8 @@ class LikeBoardViewController: UIViewController {
         view.addSubview(lineView)
         view.addSubview(nothingLabel)
         
-        
         tableView.dataSource = self
         tableView.delegate = self
-        
     }
     
     private func setAutoLayout() {
@@ -153,9 +153,16 @@ class LikeBoardViewController: UIViewController {
             lineView.heightAnchor.constraint(equalToConstant: 1),
             
             nothingLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            nothingLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            
+            nothingLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
+    }
+    
+    func setBoardsInit() {
+        LikeBoardViewModel.shared.getLikeBoard(boardType: "SCHOOL")
+        LikeBoardViewModel.shared.onBoardsResult = { result in
+            self.boards = result.data.content
+            self.tableView.reloadData()
+        }
     }
     
     @objc private func changeSegmentedControl(sender: UISegmentedControl) {
@@ -166,7 +173,6 @@ class LikeBoardViewController: UIViewController {
                 self.boards = result.data.content
                 self.tableView.reloadData()
             }
-            
         }
         else if sender.selectedSegmentIndex == 1 {
             // 학군 게시판

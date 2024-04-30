@@ -34,7 +34,7 @@ class NoticeDetailViewController: UIViewController {
     private lazy var naviTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "공지사항"
-        label.font = UIFont.boldSystemFont(ofSize: 15)
+        label.font = UIFont.boldSystemFont(ofSize: 18)
         label.textColor = .white
         label.textAlignment = .center
         label.sizeToFit()
@@ -63,7 +63,7 @@ class NoticeDetailViewController: UIViewController {
     
     private lazy var noticeTitleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 18)
+        label.font = UIFont.systemFont(ofSize: 16)
         label.numberOfLines = 2
         label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -72,7 +72,7 @@ class NoticeDetailViewController: UIViewController {
     
     private lazy var noticeDateLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.font = UIFont.systemFont(ofSize: 13)
         label.textColor = .gray
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -88,7 +88,7 @@ class NoticeDetailViewController: UIViewController {
     
     private lazy var contentLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = .black
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false

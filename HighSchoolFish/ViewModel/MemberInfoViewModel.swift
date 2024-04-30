@@ -81,18 +81,13 @@ class MemberInfoViewModel {
                     print("Name: \(memberInfoResponse.data.name)")
                     
 //                    self.setUserProfile(memberInfoResponse?.data.profile)
-                    self.setUserSchoolName(memberInfoResponse.data.schoolName)
-                    self.setUserGrade(memberInfoResponse.data.grade)
-                    self.setUserName(memberInfoResponse.data.name)
-                    self.setUserNickname(memberInfoResponse.data.nickname)
                     
-                    
-                    //                        if let profile = memberInfoResponse.data.profile {
-                    //                            print("Profile: \(profile)")
-                    //                        } else {
-                    //                            print("Profile: nil")
-                    //                        }
-                    // 기타 필요한 데이터 출력
+                    DispatchQueue.main.async {
+                        self.setUserSchoolName(memberInfoResponse.data.schoolName)
+                        self.setUserGrade(memberInfoResponse.data.grade)
+                        self.setUserName(memberInfoResponse.data.name)
+                        self.setUserNickname(memberInfoResponse.data.nickname)
+                    }
                 } catch {
                     print("Parsing Error: \(error)")
                 }
