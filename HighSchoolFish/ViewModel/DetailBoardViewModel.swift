@@ -362,10 +362,18 @@ class DetailBoardViewModel {
                 print("통신성공")
                 let data = response
                 print("like response \(data)")
-                
                 do {
-                    DispatchQueue.main.async {
-                        self.onCompleteLike?(true)
+                    if data.statusCode >= 400{
+                        // 실패
+                        DispatchQueue.main.async {
+                            self.onCompleteLike?(false)
+                        }
+                    }
+                    else {
+                        DispatchQueue.main.async {
+                            // 좋아요 취소 UI
+                            self.onCompleteLike?(true)
+                        }
                     }
                 }
                 catch(let err) {
@@ -394,10 +402,17 @@ class DetailBoardViewModel {
                 let data = response
                 print("disLike response \(data)")
                 do {
-                    DispatchQueue.main.async {
-                        // 좋아요 취소
-                        self.onCompleteDisLike?(true)
-                        
+                    if data.statusCode >= 400{
+                        // 실패
+                        DispatchQueue.main.async {
+                            self.onCompleteDisLike?(false)
+                        }
+                    }
+                    else {
+                        DispatchQueue.main.async {
+                            // 좋아요 취소 UI
+                            self.onCompleteDisLike?(true)
+                        }
                     }
                 }
                 catch(let err){

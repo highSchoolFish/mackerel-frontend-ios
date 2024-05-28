@@ -33,13 +33,18 @@ class CommentTableViewCell: UITableViewCell {
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-//        if selected {
-//            // 셀이 선택되었을 때의 동작
-//        } else {
-//            // 셀이 선택 해제되었을 때의 동작
-//            self.contentView.backgroundColor = UIColor.white
-//        }
+        //        if selected {
+        //            // 셀이 선택되었을 때의 동작
+        //        } else {
+        //            // 셀이 선택 해제되었을 때의 동작
+        //            self.contentView.backgroundColor = UIColor.white
+        //        }
         // Configure the view for the selected state
+    }
+    
+    override func prepareForReuse() {
+        likeButton.tintColor = nil
+        likeCountLabel.text = nil
     }
     
     func commentWriteConfigure(section: Int, buttonAction: @escaping () -> Void) {
@@ -62,20 +67,17 @@ class CommentTableViewCell: UITableViewCell {
     }
     
     func swipeConfigure(indexPath: IndexPath, swipeAction: @escaping () -> Void) {
-        
         self.section = indexPath.section
         self.swipeAction = swipeAction
         let swipeGestrue = UISwipeGestureRecognizer(target: self, action: #selector(deleteChildCommentGesture))
         swipeGestrue.direction = .left
-        
         self.addGestureRecognizer(swipeGestrue)
-        
-        let initCommentGesture = UISwipeGestureRecognizer(target: self, action: #selector(initCommentGestrue))
+        let initCommentGesture = UISwipeGestureRecognizer(target: self, action: #selector(initCommentGesture))
         initCommentGesture.direction = .right
         self.addGestureRecognizer(initCommentGesture)
     }
     
-    @objc private func initCommentGestrue() {
+    @objc func initCommentGesture() {
         if self.deleteButtonView.isHidden == false {
             self.deleteButtonView.alpha = 1
             self.deleteButtonView.isHidden = true
@@ -91,8 +93,6 @@ class CommentTableViewCell: UITableViewCell {
                 
             })
         }
-        
-        
     }
     
     @objc private func deleteChildCommentGesture() {
@@ -128,7 +128,7 @@ class CommentTableViewCell: UITableViewCell {
     }
     
     @objc private func likeButtonTapped() {
-        print("like Button Tapped")
+        print("cell Button Tapped")
         likeButtonAction?()
     }
     
@@ -151,13 +151,13 @@ class CommentTableViewCell: UITableViewCell {
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS" // 분수초를 포함한 날짜 형식 지정
         formatter.locale = Locale(identifier: "en_US_POSIX") // 24시간제 지정
         formatter.timeZone = TimeZone.current //
-
+        
         if let date = formatter.date(from: givenTimeString) {
             // 현재 날짜와 주어진 날짜의 차이 계산
             print("date \(date)")
             let now = Date()
             let calendar = Calendar.current
-
+            
             // 날짜 차이 계산
             let components = calendar.dateComponents([.day, .hour, .minute], from: date, to: now)
             
@@ -173,16 +173,16 @@ class CommentTableViewCell: UITableViewCell {
         } else {
             print("날짜 형식이 잘못되었습니다.")
         }
-
+        
         self.timeLabel.text = timeLabelText
         
-        //        if comment.isLike == false {
-        //            // 좋아요 안눌려있음
-        //            likeButton.tintColor = UIColor(named: "gray")
-        //        }
-        //        else {
-        //            likeButton.tintColor = UIColor(named: "red")
-        //        }
+        if comment.isLike == false {
+            // 좋아요 안눌려있음
+            likeButton.tintColor = UIColor(named: "gray")
+        }
+        else {
+            likeButton.tintColor = UIColor(named: "red")
+        }
         
         //        if comment.isWriter {
         //            // 본인이 단 댓글

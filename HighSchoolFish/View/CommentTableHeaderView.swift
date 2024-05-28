@@ -70,7 +70,7 @@ class CommentTableHeaderView: UITableViewHeaderFooterView {
         
         self.addGestureRecognizer(swipeGestrue)
         
-        let initCommentGesture = UISwipeGestureRecognizer(target: self, action: #selector(initCommentGestrue))
+        let initCommentGesture = UISwipeGestureRecognizer(target: self, action: #selector(initCommentGesture))
         initCommentGesture.direction = .right
         self.addGestureRecognizer(initCommentGesture)
     }
@@ -87,7 +87,7 @@ class CommentTableHeaderView: UITableViewHeaderFooterView {
         
     }
     
-    @objc private func initCommentGestrue() {
+    @objc func initCommentGesture() {
         if self.deleteButtonView.isHidden == false {
             self.deleteButtonView.alpha = 1
             self.deleteButtonView.isHidden = true
