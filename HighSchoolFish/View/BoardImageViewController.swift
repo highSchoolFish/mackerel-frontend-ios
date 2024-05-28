@@ -47,6 +47,8 @@ class BoardImageViewController: UIViewController {
         super.viewDidLoad()
         configure()
         setAutoLayout()
+        
+        setImageViewSwipe()
     }
     
     private func configure() {
@@ -79,6 +81,35 @@ class BoardImageViewController: UIViewController {
             pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             pageControl.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 50)
         ])
+    }
+    
+    func setImageViewSwipe() {
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(BoardImageViewController.respondToSwipeGesture(_ :)))
+        swipeLeft.direction = UISwipeGestureRecognizer.Direction.left
+        self.view.addGestureRecognizer(swipeLeft)
+        
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(BoardImageViewController.respondToSwipeGesture(_ :)))
+        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
+        self.view.addGestureRecognizer(swipeRight)
+    }
+    
+    @objc func respondToSwipeGesture(_ gesture: UIGestureRecognizer) {
+        if let swipeGesture = gesture as? UISwipeGestureRecognizer {
+            switch swipeGesture.direction {
+            case UISwipeGestureRecognizer.Direction.left:
+                if (pageControl.currentPage<pageControl.numberOfPages-1) {
+                    pageControl.currentPage = pageControl.currentPage + 1
+                }
+            case UISwipeGestureRecognizer.Direction.right:
+                if (pageControl.currentPage>0) {
+                    pageControl.currentPage = pageControl.currentPage - 1
+                }
+            default: break
+            }
+        }        
+        let url = URL(string: images[pageControl.currentPage])
+        self.imageView.kf.setImage(with: url)
+        
     }
     
     @objc func closeButtonTapped() {
