@@ -67,6 +67,7 @@ class NoticeListViewController: UIViewController {
     private func configure() {
         view.addSubview(navigationBar)
         view.addSubview(noticeTableView)
+        NoticeViewModel.shared.setIsRecentNoticeDetail(false)
     }
     
     private func setAutoLayout() {

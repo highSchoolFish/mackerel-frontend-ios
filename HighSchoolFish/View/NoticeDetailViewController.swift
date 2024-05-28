@@ -108,10 +108,18 @@ class NoticeDetailViewController: UIViewController {
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         view.backgroundColor = .white
-        NoticeViewModel.shared.getNoticeDetailResult = { result in
-            self.setDetailNotice(notice: result)
+        if NoticeViewModel.shared.isRecentNoticeDetail {
+            NoticeViewModel.shared.getRecentNoticeResult = { recentResult in
+                self.setDetailNotice(notice: recentResult)
+            }
+        }
+        else {
+            NoticeViewModel.shared.getNoticeDetailResult = { result in
+                self.setDetailNotice(notice: result)
+            }
         }
     }
+    
     
     private func setAutoLayout() {
         NSLayoutConstraint.activate([
@@ -185,7 +193,7 @@ class NoticeDetailViewController: UIViewController {
         }
         
         self.noticeDateLabel.text = timeLabelText
-
+        
     }
     
     @objc private func backButtonTapped() {

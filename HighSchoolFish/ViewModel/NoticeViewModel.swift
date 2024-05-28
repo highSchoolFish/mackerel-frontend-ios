@@ -14,10 +14,15 @@ class NoticeViewModel {
     private var createTimeString: String = ""
     private var noticeContextString: String = ""
     private var noticeIdString: String = ""
-    var getNoticeResult: ((Notice) -> Void)?
+    var getRecentNoticeResult: ((Notice) -> Void)?
     var getNoticeListResult: ((NoticeList) -> Void)?
     var getNoticeDetailResult: ((Notice) -> Void)?
     var getNoticeDetailComplete: ((Bool) -> Void)?
+    var isRecentNoticeDetail: Bool = false
+    
+    func setIsRecentNoticeDetail(_ isRecent: Bool) {
+        isRecentNoticeDetail = isRecent
+    }
     
     func setNoticeTitleString(_ title: String) {
         noticeTitleString = title
@@ -33,6 +38,7 @@ class NoticeViewModel {
     
     func setNoticeIdString(_ id: String) {
         noticeIdString = id
+        print("id \(id)")
     }
     
     func getRecentNotice() {
@@ -51,7 +57,7 @@ class NoticeViewModel {
                     print("notice Response \(noticeResponse)")
                     
                     DispatchQueue.main.async {
-                        self.getNoticeResult?(noticeResponse)
+                        self.getRecentNoticeResult?(noticeResponse)
                     }
                 }
                 catch(let err) {

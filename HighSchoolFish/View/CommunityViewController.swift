@@ -69,7 +69,8 @@ class CommunityViewController: UIViewController {
         view.layer.shadowOpacity = 1 // alpha값
         view.layer.masksToBounds = false
         view.translatesAutoresizingMaskIntoConstraints = false
-        
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(noticeViewTapped))
+        view.addGestureRecognizer(gesture)
         return view
     }()
     
@@ -113,6 +114,7 @@ class CommunityViewController: UIViewController {
         tableView.dataSource = self
         tableView.register(UINib(nibName: "CommunityTableViewCell", bundle: nil), forCellReuseIdentifier: "CommunityTableViewCell")
         tableView.backgroundColor = .white
+        tableView.separatorInset.left = 0
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
@@ -155,7 +157,7 @@ class CommunityViewController: UIViewController {
         super.viewWillAppear(animated)
         print("viewWillAppear")
         boards.removeAll()
-
+        
         CommunityViewModel.shared.getCategory()
         CommunityViewModel.shared.onBoardsResult = { resultArray in
             print("in CommunityVC arr count ", resultArray.count)
@@ -165,8 +167,9 @@ class CommunityViewController: UIViewController {
         }
         
         NoticeViewModel.shared.getRecentNotice()
-        NoticeViewModel.shared.getNoticeResult = { result in
+        NoticeViewModel.shared.getRecentNoticeResult = { result in
             print("noticeViewModel complete")
+            
             self.noticeTitleLabel.text = result.data.title
             self.noticeSubTitleLabel.text = result.data.context
             
@@ -176,13 +179,13 @@ class CommunityViewController: UIViewController {
             formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS" // 분수초를 포함한 날짜 형식 지정
             formatter.locale = Locale(identifier: "en_US_POSIX") // 24시간제 지정
             formatter.timeZone = TimeZone.current //
-
+            
             if let date = formatter.date(from: givenTimeString) {
                 // 현재 날짜와 주어진 날짜의 차이 계산
                 print("date \(date)")
                 let now = Date()
                 let calendar = Calendar.current
-
+                
                 // 날짜 차이 계산
                 let components = calendar.dateComponents([.day, .hour, .minute], from: date, to: now)
                 
@@ -198,7 +201,7 @@ class CommunityViewController: UIViewController {
             } else {
                 print("날짜 형식이 잘못되었습니다.")
             }
-
+            
             self.noticeDateLabel.text = timeLabelText
         }
     }
@@ -258,6 +261,14 @@ class CommunityViewController: UIViewController {
         ])
     }
     
+    @objc private func noticeViewTapped() {
+        NoticeViewModel.shared.getRecentNotice()
+        NoticeViewModel.shared.setIsRecentNoticeDetail(true)
+        let vc = NoticeDetailViewController()
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true)
+    }
+    
     @objc private func writingButtonTapped() {
         
         let vc = WritingBoardViewController()
@@ -309,7 +320,7 @@ extension CommunityViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-//        print("boards : \(boards)")
+        //        print("boards : \(boards)")
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "CommunityTableViewCell", for: indexPath)as? CommunityTableViewCell else{
             print("cell error")
             return .init()
@@ -336,7 +347,7 @@ extension CommunityViewController: UITableViewDelegate, UITableViewDataSource {
                 let vc = DetailBoardViewController()
                 vc.modalPresentationStyle = .fullScreen
                 self.present(vc, animated: true)
-//                self.presentToDetailBoardViewController()
+                //                self.presentToDetailBoardViewController()
             }
             else {
                 // boardId 없거나 init 실패?
