@@ -37,7 +37,7 @@ class MyPageEditViewModel {
     }
     
     func nicknameTextFieldTyped() {
-        let minCount = 2
+        let minCount = 4
         let maxCount = 12
         let count = nicknameString.count
         

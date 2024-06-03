@@ -102,8 +102,11 @@ class LikeBoardViewController: UIViewController {
         return label
     }()
     
-    private lazy var tableView: UITableView = {
+    private lazy var likeBoardTableView: UITableView = {
         let tableView = UITableView()
+        tableView.register(UINib(nibName: "BoardListTableViewCell", bundle: nil), forCellReuseIdentifier: "BoardListTableViewCell")
+        tableView.dataSource = self
+        tableView.delegate = self
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
@@ -126,9 +129,9 @@ class LikeBoardViewController: UIViewController {
         containerView.addSubview(segmentControl)
         view.addSubview(lineView)
         view.addSubview(nothingLabel)
-        
-        tableView.dataSource = self
-        tableView.delegate = self
+        view.addSubview(likeBoardTableView)
+        likeBoardTableView.dataSource = self
+        likeBoardTableView.delegate = self
     }
     
     private func setAutoLayout() {
@@ -153,15 +156,28 @@ class LikeBoardViewController: UIViewController {
             lineView.heightAnchor.constraint(equalToConstant: 1),
             
             nothingLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            nothingLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            nothingLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            likeBoardTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            likeBoardTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            likeBoardTableView.topAnchor.constraint(equalTo: segmentControl.bottomAnchor, constant: 10),
+            likeBoardTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20)
         ])
     }
     
     func setBoardsInit() {
         LikeBoardViewModel.shared.getLikeBoard(boardType: "SCHOOL")
         LikeBoardViewModel.shared.onBoardsResult = { result in
-            self.boards = result.data.content
-            self.tableView.reloadData()
+            if result.data.totalElements != 0 {
+                self.likeBoardTableView.isHidden = false
+                self.nothingLabel.isHidden = true
+                self.boards = result.data.content
+                self.likeBoardTableView.reloadData()
+            }
+            else {
+                self.likeBoardTableView.isHidden = true
+                self.nothingLabel.isHidden = false
+            }
         }
     }
     
@@ -170,24 +186,48 @@ class LikeBoardViewController: UIViewController {
             // 학교 게시판
             LikeBoardViewModel.shared.getLikeBoard(boardType: "SCHOOL")
             LikeBoardViewModel.shared.onBoardsResult = { result in
-                self.boards = result.data.content
-                self.tableView.reloadData()
+                if result.data.totalElements != 0 {
+                    self.likeBoardTableView.isHidden = false
+                    self.nothingLabel.isHidden = true
+                    self.boards = result.data.content
+                    self.likeBoardTableView.reloadData()
+                }
+                else {
+                    self.likeBoardTableView.isHidden = true
+                    self.nothingLabel.isHidden = false
+                }
             }
         }
         else if sender.selectedSegmentIndex == 1 {
             // 학군 게시판
             LikeBoardViewModel.shared.getLikeBoard(boardType: "SCHOOL_DISTRICT")
             LikeBoardViewModel.shared.onBoardsResult = { result in
-                self.boards = result.data.content
-                self.tableView.reloadData()
+                if result.data.totalElements != 0 {
+                    self.likeBoardTableView.isHidden = false
+                    self.nothingLabel.isHidden = true
+                    self.boards = result.data.content
+                    self.likeBoardTableView.reloadData()
+                }
+                else {
+                    self.likeBoardTableView.isHidden = true
+                    self.nothingLabel.isHidden = false
+                }
             }
         }
         else if sender.selectedSegmentIndex == 2 {
             // 전국 게시판
             LikeBoardViewModel.shared.getLikeBoard(boardType: "NATIONAL")
             LikeBoardViewModel.shared.onBoardsResult = { result in
-                self.boards = result.data.content
-                self.tableView.reloadData()
+                if result.data.totalElements != 0 {
+                    self.likeBoardTableView.isHidden = false
+                    self.nothingLabel.isHidden = true
+                    self.boards = result.data.content
+                    self.likeBoardTableView.reloadData()
+                }
+                else {
+                    self.likeBoardTableView.isHidden = true
+                    self.nothingLabel.isHidden = false
+                }
             }
         }
     }

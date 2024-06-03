@@ -54,7 +54,6 @@ class MyBoardViewController: UIViewController {
     private lazy var segmentControl: UISegmentedControl = {
         let segment = UISegmentedControl()
         
-        
         segment.selectedSegmentTintColor = .clear
         
         // 배경 색 제거
@@ -102,12 +101,16 @@ class MyBoardViewController: UIViewController {
         return label
     }()
     
-    private lazy var tableView: UITableView = {
+    private lazy var myBoardTableView: UITableView = {
         let tableView = UITableView()
+        tableView.register(UINib(nibName: "BoardListTableViewCell", bundle: nil), forCellReuseIdentifier: "BoardListTableViewCell")
+        tableView.dataSource = self
+        tableView.delegate = self
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
     
+    var boards: [BoardContent] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -123,8 +126,8 @@ class MyBoardViewController: UIViewController {
         containerView.addSubview(segmentControl)
         view.addSubview(lineView)
         view.addSubview(nothingLabel)
-        
-        
+        view.addSubview(myBoardTableView)
+        initSchoolBoard()
     }
     
     private func setAutoLayout() {
@@ -151,24 +154,123 @@ class MyBoardViewController: UIViewController {
             nothingLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             nothingLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
+            myBoardTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            myBoardTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            myBoardTableView.topAnchor.constraint(equalTo: segmentControl.bottomAnchor, constant: 10),
+            myBoardTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20)
+            
         ])
     }
     
+    private func initSchoolBoard() {
+        MyBoardViewModel.shared.getMyBoard(boardType: "SCHOOL")
+        MyBoardViewModel.shared.onBoardsResult = { result in
+            if result.data.totalElements != 0 {
+                self.myBoardTableView.isHidden = false
+                self.nothingLabel.isHidden = true
+                self.boards = result.data.content
+                self.myBoardTableView.reloadData()
+            }
+            else {
+                self.myBoardTableView.isHidden = true
+                self.nothingLabel.isHidden = false
+            }
+        }
+    }
     
     @objc private func changeSegmentedControl(sender: UISegmentedControl) {
         if sender.selectedSegmentIndex == 0 {
             // 학교 게시판
+            MyBoardViewModel.shared.getMyBoard(boardType: "SCHOOL")
+            MyBoardViewModel.shared.onBoardsResult = { result in
+                if result.data.totalElements != 0 {
+                    self.myBoardTableView.isHidden = false
+                    self.nothingLabel.isHidden = true
+                    self.boards = result.data.content
+                    self.myBoardTableView.reloadData()
+                }
+                else {
+                    self.myBoardTableView.isHidden = true
+                    self.nothingLabel.isHidden = false
+                }
+            }
         }
         else if sender.selectedSegmentIndex == 1 {
             // 학군 게시판
+            MyBoardViewModel.shared.getMyBoard(boardType: "SCHOOL_DISTRICT")
+            MyBoardViewModel.shared.onBoardsResult = { result in
+                if result.data.totalElements != 0 {
+                    self.myBoardTableView.isHidden = false
+                    self.nothingLabel.isHidden = true
+                    self.boards = result.data.content
+                    self.myBoardTableView.reloadData()
+                }
+                else {
+                    self.myBoardTableView.isHidden = true
+                    self.nothingLabel.isHidden = false
+                }
+            }
         }
         else if sender.selectedSegmentIndex == 2 {
             // 전국 게시판
+            MyBoardViewModel.shared.getMyBoard(boardType: "NATIONAL")
+            MyBoardViewModel.shared.onBoardsResult = { result in
+                if result.data.totalElements != 0 {
+                    self.myBoardTableView.isHidden = false
+                    self.nothingLabel.isHidden = true
+                    self.boards = result.data.content
+                    self.myBoardTableView.reloadData()
+                }
+                else {
+                    self.myBoardTableView.isHidden = true
+                    self.nothingLabel.isHidden = false
+                }
+            }
         }
     }
     
-    
     @objc private func backButtonTapped() {
         dismiss(animated: true, completion: nil)
+    }
+}
+
+extension MyBoardViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("boards.count \(boards.count)")
+        return boards.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "BoardListTableViewCell", for: indexPath)as? BoardListTableViewCell else{
+            print("cell error")
+            return .init()
+        }
+        cell.selectionStyle = .none
+        cell.generateCell(board: boards[indexPath.item])
+        
+        print("print cell index \(cell.index)")
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("선택 : \(indexPath)")
+        print("boardId : \(boards[indexPath.item].boardId)")
+        // 선택 후 setBoardId 호출
+//        DetailBoardViewModel.shared.setBoardId(boards[indexPath.item].boardId)
+//
+//        DetailBoardViewModel.shared.getBoardComplete = { result in
+//            if result == true {
+//                print("result true")
+//                // board 호출 성공
+//                // vc 전환
+//                let vc = DetailBoardViewController()
+//                vc.modalPresentationStyle = .fullScreen
+//                self.present(vc, animated: true)
+//            }
+//            else {
+//
+//            }
+//        }
     }
 }

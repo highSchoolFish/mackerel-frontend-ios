@@ -9,8 +9,9 @@ import Foundation
 import Moya
 
 enum MyPageService {
-    case likeBoard(type: String, page: Int, size: Int)
+    case likeBoard(type: String, page: Int, size: Int, sort: [String])
     case changeSchool(grade: String, schoolId: String, photo: Data)
+    case myBoard(type: String, page: Int, size: Int, sort: [String])
 }
 
 extension MyPageService: TargetType {
@@ -20,10 +21,12 @@ extension MyPageService: TargetType {
     
     var path: String {
         switch self {
-        case .likeBoard(let type, let page, let size):
+        case .likeBoard(let type, _, _, _):
             return "/api/v1/boards/type/\(type)/likes"
         case .changeSchool:
             return "/api/v1/members/school-change"
+        case .myBoard(let type, _, _, _):
+            return "/api/v1/boards/type/\(type)/written"
         }
     }
     
@@ -33,23 +36,25 @@ extension MyPageService: TargetType {
             return .get
         case .changeSchool:
             return .post
+        case .myBoard:
+            return .get
         }
     }
     
     var sampleData: Data {
         switch self {
-        case .likeBoard, .changeSchool:
+        case .likeBoard, .changeSchool, .myBoard:
             return "@@".data(using: .utf8)!
         }
     }
     
     var task: Task {
         switch self {
-        case .likeBoard(type: let type, page: let page, size: let size):
+        case .likeBoard(type: let type, page: let page, size: let size, sort: let sort):
             let parameters: [String: Any] = [
-                "type": type,
                 "page": page,
-                "size": size
+                "size": size,
+                "sort": ["createdAt,DESC"]
             ]
             return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString
             )
@@ -64,13 +69,22 @@ extension MyPageService: TargetType {
             formData.append(Moya.MultipartFormData(provider: .data(schoolData!), name: "requestDto", mimeType: "application/json"))
 
             return .uploadMultipart(formData)
+        case .myBoard(type: let type, page: let page, size: let size, sort: let sort):
+            let parameters: [String: Any] = [
+                "page": page,
+                "size": size,
+                "sort": ["createdAt,DESC"]
+            ]
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
         }
     }
     
     var headers: [String: String]? {
         switch self {
-        case .likeBoard, .changeSchool:
+        case .changeSchool:
             return ["Content-Type" : "multipart/form-data"]
+        case .likeBoard, .myBoard:
+            return ["Content-type": "application/json"]
         }
     }
 }

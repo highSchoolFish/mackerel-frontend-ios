@@ -182,6 +182,7 @@ class MySchoolCommunityViewController: UIViewController {
         view.addSubview(categoryView)
         view.addSubview(popularCommunityView)
         
+        naviTitleLabel.text = "\(MemberInfoViewModel.shared.userSchoolNameString)"
     }
     
     private func setShadow() {
