@@ -6,7 +6,8 @@
 //
 
 import UIKit
+import Foundation
 
-class MessageViewModel: NSObject {
+class MessageViewModel {
 
 }

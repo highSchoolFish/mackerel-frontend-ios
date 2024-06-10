@@ -112,6 +112,12 @@ class MyBoardViewController: UIViewController {
     
     var boards: [BoardContent] = []
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print("ViewController의 view가 Load됨")
+        initSchoolBoard()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
@@ -127,7 +133,6 @@ class MyBoardViewController: UIViewController {
         view.addSubview(lineView)
         view.addSubview(nothingLabel)
         view.addSubview(myBoardTableView)
-        initSchoolBoard()
     }
     
     private func setAutoLayout() {
@@ -257,20 +262,20 @@ extension MyBoardViewController: UITableViewDelegate, UITableViewDataSource {
         print("선택 : \(indexPath)")
         print("boardId : \(boards[indexPath.item].boardId)")
         // 선택 후 setBoardId 호출
-//        DetailBoardViewModel.shared.setBoardId(boards[indexPath.item].boardId)
-//
-//        DetailBoardViewModel.shared.getBoardComplete = { result in
-//            if result == true {
-//                print("result true")
-//                // board 호출 성공
-//                // vc 전환
-//                let vc = DetailBoardViewController()
-//                vc.modalPresentationStyle = .fullScreen
-//                self.present(vc, animated: true)
-//            }
-//            else {
-//
-//            }
-//        }
+        DetailBoardViewModel.shared.setBoardId(boards[indexPath.item].boardId)
+
+        DetailBoardViewModel.shared.getBoardComplete = { result in
+            if result == true {
+                print("result true")
+                // board 호출 성공
+                // vc 전환
+                let vc = DetailBoardViewController()
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: true)
+            }
+            else {
+
+            }
+        }
     }
 }
